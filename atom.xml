@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>龙胖的博客</title>
+  <icon>https://longfater.github.io/icon.png</icon>
+  <subtitle>龙胖的博客</subtitle>
+  <link href="https://longfater.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://longfater.github.io/"/>
+  <updated>2022-03-19T11:39:16.000Z</updated>
+  <id>https://longfater.github.io/</id>
+  
+  <author>
+    <name>Longfat</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>赤壁赋</title>
+    <link href="https://longfater.github.io/2022/03/19/chi-bi-fu/"/>
+    <id>https://longfater.github.io/2022/03/19/chi-bi-fu/</id>
+    <published>2022-03-19T09:18:30.000Z</published>
+    <updated>2022-03-19T11:39:16.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;赤壁赋&quot;&gt;&lt;a href=&quot;#赤壁赋&quot; class=&quot;headerlink&quot; title=&quot;赤壁赋&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://so.gushiwen.cn/shiwenv_4cac23b07849.aspx&quot;&gt;赤壁赋&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="诗文" scheme="https://longfater.github.io/tags/%E8%AF%97%E6%96%87/"/>
+    
+    <category term="赤壁赋" scheme="https://longfater.github.io/tags/%E8%B5%A4%E5%A3%81%E8%B5%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>洛神赋</title>
+    <link href="https://longfater.github.io/2022/03/19/luo-shen-fu/"/>
+    <id>https://longfater.github.io/2022/03/19/luo-shen-fu/</id>
+    <published>2022-03-19T09:15:49.000Z</published>
+    <updated>2022-03-19T11:39:16.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;洛神赋&quot;&gt;&lt;a href=&quot;#洛神赋&quot; class=&quot;headerlink&quot; title=&quot;洛神赋&quot;&gt;&lt;/a&gt;洛神赋&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;https://so.gushiwen.cn/authorv_6c695909f577.aspx&quot;&gt;曹植&lt;/a&gt;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="诗文" scheme="https://longfater.github.io/tags/%E8%AF%97%E6%96%87/"/>
+    
+    <category term="洛神赋" scheme="https://longfater.github.io/tags/%E6%B4%9B%E7%A5%9E%E8%B5%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>春江花月夜</title>
+    <link href="https://longfater.github.io/2022/03/19/chun-jiang-hua-yue-ye/"/>
+    <id>https://longfater.github.io/2022/03/19/chun-jiang-hua-yue-ye/</id>
+    <published>2022-03-19T09:13:12.000Z</published>
+    <updated>2022-03-19T11:39:16.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;春江花月夜&quot;&gt;&lt;a href=&quot;#春江花月夜&quot; class=&quot;headerlink&quot; title=&quot;春江花月夜&quot;&gt;&lt;/a&gt;春江花月夜&lt;/h3&gt;&lt;p&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="诗文" scheme="https://longfater.github.io/tags/%E8%AF%97%E6%96%87/"/>
+    
+    <category term="春江花月夜" scheme="https://longfater.github.io/tags/%E6%98%A5%E6%B1%9F%E8%8A%B1%E6%9C%88%E5%A4%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>出师表</title>
+    <link href="https://longfater.github.io/2022/03/19/chu-shi-biao/"/>
+    <id>https://longfater.github.io/2022/03/19/chu-shi-biao/</id>
+    <published>2022-03-19T09:11:02.000Z</published>
+    <updated>2022-03-19T11:39:16.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;出师表&quot;&gt;&lt;a href=&quot;#出师表&quot; class=&quot;headerlink&quot; title=&quot;出师表&quot;&gt;&lt;/a&gt;出师表&lt;/h3&gt;&lt;p&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="出师表" scheme="https://longfater.github.io/tags/%E5%87%BA%E5%B8%88%E8%A1%A8/"/>
+    
+    <category term="诗文" scheme="https://longfater.github.io/tags/%E8%AF%97%E6%96%87/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>陈情表</title>
+    <link href="https://longfater.github.io/2022/03/19/chen-qing-biao/"/>
+    <id>https://longfater.github.io/2022/03/19/chen-qing-biao/</id>
+    <published>2022-03-19T09:04:59.000Z</published>
+    <updated>2022-03-19T11:39:16.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;陈情表&quot;&gt;&lt;a href=&quot;#陈情表&quot; class=&quot;headerlink&quot; title=&quot;陈情表&quot;&gt;&lt;/a&gt;陈情表&lt;/h3&gt;&lt;p&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="诗文" scheme="https://longfater.github.io/tags/%E8%AF%97%E6%96%87/"/>
+    
+    <category term="陈情表" scheme="https://longfater.github.io/tags/%E9%99%88%E6%83%85%E8%A1%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>滕王阁序</title>
+    <link href="https://longfater.github.io/2022/03/19/teng-wang-ge-xu/"/>
+    <id>https://longfater.github.io/2022/03/19/teng-wang-ge-xu/</id>
+    <published>2022-03-19T08:56:10.000Z</published>
+    <updated>2022-03-19T11:39:16.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;滕王阁序&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://so.gushiwen.cn/authorv_e6b970da08cd.aspx&quot;&gt;王勃&lt;/a&gt; &lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="诗文" scheme="https://longfater.github.io/tags/%E8%AF%97%E6%96%87/"/>
+    
+    <category term="滕王阁序" scheme="https://longfater.github.io/tags/%E6%BB%95%E7%8E%8B%E9%98%81%E5%BA%8F/"/>
+    
+  </entry>
+  
+</feed>
