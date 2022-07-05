@@ -556,6 +556,7 @@ header .go-back i {
 }
 
 .bg-cover:before,
+/*背景颜色遮罩
 .bg-cover:after {
     position: absolute;
     z-index: 1;
@@ -566,6 +567,7 @@ header .go-back i {
     top: 0;
     content: "";
 }
+*/
 
 .bg-cover .container {
     position: relative;
