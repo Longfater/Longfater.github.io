@@ -1,0 +1,1518 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="计组第3章-存储系统, 龙胖的博客">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>计组第3章-存储系统 | 龙胖的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="龙胖的博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">龙胖的博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">龙胖的博客</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">计组第3章-存储系统</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                                <span class="chip bg-color">计算机组成原理</span>
+                            </a>
+                        
+                            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%80%83%E7%A0%94408/">
+                                <span class="chip bg-color">计算机考研408</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-07-27
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-07-27
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6.4k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    22 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="第三章-存储系统"><a href="#第三章-存储系统" class="headerlink" title="第三章 存储系统"></a>第三章 存储系统</h3><h4 id="考纲内容"><a href="#考纲内容" class="headerlink" title="考纲内容"></a>考纲内容</h4><blockquote>
+<p>（一）存储器的分类</p>
+<p>（二）层次化存储器的基本结构</p>
+<p>（三）半导体随机存储器</p>
+<p>​        SRAM、DRAM、Flash存储器</p>
+<p>（四）主存储器</p>
+<p>​        DRAM芯片与内存条、多模块存储器、主存和CPU之间的连接</p>
+<p>（五）外部存储器</p>
+<p>​        磁盘存储器、固态硬盘（SSD）</p>
+<p>（六）高速缓冲存储器（Cache）</p>
+<p>​        Cache的基本原理；Cache和主存之间的映射方式</p>
+<p>​        Cache中主存块的替换算法；Cache写策略</p>
+<p>（七）虚拟存储器</p>
+<p>​        虚拟存储器的基本概念</p>
+<p>​        页式虚拟存储器：基本原理、页表、地址转换、TLB（快表）</p>
+<p>​        段式虚拟存储器的基本原理；段页式虚拟存储器的基本原理</p>
+</blockquote>
+<h4 id="3-1-存储器概述"><a href="#3-1-存储器概述" class="headerlink" title="3.1 存储器概述"></a>3.1 存储器概述</h4><h5 id="1-存储器的层次结构"><a href="#1-存储器的层次结构" class="headerlink" title="1. 存储器的层次结构"></a>1. 存储器的层次结构</h5><img src="/.io//image-20220710162950624.png" alt="image-20220710162950624">
+
+<img src="/.io//image-20220710163119440.png" alt="image-20220710163119440">
+
+<img src="/.io//image-20220710163158290.png" alt="image-20220710163158290">
+
+<img src="/.io//image-20220710164124133.png" alt="image-20220710164124133">
+
+<p>实际上，存储器层次结构主要体现在<code>Cache—主存层</code>和<code>主存—辅存层</code>，前者主要解决<strong>CPU和主存速度不匹配的问题</strong>，后者主要解决<strong>存储系统的容量问题</strong>。在存储体系中，Cache、主存能够与CPU直接交换信息，辅存则要通过主存与CPU交换信息。存储器层次结构的主要思想是上一层存储器作为低一层存储器的高速缓存，上一层内容只是下一层经常使用到的内容的副本。</p>
+<h5 id="2-存储器的分类"><a href="#2-存储器的分类" class="headerlink" title="2. 存储器的分类"></a>2. 存储器的分类</h5><ul>
+<li>按存储介质分类：半导体存储器、磁表面存储器、光存储器</li>
+<li>按存取方式分类：随机存取存储器(RAM、ROM)、顺序存取存储器(磁带)、直接存取存储器(磁盘、光盘)</li>
+</ul>
+<img src="/.io//image-20220710165435322.png" alt="image-20220710165435322">
+
+<img src="/.io//image-20220710165509725.png" alt="image-20220710165509725">
+
+<p><strong>顺序存取存储器（SAM）</strong>：磁带、电影胶片</p>
+<p>访问时，读/写部件按顺序查找目标地址，访问时间与数据的存储位置有关。</p>
+<p><strong>直接存取存储器（DAM）</strong>：硬盘</p>
+<p>访问时，读/写部件先粗定位一个小区域，再在该区域内顺序查找。</p>
+<h5 id="3-存储器的性能指标"><a href="#3-存储器的性能指标" class="headerlink" title="3. 存储器的性能指标"></a>3. 存储器的性能指标</h5><ul>
+<li>存储容量 = 存储字数 × 字长</li>
+<li>单位成本：每位价格 = 总成本/总容量</li>
+<li>存储速度：<strong>数据传输率 = 数据的宽度/存储周期</strong><ul>
+<li>存取时间：存储器收到读写命令到存储器读出/写入信息所需要的时间</li>
+<li>存取周期：<strong>存取周期 = 存取时间 + 恢复期</strong></li>
+<li>主存带宽：又称为数据传输率</li>
+</ul>
+</li>
+</ul>
+<img src="/.io//image-20220711152647054.png" alt="image-20220711152647054">
+
+
+
+<h4 id="3-2-主存储器"><a href="#3-2-主存储器" class="headerlink" title="3.2 主存储器"></a>3.2 主存储器</h4><h5 id="1-SRAM芯片和DRAM芯片"><a href="#1-SRAM芯片和DRAM芯片" class="headerlink" title="1. SRAM芯片和DRAM芯片"></a>1. SRAM芯片和DRAM芯片</h5><h6 id="1-SRAM的工作原理"><a href="#1-SRAM的工作原理" class="headerlink" title="1. SRAM的工作原理"></a>1. SRAM的工作原理</h6><img src="/.io//image-20220710170638568.png" alt="image-20220710170638568">
+
+<p>通常把存放一个二进制位的物理器件称为存储元，它是存储器最基本的结构。</p>
+<p><strong>静态随机存储器SRAM的存储元是双稳态触发器（六晶体管MOS），依靠双稳态电路内部交叉反馈电路形成互锁，通过电源对电路的持续供电以存储信息，不需要刷新，为非破坏性读出，不需要重写。</strong></p>
+<img src="/.io//image-20220710171018980.png" alt="image-20220710171018980">
+
+<img src="/.io//image-20220710171508165.png" alt="image-20220710171508165">
+
+<h6 id="2-DRAM的工作原理"><a href="#2-DRAM的工作原理" class="headerlink" title="2. DRAM的工作原理"></a>2. DRAM的工作原理</h6><p><strong>动态随机访问存储器DRAM依靠存储单元中形成的栅极电容来保存信息，不需要持续电源，因此需要定期逐行刷新。</strong>MOS：金属氧化物半导体，加高电平即导通，低电平即阻断。</p>
+<img src="/.io//image-20220710172412606.png" alt="image-20220710172412606">
+
+<img src="/.io//image-20220710172450820.png" alt="image-20220710172450820">
+
+<img src="/.io//image-20220710172518487.png" alt="image-20220710172518487">
+
+<p><strong>动态存储器的刷新：</strong></p>
+<p><strong>定期向电容补充电荷叫做刷新。</strong>因为动态存储器依靠电容电荷存储信息，没有电源持续供电，电荷会泄露，故需定期向电容补充电荷，才能维持存储信息不变。</p>
+<img src="/.io//image-20220710175156513.png" alt="image-20220710175156513">
+
+<img src="/.io//image-20220710175305647.png" alt="image-20220710175305647">
+
+<img src="/.io//image-20220710175332757.png" alt="image-20220710175332757">
+
+<h6 id="3-DRAM芯片读写周期"><a href="#3-DRAM芯片读写周期" class="headerlink" title="3. DRAM芯片读写周期"></a>3. DRAM芯片读写周期</h6><img src="/.io//image-20220710184205175.png" alt="image-20220710184205175">
+
+<h6 id="4-SRAM与DRAM的比较"><a href="#4-SRAM与DRAM的比较" class="headerlink" title="4. SRAM与DRAM的比较"></a>4. SRAM与DRAM的比较</h6><img src="/.io//image-20220710184607749.png" alt="image-20220710184607749">
+
+<h6 id="5-存储器芯片的内部结构"><a href="#5-存储器芯片的内部结构" class="headerlink" title="5. 存储器芯片的内部结构"></a>5. 存储器芯片的内部结构</h6><img src="/.io//image-20220724162255581.png" alt="image-20220724162255581">
+
+<ol>
+<li>存储体（存储矩阵 ）。存储体是存储单元的集合，它由行选择线(X)和列选择线(Y)来选择所访问单元，存储体上的相同行、列上的位同时被读出或写入。</li>
+<li>地址译码器：用来将地址转换为译码输出线上的高电平，以便驱动相应的读写电路。</li>
+<li>I/O控制电路：用以控制被选中单元的读出或写入，具有放大信息的作用。</li>
+<li>片选控制信号。</li>
+<li>读/写控制信号。</li>
+</ol>
+<h6 id="6-半导体存储器的逻辑设计"><a href="#6-半导体存储器的逻辑设计" class="headerlink" title="6. 半导体存储器的逻辑设计"></a>6. 半导体存储器的逻辑设计</h6><img src="/.io//image-20220710190056581.png" alt="image-20220710190056581">
+
+<img src="/.io//image-20220710190134519.png" alt="image-20220710190134519">
+
+<img src="/.io//image-20220710190200719.png" alt="image-20220710190200719">
+
+<img src="/.io//image-20220710190229562.png" alt="image-20220710190229562">
+
+<img src="/.io//image-20220710190301146.png" alt="image-20220710190301146">
+
+<img src="/.io//image-20220710190355822.png" alt="image-20220710190355822">
+
+<img src="/.io//image-20220710190421670.png" alt="image-20220710190421670">
+
+
+
+<h5 id="2-只读存储器ROM"><a href="#2-只读存储器ROM" class="headerlink" title="2. 只读存储器ROM"></a>2. 只读存储器ROM</h5><p>只读存储器（ROM）有两个显著的优点：</p>
+<ul>
+<li>结构简单，所以位密度比可读写存储器高。</li>
+<li>具有<strong>非易失性</strong>，所以可靠性高。</li>
+</ul>
+<p>ROM的类型：</p>
+<ol>
+<li>掩模式只读存储器MROM：内容由半导体制造厂商按用户的需求在芯片生产过程中直接写入，之后无法改变</li>
+<li>一次可编程只读存储器PROM：可以利用专门的设备写入一次，之后内容无法改变。</li>
+<li>可擦除可编程存储器EPROM：可写入几十次，用紫外线照射擦除。</li>
+<li>电擦除型可编程只读存储器EEPROM：使用高压电实现比特级擦除。</li>
+<li>Flash存储器：即闪存，是一种快速擦写型ROM，典型应用有U盘、SSD固态硬盘等。其主要特点是既可在不加电的情况下长期保存信息，又能在线进行快速擦除与重写。</li>
+<li>固态硬盘SSD：基于闪存，保留了Flash存储器长期保存信息、快速擦除与重写的特性，对比传统硬盘也具有读写速度快、低功耗等特点，缺点是价格较高。</li>
+</ol>
+<h5 id="3-主存储器的基本组成"><a href="#3-主存储器的基本组成" class="headerlink" title="3. 主存储器的基本组成"></a>3. 主存储器的基本组成</h5><img src="/.io//image-20220710191407193.png" alt="image-20220710191407193">
+
+<p>指令执行过程中需要访问主存时，CPU首先把被访问单元的地址送到地址寄存器MAR中，然后通过地址线将主存地址送到主存中的地址寄存器，以便地址译码器译码选中相应单元，同时CPU将读写信号通过控制线送到主存的读写控制电路。</p>
+<p>如果是写操作，那么CPU同时将要写的信号送入MDR中，在读写控制电路的控制下，经过数据线将信号写入选中的单元；</p>
+<p>若果是读操作，那么主存读出选中单元的内容送到数据线，然后送到MDR中。</p>
+<p><strong>数据线的宽度与MDR的宽度相同，地址线的宽度与MAR的宽度相同。地址线的位数决定了主存地址空间的最大可寻址范围。</strong></p>
+<h5 id="4-多模块存储器"><a href="#4-多模块存储器" class="headerlink" title="4. 多模块存储器"></a>4. 多模块存储器</h5><p>多模块存储器是一种空间并行技术，利用多个结构完全相同的存储模块并行工作来提高存储器的吞吐率。常用的有单体多字存储器和多体位交叉存储器。</p>
+<blockquote>
+<p>注意：CPU的速度比存储器快，若同时从存储器中取出n条指令，就可以充分利用CPU资源，提高运行速度。多体交叉存储器就是基于这种思想提出的。</p>
+</blockquote>
+<h6 id="1-单体多字存储器"><a href="#1-单体多字存储器" class="headerlink" title="1. 单体多字存储器"></a>1. 单体多字存储器</h6><p>单体多字存储器的特点是存储器中只有一个存储体，每个存储单元存储m个字，总线宽度也为m个字。一次并行读出m个字，地址必须顺序排列并处于同一存储单元。</p>
+<h6 id="2-多体并行存储器"><a href="#2-多体并行存储器" class="headerlink" title="2. 多体并行存储器"></a>2. 多体并行存储器</h6><p>多体并行存储器由多体模块组成。每个模块都有相同的容量和存取速度，各模块都有独立的读写控制电路、地址寄存器和数据寄存器。它们既能并行工作，又能交叉工作。</p>
+<p>多体并行存储器分为高位交叉编址和低位交叉编址。</p>
+<p><strong>高位交叉编址（顺序方式）</strong>：高位地址表示体号，低位地址为体内地址。访问一个连续主存块时总是先在一个模块内访问，等待该模块访问结束才转到下一个模块，各模块不能被并行访问。</p>
+<img src="/.io//image-20220724163124596.png" alt="image-20220724163124596">
+
+<p><strong>低位交叉编址（交叉方式）</strong>：低位地址为体号，高位地址为体内地址。每个模块按”模m“编址，模块号=单元地址%m，假定有m个模块，每个模块有k个单元，则$M_{0}=Pm,M_{1}=Pm+1,\cdot\cdot\cdot$,$0=&lt;P&lt;=k+1$。</p>
+<p>低位交叉方式下，总是把高位的体内地址送到由低位地址确定的模块内进行译码，程序连续存放在相邻的模块中，因此称采用此编制方式的存储器为交叉存储器。</p>
+<img src="/.io//image-20220724163237158.png" alt="image-20220724163237158">
+
+<p>采用低位交叉编址后，可在不改变每个模块的存取周期的前提下，用流水线的方式并行存取，提高存储器的带宽。</p>
+<p>交叉存取度m = 存取周期T / 总线传送周期r；存储体的模块数必须大于等于m。</p>
+<p>顺序存储器  $t_{1}=m T$</p>
+<p>交叉存储器 $t_{2} = T + (m-1)r$。</p>
+<h5 id="5-本节小结"><a href="#5-本节小结" class="headerlink" title="5. 本节小结"></a>5. 本节小结</h5><ol>
+<li>芯片引脚数 = 地址线数 + 数据线数 + 片选线数 + 读写控制线数</li>
+<li>一根线就是一个二进制位，高电平时为1，低电平时为0</li>
+<li><strong>n根地址线可以表示$2^{n}$个存储单元，故若有$2^{n}$个存储单元，则地址线数 = n</strong></li>
+<li><strong>数据线数 = 存储字长，即1个存储单元的位数</strong></li>
+<li>读写控制线为1或2根，皆有可能，片选线数为1根</li>
+<li>DRAM采用地址引脚复用技术，地址线减半，数据线不变，增加了两根线即行通选和列通选，片选线以行通选代替</li>
+<li>分散刷新延长了存取周期，不存在死时间。</li>
+</ol>
+<h4 id="3-3-主存储器与CPU的连接"><a href="#3-3-主存储器与CPU的连接" class="headerlink" title="3.3 主存储器与CPU的连接"></a>3.3 主存储器与CPU的连接</h4><h5 id="1-连接原理"><a href="#1-连接原理" class="headerlink" title="1. 连接原理"></a>1. 连接原理</h5><p>主存储器通过数据总线、地址总线和控制总线与CPU连接；</p>
+<p>数据总线的位数与工作频率的乘积正比于数据传输率；</p>
+<p>地址总线的位数决定了可寻址的最大内存空间；</p>
+<p>控制总线（读/写）指出总线周期的类型和本次输入/输出操作完成的时刻。</p>
+<h5 id="2-主存容量扩展"><a href="#2-主存容量扩展" class="headerlink" title="2. 主存容量扩展"></a>2. 主存容量扩展</h5><p>由于单个存储芯片的容量是有限的，它在字数或字长方面与实际存储器的需求都有差距，因此需要在字和位两方面进行扩充才能满足实际存储器的容量要求。通常采用位扩展法、字扩展法和字位同时扩展法来扩展主存容量。</p>
+<ol>
+<li><p><strong>位扩展法</strong>：用多个存储器件对字长进行扩充，增加存储字长。位扩展的连接方式是将多个存储芯片的地址端、片选端和读写控制端相应并联，数据端分别引出。</p>
+<blockquote>
+<p>注意：仅采用位扩展时，各芯片连接地址线的方式相同，但连接数据线的方式不同，在某一时刻选中所有的芯片，所以片选信号（CS非）要连接到所有的芯片。</p>
+</blockquote>
+<img src="/.io//image-20220724163553716.png" alt="image-20220724163553716">
+</li>
+<li><p><strong>字扩展法</strong>：字扩展将芯片的地址线、数据线、读写控制线相应并联，而由片选信号来区分各芯片的地址范围。</p>
+<blockquote>
+<p>注意：仅采用字扩展时，各芯片连接地址线的方式相同，连接数据线的方式也相同，但在某一时刻只需选中部分芯片，所以通过片选信号（CS非）连接到相应的芯片。</p>
+</blockquote>
+<img src="/.io//image-20220724163643199.png" alt="image-20220724163643199">
+</li>
+<li><p><strong>字位同时扩展法</strong>：同时增加存储字的数量和存储字长。</p>
+<blockquote>
+<p>数据线的连接方式不同，而且片选信号也要连接到相应的芯片。</p>
+</blockquote>
+<img src="/.io//image-20220724163750209.png" alt="image-20220724163750209"></li>
+</ol>
+<h5 id="3-存储容量的地址分配和片选"><a href="#3-存储容量的地址分配和片选" class="headerlink" title="3. 存储容量的地址分配和片选"></a>3. 存储容量的地址分配和片选</h5><p>CPU要实现对存储单元的访问，首先要进行片选，然后进行字选。</p>
+<p>片选信号的产生分为线选法和译码片选法。</p>
+<ol>
+<li><p><strong>线选法</strong>：用除片内寻址外的高位地址线直接分别连接至各个存储芯片的片选端，当某地址线信号为”0“时，就选中与之对应的存储芯片（CS非低电平有效）。这些片选地址每次寻址时只能有一位有效，保证每次只选中一个芯片。</p>
+<p>优点：不需要地址译码器，线路简单。</p>
+<p>缺点：地址空间不连续，选片的地址必须分时为低电平，不能充分利用系统的存储器空间。</p>
+</li>
+<li><p><strong>译码片选法</strong>：用除片内寻址外的高位地址线通过地址译码器芯片产生片选信号。</p>
+</li>
+</ol>
+<h5 id="4-存储器与CPU的连接"><a href="#4-存储器与CPU的连接" class="headerlink" title="4. 存储器与CPU的连接"></a>4. 存储器与CPU的连接</h5><ol>
+<li>合理选择存储芯片：主要指芯片类型和数量的选择；</li>
+<li>地址线的连接：通常用CPU地址线的低位进行字选，高位进行片选；</li>
+<li>数据线的连接：CPU的数据线数与存储器的数字线数不相等时，必须对存储芯片进行扩位；</li>
+<li>读/写命令线的连接：一般可以直接相连，高电平为读，低电平为写；</li>
+<li>片选线的连接：是CPU与存储芯片连接的关键，存储器有许多存储芯片叠加而成，哪一片被选中完全取决于该存储芯片的片选控制端（CS非）能否接收到来自CPU的有效片选信号。</li>
+</ol>
+<h4 id="3-4-外部存储器"><a href="#3-4-外部存储器" class="headerlink" title="3.4 外部存储器"></a>3.4 外部存储器</h4><h5 id="1-磁盘存储器"><a href="#1-磁盘存储器" class="headerlink" title="1. 磁盘存储器"></a>1. 磁盘存储器</h5><ol>
+<li><p>磁盘存储器的优缺点：存储容量大、位价格低；记录介质可重复使用；记录信息可长期保存而不丢失；非破坏性读出，读出时不需要再生；缺点是存取速度慢，机械结构复杂，对工作环境要求较高。</p>
+</li>
+<li><p>磁盘设备的组成：磁盘存储器由磁盘驱动器、磁盘控制器和盘片组成；一块硬盘含有若干记录面，每个记录面划分为若干磁道，而每条磁道又划分为若干扇区，<strong>扇区是磁盘读写的最小单位</strong>。</p>
+</li>
+<li><p>磁头数即记录面数，表示硬盘共有多少个磁头；柱面数表示硬盘每面盘片上有多少条磁道；扇区数表示每条磁道上有多少个扇区。</p>
+</li>
+<li><p>磁记录原理：磁头和磁性记录介质相对运动时，通过电磁转换完成读写操作。</p>
+</li>
+<li><p>磁盘的性能指标：记录密度；磁盘容量；平均存取时间；数据传输率；</p>
+<p>数据传输率=磁盘转速r(转/秒) × 磁道容量N(字节)</p>
+</li>
+<li><p>磁盘地址=驱动器号+柱面(磁道)号+盘面号+扇区号</p>
+</li>
+<li><p>读一个扇区中数据所用的时间 = 找磁道的时间 + 找扇区的时间 + 磁头扫过一个扇区的时间</p>
+</li>
+<li><p><strong>磁盘阵列</strong></p>
+<p><strong>PAID（独立冗余磁盘阵列）是指将多个独立的物理磁盘组成一个独立的逻辑磁盘，数据在多个物理盘上分割交叉存储、并行访问，具有更好的存储性能、可靠性和安全性。</strong></p>
+<p>RAID0: 无冗余和无校验的磁盘阵列</p>
+<p>RAID1: 镜像磁盘阵列</p>
+<p>RAID2: 采用纠错的海明码的磁盘阵列</p>
+<p>RAID3: 位交叉奇偶校验的磁盘阵列</p>
+<p>RAID4: 块交叉奇偶校验的磁盘阵列</p>
+<p>RAID5: 无独立校验的奇偶校验磁盘阵列</p>
+<p>总之，RAID通过同时使用多个磁盘，提高了传输率；通过在多个磁盘上并行存取来大幅提高存储系统的数据吞吐量；通过镜像备份，提高安全可靠性；通过数据校验，提供容错能力。</p>
+</li>
+</ol>
+<h5 id="2-固态硬盘"><a href="#2-固态硬盘" class="headerlink" title="2. 固态硬盘"></a>2. 固态硬盘</h5><p>固态硬盘是一种基于闪存技术的存储器。它与U盘并没有本质上的区别，只是容量更大、存储性能更好。</p>
+<p>固态硬盘的特点：基于闪存的存储技术、随机写很慢、随机读写性能明显高于磁盘、容易磨损。</p>
+<h4 id="3-5-高速缓冲存储器"><a href="#3-5-高速缓冲存储器" class="headerlink" title="3.5 高速缓冲存储器"></a>3.5 高速缓冲存储器</h4><h5 id="1-程序访问的局部性原理"><a href="#1-程序访问的局部性原理" class="headerlink" title="1. 程序访问的局部性原理"></a>1. 程序访问的局部性原理</h5><img src="/.io//image-20220724180300224.png" alt="image-20220724180300224" style="zoom: 67%;">
+
+<h5 id="2-Cache的基本工作原理"><a href="#2-Cache的基本工作原理" class="headerlink" title="2. Cache的基本工作原理"></a>2. Cache的基本工作原理</h5><p>Cache位于存储器层次结构的顶层，通常由SRAM构成。为便于Cache和主存交换信息，Cache和主存通常被划分为大小相等的块，Cache块又称Cache行，每块由若干字节组成，块的长度称为块长（Cache行长）。</p>
+<img src="/.io//image-20220724181021396.png" alt="image-20220724181021396">
+
+<img src="/.io//image-20220724181049649.png" alt="image-20220724181049649">
+
+<img src="/.io//image-20220724181150167.png" alt="image-20220724181150167">
+
+
+
+<h5 id="3-Cache和主存的映射方式"><a href="#3-Cache和主存的映射方式" class="headerlink" title="3. Cache和主存的映射方式"></a>3. Cache和主存的映射方式</h5><img src="/.io//image-20220724181329933.png" alt="image-20220724181329933">
+
+<ol>
+<li><p><strong>全相联映射</strong></p>
+<p><strong>主存中的每一块可以装入Cache中的任何位置</strong>，每行的标记用于指出该行取自主存的哪一块，所以CPU访存时需要与所有Cache行的标记进行比较。<strong>标记 = 主存块地址</strong>，主存地址 = 主存块地址（标记） + 块内地址。</p>
+<p>优点：比较灵活，冲突率低，空间利用率高，命中率高；</p>
+<p>缺点：标记长，标记的比较速度慢，实现成本高通常采用价格昂贵的相联存储器。</p>
+<img src="/.io//image-20220724182111571.png" alt="image-20220724182111571">
+</li>
+<li><p><strong>直接映射</strong></p>
+<p>主存中的每一块只能装入Cache块中的唯一位置。若这个位置已有内容，则产生块冲突，原来的块将被无条件替换出去（<strong>无需使用替换算法</strong>）。</p>
+<p>直接映射规则：<strong>Cache行号 = 主存块号 % Cache总行数</strong></p>
+<p>主存地址结构：<strong>主存块地址 = 标记 + Cache行号</strong>，主存地址 = 标记 + Cache行号 + 块内地址。</p>
+<p>假设Cache共有$2^{c}$行，主存有$2^{m}$块，则每个Cache行会对应$2^{m-c}$块，故需要设置一个长为m-c的标记，以确定该Cache行的内容来自$2^{m-c}$块中的哪一块。而主存块号的低c位正好是它要装入的Cache行号。</p>
+<p>直接映射实现简单，但不够灵活，块冲突概率最高，空间利用率最低。</p>
+<img src="/.io//image-20220724190305533.png" alt="image-20220724190305533">
+</li>
+<li><p><strong>组相联映射</strong></p>
+<p>将Cache分成Q个大小相等的组，每个主存块可装入固定组中的任意一行，即组间采用直接映射、而组内采用全相联映射的方式。它是对全相联映射和直接映射的一种折中，当Q=1时变为全相联映射，当Q=Cache行数时变为直接映射。假设每组有r个Cache行，则称之为r路组相联。</p>
+<p>组相联的映射关系为：<strong>Cache组号 = 主存块号 % Cache组数Q</strong></p>
+<p>选定适当的分组数量，可使组相联映射的成本接近直接映射，而性能上仍接近全相联映射。</p>
+<p>组相联映射的主存地址结构为：<strong>主存块地址 = 标记 + 组号</strong>，主存地址 = 标记 + 组号 + 块内地址。</p>
+<p>组间作区分，组内不作区分，给定一个主存块，根据主存块号%Cache组数Q确定组号，然后映射至该组内空闲的Cache块，若Cache块均已装满，则根据替换算法进行替换。</p>
+<img src="/.io//image-20220724192557766.png" alt="image-20220724192557766"></li>
+</ol>
+<h5 id="4-Cache中主存块的替换算法"><a href="#4-Cache中主存块的替换算法" class="headerlink" title="4. Cache中主存块的替换算法"></a>4. Cache中主存块的替换算法</h5><p>在采用全相联映射或组相联映射方式时，从主存向Cache传送一个新块，当Cache或Cache组中的空间已被占满时，就需要使用替换算法置换Cache行。而采用直接映射方式时，由于新主存块的Cache行位置是固定的，所以直接将该位置替换即可，无需考虑替换算法。</p>
+<p>常见的替换算法有：随机（RAND）替换算法；先进先出法（First in First out）;近期最少使用法（Least recently Used）;最不经常使用法（Least Frequently Used）。</p>
+<ol>
+<li><p><strong>随机算法（RAND）</strong>：随机替换。没有依据程序的局部性原理，所以可能会降低命中率。</p>
+</li>
+<li><p><strong>先进先出算法（FIFO）</strong>：选择最早调入的行进行替换。最早调入的内容也可能是目前经常要用的，所以也没有依据程序的局部性原理。</p>
+</li>
+<li><p><strong>近期最少使用算法（LRU）</strong>：依据<strong>程序访问的局部性原理</strong>，选择近期长久未访问过的Cache行作为替换的行，平均命中率比FIFO要高，是堆栈类算法。LRU算法对每个Cache行设置一个计数器，记录未访问的时间长短，命中某一行时，该行计数值清零，其余行计数值加一，计数值越大说明，说明近期使用到的概率越低。</p>
+<p>当集中访问的存储区超过Cache组的大小时，命中率可能变得很低，这种现象称为<strong>抖动</strong>。</p>
+</li>
+<li><p><strong>最不经常使用算法（LFU）</strong>：将一段时间内被访问次数最少的Cache行换出。同样设置一个计数器，记录每一行被访问的次数，需要替换时，将计数值最小的行换出。LFU算法看似合理其实也有一定的缺陷，因为总的使用次数最少并不意味着近期使用的次数也最少，根据程序访问的局部性原理，我们应该以近期的使用次数作为衡量标准。</p>
+</li>
+</ol>
+<h5 id="5-Cache写策略"><a href="#5-Cache写策略" class="headerlink" title="5. Cache写策略"></a>5. Cache写策略</h5><p>因为Cache中的内容是主存块副本，当对Cache中的内容进行更新时，就需选用写操作策略使Cache内容与主存内容保持一致。此时分两种情况。</p>
+<p>对于<strong>Cache写命中（write hit）</strong>，有两种处理方法：</p>
+<ol>
+<li><p><strong>全写法（写直通法、write-through）</strong>。当CPU对Cache写命中时，必须把数据同时写入Cache和主存当某一块需要替换时，因为已经写入主存，所以直接替换即可。这种方法实现简单，主存与Cache即时同步，能随时保持主存数据的正确性，缺点是增加了访存次数，降低了Cache的效率。</p>
+<p>为减少全写法直接写入主存的时间损耗，在Cache和主存之间添加了一个写缓冲（Write Buffer）。CPU同时将数据写入Cache和写缓冲中，写缓冲再控制将内容写入主存。写缓冲是一个FIFO队列，可以解决速度不匹配的问题，但若出现频繁写时，会使写缓冲饱和溢出。</p>
+</li>
+<li><p><strong>回写法（write-back）</strong>。当CPU对Cache写命中时，只把数据写入Cache中，而不立即写入主存，只有当此块被换出时才写回主存。这种方法减少了访存次数，但存在数据不一致的隐患。为了减少写回主存的开销，每个Cache行设置一个修改位（脏位）。若修改位为1，则说明对应Cache行中的块被修改过，替换时需要写回主存；若修改位为0，则说明数据未被修改过，替换时无需写回主存。</p>
+</li>
+</ol>
+<p>对于<strong>Cache写不命中</strong>，也有两种处理方法：</p>
+<ol>
+<li><p><strong>写分配法（write-allocate）</strong>。加载主存中的块到Cache中，然后更新这个块。它试图利用程序的空间局部性原理，即在某个存储单元被访问时，它附近的存储单元也很可能即将被访问（因为程序往往是顺序存储的，一段程序的指令和数据通常集中存储在相邻的一片存储区域中），因此可以先将该存储单元所在的块调入Cache中，如果命中，则CPU无需再进行访存，直接与Cache交换数据，程序的执行速度大大提高。</p>
+<p>但缺点是每次不命中都需要从主存中读取一块，如果CPU不需要再使用该块中的内容，则一方面浪费了Cache的空间，另一方面凭白多消耗了一次主存块调入Cache的时间。</p>
+</li>
+<li><p><strong>非写分配法（not-write-allocate）</strong>。只写入主存，不进行调块。虽然不会提高速度但至少也不会减慢速度。</p>
+</li>
+</ol>
+<p><strong>非写分配法通常与全写法合用，写分配法通常与回写法合用。</strong>即写命中时如果同时将数据写入主存和Cache，则写不命中时，只写入主存，不进行调块。写命中时，如果只写入Cache，则写不命中时，进行调块，至Cache块被替换时再根据修改位写回主存。</p>
+<p>随着新技术的发展（如指令预取），需要将指令Cache和数据Cache分离，分离的主要目的是减少指令流水线的资源冲突。</p>
+<h4 id="3-6-虚拟存储器"><a href="#3-6-虚拟存储器" class="headerlink" title="3.6 虚拟存储器"></a>3.6 虚拟存储器</h4><h5 id="1-虚拟存储器的基本概念"><a href="#1-虚拟存储器的基本概念" class="headerlink" title="1. 虚拟存储器的基本概念"></a>1. 虚拟存储器的基本概念</h5><img src="/.io//image-20220724213434258.png" alt="image-20220724213434258">
+
+<img src="/.io//image-20220724213522820.png" alt="image-20220724213522820">
+
+<h5 id="2-页式虚拟存储器"><a href="#2-页式虚拟存储器" class="headerlink" title="2. 页式虚拟存储器"></a>2. 页式虚拟存储器</h5><img src="/.io//image-20220724213612239.png" alt="image-20220724213612239">
+
+<img src="/.io//image-20220724213650698.png" alt="image-20220724213650698">
+
+<img src="/.io//image-20220724213749639.png" alt="image-20220724213749639">
+
+<h5 id="3-段式虚拟存储器"><a href="#3-段式虚拟存储器" class="headerlink" title="3. 段式虚拟存储器"></a>3. 段式虚拟存储器</h5><img src="/.io//image-20220724214839881.png" alt="image-20220724214839881">
+
+<img src="/.io//image-20220724214917023.png" alt="image-20220724214917023">
+
+<h5 id="4-段页式虚拟存储器"><a href="#4-段页式虚拟存储器" class="headerlink" title="4. 段页式虚拟存储器"></a>4. 段页式虚拟存储器</h5><img src="/.io//image-20220724214958091.png" alt="image-20220724214958091">
+
+<img src="/.io//image-20220724215026995.png" alt="image-20220724215026995">
+
+<h5 id="5-虚拟存储器与Cache的比较"><a href="#5-虚拟存储器与Cache的比较" class="headerlink" title="5. 虚拟存储器与Cache的比较"></a>5. 虚拟存储器与Cache的比较</h5><p>相同之处：</p>
+<ol>
+<li>最终目标都是为了提高系统性能，两者都有容量、速度、价格的梯度；</li>
+<li>都是把数据划分为小信息块，并作为基本的传递单位，虚存系统的信息块更大；</li>
+<li>都有地址的映射、替换算法、更新策略等问题；</li>
+<li>依据程序的局部性原理，应用“快速缓存”的思想，将活跃的数据放在相对高速的部件中。</li>
+</ol>
+<p>不同之处：</p>
+<ol>
+<li>Cache主要解决系统速度，而虚拟存储器则是解决主存容量；</li>
+<li>Cache全由硬件实现，是硬件存储器，对所有程序员透明；而虚拟存储器则是由操作系统和硬件共同实现，，是逻辑上的存储器，对系统程序员不透明，但是对应用程序员透明；</li>
+<li>对于不命中性能影响，因为CPU的速度约为Cache的10倍，主存的速度为硬盘的100倍以上，因此虚拟存储器系统不命中时对系统性能影响更大；</li>
+<li>CPU与Cache和主存都建立了直接访问的通路，而辅存与CPU没有直接通路。也就是说在Cache不命中时主存能和CPU直接通信，同时将数据调入Cache；而虚拟存储器系统不命中时，只能先由硬盘调入主存，而不能直接和CPU通信。</li>
+</ol>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Longfat</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://Longfater.github.io/2022/07/27/ji-zu-di-3-zhang-cun-chu-xi-tong/">https://Longfater.github.io/2022/07/27/ji-zu-di-3-zhang-cun-chu-xi-tong/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Longfat</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                                    <span class="chip bg-color">计算机组成原理</span>
+                                </a>
+                            
+                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%80%83%E7%A0%94408/">
+                                    <span class="chip bg-color">计算机考研408</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+    <div class="livere-card card" data-aos="fade-up">
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" class="card-content" data-id="city" data-uid="MTAyMC81NTY2NC8zMjEzMQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                let j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') {
+                    return;
+                }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript。</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</div>
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2022/07/27/ji-zu-di-3-zhang-cun-chu-xi-tong/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="计组第3章-存储系统">
+                        
+                        <span class="card-title">计组第3章-存储系统</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Longfat
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                        <span class="chip bg-color">计算机组成原理</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%80%83%E7%A0%94408/">
+                        <span class="chip bg-color">计算机考研408</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/07/27/ji-zu-di-2-zhang-shu-ju-de-biao-shi-he-yun-suan/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="计组第2章-数据的表示和运算">
+                        
+                        <span class="card-title">计组第2章-数据的表示和运算</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Longfat
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                        <span class="chip bg-color">计算机组成原理</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%80%83%E7%A0%94408/">
+                        <span class="chip bg-color">计算机考研408</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022</span>
+            
+            <span id="year">2022</span>
+            <a href="/about" target="_blank">Longfat</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">17.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Longfater" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2094717311@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2094717311" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2094717311" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript">
+    //只在桌面版网页启用特效
+    var windowWidth = $(window).width();
+    if (windowWidth > 768) {
+        document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>');
+    }
+    </script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

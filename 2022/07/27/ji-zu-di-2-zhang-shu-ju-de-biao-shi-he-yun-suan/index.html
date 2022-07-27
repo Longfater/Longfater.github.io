@@ -1,0 +1,1494 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="计组第2章-数据的表示和运算, 龙胖的博客">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>计组第2章-数据的表示和运算 | 龙胖的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="龙胖的博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">龙胖的博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">龙胖的博客</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">计组第2章-数据的表示和运算</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                                <span class="chip bg-color">计算机组成原理</span>
+                            </a>
+                        
+                            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%80%83%E7%A0%94408/">
+                                <span class="chip bg-color">计算机考研408</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-07-27
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-07-27
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.5k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    20 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="第二章-数据的表示和运算"><a href="#第二章-数据的表示和运算" class="headerlink" title="第二章 数据的表示和运算"></a>第二章 数据的表示和运算</h3><h4 id="考纲内容"><a href="#考纲内容" class="headerlink" title="考纲内容"></a>考纲内容</h4><blockquote>
+<p>（一）数制与编码</p>
+<p>​        进位计数制及其相互转换；定点数的编码表示</p>
+<p>（二）运算方法和运算电路</p>
+<p>​        基本运算部件：加法器，算术逻辑单元（ALU）</p>
+<p>​        加/减运算：补码加/减运算器，标志位的生成</p>
+<p>​        乘/除运算：乘/除运算的基本原理，乘法运算和除法电路的基本结构</p>
+<p>（三）整数的表示和运算</p>
+<p>​        无符号整数的表示和运算；带符号整数的表示和运算</p>
+<p>（四）浮点数的表示和运算</p>
+<p>浮点数的表示：IEEE754标准；浮点数的加/减运算</p>
+</blockquote>
+<h4 id="一、数制与编码"><a href="#一、数制与编码" class="headerlink" title="一、数制与编码"></a>一、数制与编码</h4><h5 id="1-进位计数制及其相互转换"><a href="#1-进位计数制及其相互转换" class="headerlink" title="1.进位计数制及其相互转换"></a>1.进位计数制及其相互转换</h5><p>在进位计数法中，一个数由若干个<strong>数位</strong>组成，每个数位都有其<strong>基数</strong>与<strong>位权</strong>。</p>
+<p>这个数的十进制值由各个数位上的基数按位权展开并相加得到，称为<strong>按权展开相加法</strong>。</p>
+<h6 id="1-二进制与八进制、十六进制的转换"><a href="#1-二进制与八进制、十六进制的转换" class="headerlink" title="(1) 二进制与八进制、十六进制的转换"></a>(1) 二进制与八进制、十六进制的转换</h6><p>一个二进制数（即一个二进制位）可以表示的数只有0和1两个，而一个八进制数可以表示的数有0~7共八个，刚好可以由3个二进制位来完全表示（<code>2**3=8</code>），故1个八进制位可以转换为3个二进制位，同理，1个十六进制位可以转换为4个二进制位。</p>
+<p>而十六进制和八进制的相互转换可以通过二进制作为过渡。</p>
+<h6 id="2-任意进制数转换为十进制数"><a href="#2-任意进制数转换为十进制数" class="headerlink" title="(2) 任意进制数转换为十进制数"></a>(2) 任意进制数转换为十进制数</h6><p>将任意进制数各个数位上的基数与它们的权值相乘，再把乘积累加，即可得到其十进制值，即按权展开相加法。</p>
+<h6 id="3-十进制数转换为任意进制数"><a href="#3-十进制数转换为任意进制数" class="headerlink" title="(3) 十进制数转换为任意进制数"></a>(3) 十进制数转换为任意进制数</h6><p>整数部分：除基取余法。（自下向上）</p>
+<p>小数部分：乘基取整法。（自上向下）</p>
+<img src="/.io//image-20220708135843597.png" alt="image-20220708135843597">
+
+<h5 id="2-定点数的编码表示"><a href="#2-定点数的编码表示" class="headerlink" title="2.定点数的编码表示"></a>2.定点数的编码表示</h5><p><strong>真值和机器数：以(+)(-)号来表示正负的数称为真值，以0和1来表示正负的称为机器数。</strong></p>
+<p>BCD码：二进制编码的十进制数，有<code>2**4-10=6</code>位冗余，常见的BCD码有8421码。</p>
+<p>1.机器数的定点表示</p>
+<p>定点数与浮点数相对，包含定点小数和定点整数，定点小数即纯小数，范围在（-1,1）内，其整数部分为0，定点整数即纯整数，其小数部分为0。</p>
+<p>定点小数的小数点位置在符号位之后，有效数值部分最高位之前；定点整数小数点在有效数值部分最低位之后。</p>
+<p>定点数的编码表示主要有四种：原码、反码、补码、移码。</p>
+<h6 id="1-原码-Sign-Magnitude"><a href="#1-原码-Sign-Magnitude" class="headerlink" title="(1) 原码(Sign-Magnitude)"></a>(1) 原码(Sign-Magnitude)</h6><p><strong>用机器数的最高位表示数的符号，0代替正号，1代替负号，其余各位不变，即得真值的原码。</strong></p>
+<p>当真值为正数时，最高位为0，故<code>真值x = 原码[x]</code></p>
+<p>当真值为负数时，其最高位为1，记真值为x(x&lt;0,包含负号)</p>
+<blockquote>
+<p>如果是整数，权值为<code>2**n</code>,n为整数位数，故<code>[x]原 = 2**n + |x|</code></p>
+<p>如果是小数，权值为<code>2**0 = 1</code>,设小数位数为n，则<code>[x]原 = 1 + |x| </code></p>
+</blockquote>
+<p><strong>原码最高有效位是符号位，没有权值，仅用来确定剩下的位应该取正权还是负权</strong>：<br>$$<br>B2S_{w}(\vec{x})=(-1)^{x_{w-1}}(\sum_{i=0}^{w-2}x_{i}2^{i})<br>$$<br>原码表示范围：$SMin_{w}=[1,111\cdot\cdot\cdot1]=-2^{w-1}+1$,$SMax_{w}=[0,111\cdot\cdot\cdot1]=2^{w-1}-1$,关于原点对称。</p>
+<h6 id="2-补码-Two’s-complement"><a href="#2-补码-Two’s-complement" class="headerlink" title="(2) 补码(Two’s-complement)"></a>(2) 补码(Two’s-complement)</h6><p><strong>补码的最高位为负权</strong>，其余各位为正权，最高位为0代表正数，最高位为1代表负数。</p>
+<p>对于向量<br>$$<br>\vec{x}=[x_{w-1},x_{w-2},\cdot\cdot\cdot,x_{0}]:<br>$$</p>
+<p>$$<br>B2T_{w}(\vec{x})=-x_{w-1}2^{w-1}+\sum_{i=0}^{w-2}x_{i}2^{i}<br>$$</p>
+<p>$B2T_{w}$（Binary to Two’s-complement，二进制转化为二进制的补码：将真值（二进制向量）的最高位权重取负，再与其余各数位按权展开相加，即可得到其补码的十进制值，根据除2取余法即可转换为二进制形式的补码，该补码位数不足8位时，正数最高位补0，负数最高位补1，其余位补0）。<strong>补码的最高有效位 $x_{w-1}$也称为符号位，它的权重为$-2^{w-1}$。</strong></p>
+<p>当真值x为正数时，$x_{w-1}=0$,故$[x]补=\sum_{i=0}^{w-2}x_{i}2^{i}=真值x$;</p>
+<p>当真值x为负数时，$x_{w-1}=1$, $B2T_{w}(\vec{x})=-2^{w-1}+\sum_{i=0}^{w-2}x_{i}2^{i}$,</p>
+<p>如果是整数，真值的绝对值$|x|=[x]补+x_{w-1}2^{w}$，即相差了两个$x_{w-1}2^{w-1}$。</p>
+<p>补码所能表示的范围：$TMin_{w}=[1,0,0,0,\cdot\cdot\cdot,0]=-2^{w-1}$,$TMax_{w}=[0,1,1,1,\cdot\cdot\cdot,1]=2^{w-1}-1$。</p>
+<p>$TMax_{w}=-TMin_{w}-1$,补码的范围是不对称的，$TMin_{w}$没有与之对应的正数。</p>
+<h6 id="3-反码-One’s-Complement"><a href="#3-反码-One’s-Complement" class="headerlink" title="(3)  反码(One’s Complement)"></a>(3)  反码(One’s Complement)</h6><p>除了最高有效位的权是$-(2^{w-1}-1)$而不是$-2^{w-1}$,它和补码是一样的：<br>$$<br>B2O_{w}(\vec{x})=-x_{w-1}(2^{w-1}-1)+\sum_{i=0}^{w-2}x_{i}2^{i}<br>$$<br>由原码求反码：符号位不变，尾数取反；</p>
+<p>由反码求补码：末位+1；</p>
+<p><strong>故由原码求补码：符号位不变，尾数取反，末位加一。</strong></p>
+<h6 id="4-移码"><a href="#4-移码" class="headerlink" title="(4)  移码"></a>(4)  移码</h6><p><strong>移码和补码：符号位相反，数值位相同。</strong></p>
+<p>移码全0时，对应真值的最小值$-2^{n}$,移码全1时，对应真值的最大值$2^{n}-1$。</p>
+<p>移码保持了数据原有的大小顺序，移码大真值就大，移码小真值就小。</p>
+<h6 id="5-原码、反码、补码、移码总结："><a href="#5-原码、反码、补码、移码总结：" class="headerlink" title="(5) 原码、反码、补码、移码总结："></a>(5) 原码、反码、补码、移码总结：</h6><ul>
+<li>原码、补码、反码的符号位相同，正数的机器数相同；</li>
+<li>原码、反码的表示在数轴上对称，二者都存在+0和-0两个零；</li>
+<li>补码、移码不对称，0的表示唯一，它们比原码、反码多出一个位置来表示一个数；</li>
+<li><strong>将真值的(+)(-)负号用0和1来表示即得真值的原码；原码符号位不变、尾数取反即得反码；反码末位+1即得补码；补码符号位取反即得移码；</strong></li>
+<li><strong>补码和真值的相互转换：连同符号位一起取反，末位加1。</strong></li>
+<li><strong>[x]补转换为[-x]补：各位取反，末位+1。</strong></li>
+</ul>
+<h4 id="二、运算方法和运算电路"><a href="#二、运算方法和运算电路" class="headerlink" title="二、运算方法和运算电路"></a>二、运算方法和运算电路</h4><h5 id="1-基本运算部件"><a href="#1-基本运算部件" class="headerlink" title="1.基本运算部件"></a>1.基本运算部件</h5><p>在计算机中，运算器是由算术逻辑单元ALU、移位器、状态寄存器、和通用寄存器等组成。运算器的基本功能包括加、减、乘、除四则运算，与、或、非、异或等逻辑运算以及移位、求补等操作。ALU的核心部件是加法器。</p>
+<h6 id="1-一位全加器"><a href="#1-一位全加器" class="headerlink" title="(1) 一位全加器"></a>(1) 一位全加器</h6><img src="/.io//image-20220706171044267.png" alt="image-20220706171044267" style="zoom:50%;">
+
+<p>全加器（FA）是最基本的加法单元，有加数A加数B与低位传来的进位$C_{i-1}$共三个输入，有本位和$S_{i}$和向高位的进位$C_{i}$共两个输出。全加器的逻辑表达式如下：</p>
+<p>和表达式：$S_{i}=A_{i}⊕B_{i}⊕C_{i-1}$（有奇数个1时，$S_{i}=1$;否则$S_{i}=0$）</p>
+<p>进位表达式：$C_{i}=A_{i}B_{i}+(A_{i}⊕B_{i})C_{i-1}$</p>
+<h6 id="2-串行进位加法器"><a href="#2-串行进位加法器" class="headerlink" title="(2) 串行进位加法器"></a>(2) 串行进位加法器</h6><p>把n个加法器相连可以得到n位加法器，称为串行进位加法器。串行进位加法器是实现了两个n位二进制数$A=A_{n}A_{n-1}\cdot\cdot\cdot A_{1}$和$B=B_{n}B_{n-1}\cdot\cdot\cdot B_{1}$逐位相加的功能。</p>
+<img src="/.io//image-20220706172746396.png" alt="image-20220706172746396" style="zoom:50%;">
+
+<p>得到的和为$S=S_{n}S_{n-1}\cdot\cdot\cdot S_{1}$,进位输出为$C_{n}$.</p>
+<p>由于加法器位数有限，如果超过了最高位数，高位自动丢失，所以实际是模$2^{n}$的加法运算。</p>
+<p>在串行进位加法器中，低位运算所产生进位所需的时间将影响高位运算的时间。串行进位加法器的最长运算时间主要是由进位信号的传递时间决定的，位数越多延迟时间越长，而全加器本身的求和延迟只是次要因素，因此加快进位产生和提高传递的速度是提升性能的关键。</p>
+<h6 id="3-并行进位加法器"><a href="#3-并行进位加法器" class="headerlink" title="(3) 并行进位加法器"></a>(3) 并行进位加法器</h6><p><strong>令$G_{i}=A_{i}B_{i}$,称为进位产生函数，即进位信号；$P_{i}=A_{i}⊕B_{i}$,称为进位传递函数，即进位传递信号。</strong></p>
+<p>$C_{i}$仅与$A_{i}$、$B_{i}$和最低进位$C_{0}$有关，相互间的进位没有依赖关系。只要$A_{1}$<del>$A_{n}$ ,$B_{1}$</del>$B_{n}$和$C_{0}$同时到达，就可以几乎同时形成$C_{1}$ ~ $C_{4}$,并且同时生成各位的和。</p>
+<p>实现上述逻辑的电路称为先行进位部件，简称CLA部件。通过这种进位方式实现的加法器称为全先行进位加法器。</p>
+<img src="/.io//image-20220706182924797.png" alt="image-20220706182924797" style="zoom: 25%;">
+
+<p>这种进位方式是快速的，与位数无关。但随着加法器位数的增加，$C_{i}$的逻辑表达式会变得越来越长，这会使电路结构越来越复杂，所以可以将加法器部件先分组，采取组内并行进位，组间再并行进位的方式，可以控制每个部分的复杂性，同时也进一步提高了运算速度。</p>
+<h6 id="4-带标志加法器"><a href="#4-带标志加法器" class="headerlink" title="(4) 带标志加法器"></a>(4) 带标志加法器</h6><img src="/.io//image-20220706184853883.png" alt="image-20220706184853883" style="zoom: 80%;">
+
+<p>在无符号加法器的基础上添加了溢出标志OF，符号标志SF，零标志ZF，进位/借位标志CF。值得注意的是，为了加快加法运算的速度，实际电路一定使用多级先行进位方式。</p>
+<h6 id="5-算术逻辑单元ALU"><a href="#5-算术逻辑单元ALU" class="headerlink" title="(5) 算术逻辑单元ALU"></a>(5) 算术逻辑单元ALU</h6><p>ALU的核心是带标志加法器，同时也能执行与或非等逻辑运算。ALU基本结构如图所示，<code>ALUop</code>是操作控制端，用来决定ALU所执行的处理功能，<code>ALUop</code>的位数决定了操作的种类数量。</p>
+<p>MUX是多路选择开关，它从多个输入信号中选择一个送到输出端。</p>
+<img src="/.io//image-20220706190140139.png" alt="image-20220706190140139">
+
+<h5 id="2-定点数的移位运算"><a href="#2-定点数的移位运算" class="headerlink" title="2.定点数的移位运算"></a>2.定点数的移位运算</h5><h6 id="1-算术移位"><a href="#1-算术移位" class="headerlink" title="(1) 算术移位"></a>(1) 算术移位</h6><p><strong>算术移位：符号位不变、数码位置变化</strong>。</p>
+<p>算术移位的对象是有符号数，在移位过程中符号位保持不变。</p>
+<p>对于正数，由于<code>原码 = 反码 = 补码 = 真值</code>，因此移位后出现的空位全部补0。对于负数，因为原码、反码、补码的表示形式不同，因此当机器数移位时，对其空位的添补规则也不同。</p>
+<blockquote>
+<p>注意：不论是正数还是负数，移位后其符号位均不变，且移位后都相当于对真值补0。</p>
+</blockquote>
+<p>负数的算术移位添补规则：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>码制</th>
+<th align="left">添补代码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>正数</td>
+<td>原码、反码、补码</td>
+<td align="left">0</td>
+</tr>
+<tr>
+<td></td>
+<td>原码</td>
+<td align="left">0</td>
+</tr>
+<tr>
+<td>负数</td>
+<td>反码</td>
+<td align="left">左移添0，右移添1</td>
+</tr>
+<tr>
+<td></td>
+<td>补码</td>
+<td align="left">1</td>
+</tr>
+</tbody></table>
+<h6 id="2-逻辑移位"><a href="#2-逻辑移位" class="headerlink" title="(2) 逻辑移位"></a>(2) 逻辑移位</h6><p><strong>逻辑移位：数码位置变化。</strong></p>
+<p>逻辑移位时将操作数视为无符号数。</p>
+<p>移位规则：逻辑左移时，高位移丢，低位添0；逻辑右移时，低位移丢，高位添0。</p>
+<img src="/.io//image-20220706191610089.png" alt="image-20220706191610089">
+
+<img src="/.io//image-20220706191752334.png" alt="image-20220706191752334">
+
+<h6 id="3-循环移位"><a href="#3-循环移位" class="headerlink" title="(3) 循环移位"></a>(3) 循环移位</h6><p>循环移位分为带进位标志位CF的循环移位和不带进位标志位的循环移位。循环移位的主要特点是，移出的数位又被移入数据中。循环移位适合于将数据的低字节数据和高字节数据互换。</p>
+<h5 id="3-定点数的加减运算"><a href="#3-定点数的加减运算" class="headerlink" title="3.定点数的加减运算"></a>3.定点数的加减运算</h5><h6 id="1-补码的加减法运算"><a href="#1-补码的加减法运算" class="headerlink" title="(1) 补码的加减法运算"></a>(1) 补码的加减法运算</h6><p>定点数一般用补码表示，符号位参与运算。</p>
+<img src="/.io//image-20220706195529993.png" alt="image-20220706195529993">
+
+<img src="/.io//image-20220706195624577.png" alt="image-20220706195624577">
+
+<img src="/.io//image-20220706195651109.png" alt="image-20220706195651109">
+
+<h6 id="2-补码加减运算电路"><a href="#2-补码加减运算电路" class="headerlink" title="(2) 补码加减运算电路"></a>(2) 补码加减运算电路</h6><img src="/.io//image-20220706195752856.png" alt="image-20220706195752856">
+
+<h6 id="3-溢出判断方法"><a href="#3-溢出判断方法" class="headerlink" title="(3) 溢出判断方法"></a>(3) 溢出判断方法</h6><img src="/.io//image-20220706200603460.png" alt="image-20220706200603460">
+
+<img src="/.io//image-20220706200618745.png" alt="image-20220706200618745">
+
+<p>逻辑一（根据符号判断）：无论是加法还是减法，只要<strong>参加操作的两个数符号相同，结果又与原操作数符号不同</strong>，则表示结果溢出。</p>
+<p>根据溢出逻辑表达式，当溢出逻辑V=0时，表示无溢出；当溢出逻辑V=1时，表示有溢出。</p>
+<p>逻辑二（根据进位判断）：若符号位的进位$C_{f}$与最高数位的进位C相同，$V=C_{f}⊕C=0$表示无溢出，<strong>若符号位的进位与最高位的进位不一致，V=1表示有溢出。</strong></p>
+<p>逻辑三（根据双符号位判断）：采用双符号位时，若结果的两个符号位相同，$V=S_{f1}⊕S_{f2}=0$,表示无溢出，V=1表示溢出。<strong>01表示正溢，10表示负溢。</strong></p>
+<h6 id="4-原码的加减法运算"><a href="#4-原码的加减法运算" class="headerlink" title="(4) 原码的加减法运算"></a>(4) 原码的加减法运算</h6><img src="/.io//image-20220706202418827.png" alt="image-20220706202418827">
+
+<h5 id="4-定点数的乘除运算"><a href="#4-定点数的乘除运算" class="headerlink" title="4.定点数的乘除运算"></a>4.定点数的乘除运算</h5><h6 id="1-◓原码一位乘法"><a href="#1-◓原码一位乘法" class="headerlink" title="(1) ◓原码一位乘法"></a>(1) ◓原码一位乘法</h6><img src="/.io//image-20220706205641762.png" alt="image-20220706205641762">
+
+<img src="/.io//image-20220706205701414.png" alt="image-20220706205701414">
+
+<img src="/.io//image-20220706205722544.png" alt="image-20220706205722544">
+
+<img src="/.io//image-20220706205738465.png" alt="image-20220706205738465">
+
+<img src="/.io//image-20220706205754110.png" alt="image-20220706205754110">
+
+<img src="/.io//image-20220706205806670.png" alt="image-20220706205806670">
+
+<h6 id="2-无符号数乘法运算电路"><a href="#2-无符号数乘法运算电路" class="headerlink" title="(2) 无符号数乘法运算电路"></a>(2) 无符号数乘法运算电路</h6><img src="/.io//image-20220707090213305.png" alt="image-20220707090213305">
+
+<h6 id="3-补码一位乘法"><a href="#3-补码一位乘法" class="headerlink" title="(3) 补码一位乘法"></a>(3) 补码一位乘法</h6><p>补码一位乘法是有符号数的乘法，采用相加和相减操作计算补码数据的乘积。</p>
+<p>设$[X]补=x_{s}\cdot x_{1}x_{2}\cdot\cdot\cdot x_{n}$,$[Y]补=y_{s}\cdot y_{2}y_{2}\cdot\cdot\cdot y_{n}$,则运算规则如下：</p>
+<ul>
+<li>符号位参与运算，运算的数均以补码表示。</li>
+<li>被乘数一般取双符号位参与运算，部分积取双符号位，初始值为0，乘数取单符号位。</li>
+<li>乘数末位增设附加位$y_{n+1}$,初始值为0。</li>
+<li>根据$y_{n}y_{n+1}$的取值来确定操作，见下图。</li>
+</ul>
+<img src="/.io//image-20220707090920563.png" alt="image-20220707090920563">
+
+<img src="/.io//image-20220707090936191.png" alt="image-20220707090936191">
+
+<img src="/.io//image-20220707090947715.png" alt="image-20220707090947715">
+
+<h6 id="4-符号扩展"><a href="#4-符号扩展" class="headerlink" title="(4) 符号扩展"></a>(4) 符号扩展</h6><ol>
+<li><strong>无符号数使用零扩展</strong></li>
+<li><strong>补码数使用符号扩展</strong></li>
+</ol>
+<img src="/.io//image-20220707093540297.png" alt="image-20220707093540297">
+
+<img src="/.io//image-20220707093601666.png" alt="image-20220707093601666">
+
+<h6 id="5-原码除法运算"><a href="#5-原码除法运算" class="headerlink" title="(5) 原码除法运算"></a>(5) 原码除法运算</h6><h6 id="6-◒补码不恢复余数除法"><a href="#6-◒补码不恢复余数除法" class="headerlink" title="(6) ◒补码不恢复余数除法"></a>(6) ◒补码不恢复余数除法</h6><p>补码一位除法的特点是，符号位与数值位一起参与运算，商符自然形成。</p>
+<p>除法第一步根据被除数和除数的符号决定做加法还是减法；上商的原则根据余数和被除数的符号位共同决定，同号上商”1”，异号上商”0”；最后一步商恒置”1”。</p>
+<p>加减法的交替规则如下：</p>
+<ol>
+<li>符号位参与运算，除数、被除数以及商和余数均用补码表示。</li>
+<li>若被除数与除数同号，则被除数减去除数；若被除数与除数异号，则被除数加上除数。</li>
+<li><strong>若余数与除数同号，则商上”1”，余数左移一位减去除数；若异号则商上”0”，余数左移一位加上除数。</strong></li>
+<li>重复执行第3步n次。</li>
+<li>若对商的精度没有要求，则一般采用”末位恒置1“法。</li>
+</ol>
+<img src="/.io//image-20220707095952702.png" alt="image-20220707095952702">
+
+<img src="/.io//image-20220707100006747.png" alt="image-20220707100006747">
+
+<img src="/.io//image-20220707100018482.png" alt="image-20220707100018482">
+
+<h6 id="7-除法运算电路"><a href="#7-除法运算电路" class="headerlink" title="(7) 除法运算电路"></a>(7) 除法运算电路</h6><img src="/.io//image-20220707105924745.png" alt="image-20220707105924745">
+
+<h5 id="5-C语言整数类型转换"><a href="#5-C语言整数类型转换" class="headerlink" title="5.C语言整数类型转换"></a>5.C语言整数类型转换</h5><h6 id="1-有符号数和无符号数的转换"><a href="#1-有符号数和无符号数的转换" class="headerlink" title="(1) 有符号数和无符号数的转换"></a>(1) 有符号数和无符号数的转换</h6><ol>
+<li>强制类型转换的原理</li>
+</ol>
+<p>C语言允许在不同的数据类型之间进行强制类型转换。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>{</span><br><span class="line">    <span class="type">short</span> x=<span class="number">-4321</span>;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">short</span> y=(<span class="type">unsigned</span> <span class="type">short</span>)x;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"x=%d, y=%u\n"</span>,x,y);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>在采用补码的机器上，上述代码会输出如下结果：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x=-4321,y=61215</span><br></pre></td></tr></tbody></table></figure>
+
+<p>这两个值看似没有任何关系，不过将它们转换为二进制表示时，我们就会发现其中的规律：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">11111111111111111110111100011111</span></span><br><span class="line">y=                <span class="number">1110111100011111</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>可以发现x和y的二进制表示是一致的，只不过x进行了符号扩展。</p>
+<p>因此，<strong>强制类型转换的结果保持位值不变，仅改变了解释这些位值的方式。</strong></p>
+<ol start="2">
+<li>有符号数与无符号数的相互转换方式</li>
+</ol>
+<p>【2016统考真题】有如下C语言程序段：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">short</span> si = <span class="number">-32767</span>;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">short</span> usi = si;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>执行上述两条语句后，<code>usi</code>的值为（  ）。</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A. -32767	B. 32767	C. 32768	D. 32769</span><br></pre></td></tr></tbody></table></figure>
+
+<p>【2019统考真题】考虑以下C语言代码：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">short</span> usi = <span class="number">65535</span>;</span><br><span class="line"><span class="type">short</span> si = usi;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>执行上述程序段后，<code>si</code>的值是（  ）。</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A. -1	B. -32767	C. -32768	D. -65535</span><br></pre></td></tr></tbody></table></figure>
+
+<p>【分析】：这两个题都是对无符号数与有符号数的相互转换的考察，我们要熟悉无符号数与有符号数的表示范围与转换规则。</p>
+<img src="/.io//image-20220707213217903.png" alt="image-20220707213217903">
+
+<img src="/.io//image-20220707213230541.png" alt="image-20220707213230541">
+
+<img src="/.io//image-20220707213451081.png" alt="image-20220707213451081">
+
+<h6 id="2-不同字长整数之间的转换"><a href="#2-不同字长整数之间的转换" class="headerlink" title="(2) 不同字长整数之间的转换"></a>(2) 不同字长整数之间的转换</h6><ol>
+<li>当大字长变量向小字长变量强制类型转换时，系统把多余的高位部分直接<strong>截断</strong>，低位直接赋值，因此也是一种保持位值的方法；</li>
+<li>短字长整数到长字长整数的转换时，不仅要使相应的位值相等，还要对高位部分进行扩展。如果原数字是无符号整数，则进行<strong>零扩展</strong>，否则进行<strong>符号扩展</strong>。</li>
+</ol>
+<h5 id="6-数据的存储和排列"><a href="#6-数据的存储和排列" class="headerlink" title="6.数据的存储和排列"></a>6.数据的存储和排列</h5><h6 id="1-大端法和小端法"><a href="#1-大端法和小端法" class="headerlink" title="(1) 大端法和小端法"></a>(1) 大端法和小端法</h6><img src="/.io//image-20220707135807966.png" alt="image-20220707135807966"> 
+
+<h6 id="2-数据按边界对齐存储"><a href="#2-数据按边界对齐存储" class="headerlink" title="(2) 数据按边界对齐存储"></a>(2) 数据按边界对齐存储</h6><p>当告诉我们按字节编址时，即每个字节都有其地址；当告诉我们机器字长为32位时，即一个机器字包含4个字节，注意数据存储是否按机器字的边界对齐。</p>
+<img src="/.io//image-20220707135940966.png" alt="image-20220707135940966">
+
+<p>数据以按边界对齐方式存放可以一次访存取出，所存储的数据不能恰好按边界对齐时，可以填补空白字节，使之按边界对齐，这样虽然浪费了一些存储空间，但可以提高取指令和取数的速度。</p>
+<h5 id="7-浮点数的表示与运算"><a href="#7-浮点数的表示与运算" class="headerlink" title="7.浮点数的表示与运算"></a>7.浮点数的表示与运算</h5><img src="/.io//image-20220708175817299.png" alt="image-20220708175817299">
+
+<img src="/.io//image-20220708175911661.png" alt="image-20220708175911661">
+
+<h6 id="1-浮点数的表示格式"><a href="#1-浮点数的表示格式" class="headerlink" title="(1) 浮点数的表示格式"></a>(1) 浮点数的表示格式</h6><p>通常，浮点数表示为<br>$$<br>N=(-1)^{S}×M×R^{E}<br>$$<br>其中，S为数符，取值0或1，用来决定浮点数的符号；</p>
+<p>M是尾数，为二进制定点小数，一般用定点原码小数表示，尾数的位数反映浮点数的精度；</p>
+<p>R为基数，二进制基数R=2；</p>
+<p>E为阶码，即指数，用移码表示。阶码的值反映浮点数的小数点的实际位置，阶码的位数反映浮点数的表示范围。</p>
+<img src="/.io//image-20220708093014957.png" alt="image-20220708093014957">
+
+<h6 id="2-浮点数的规格化"><a href="#2-浮点数的规格化" class="headerlink" title="(2) 浮点数的规格化"></a>(2) 浮点数的规格化</h6><p>规格化：约定尾数M的值域，使浮点数的表示代码是唯一的、确定的。</p>
+<p>所谓规格化操作，是指通过调整一个非规格化浮点数的尾数和阶码的大小，使非零的浮点数在尾数的最高数位上保证是一个有效值（十进制），即阶码的位模式既不全为0，也不全为1。</p>
+<p>当阶码的位模式全为0时，说明尾数M过小，尾数的最高数位不是有效位，应该对尾数M进行左规，尾数每左移一位，阶码减1（基数为2时）；</p>
+<img src="/.io//image-20220708102345481.png" alt="image-20220708102345481">
+
+<p>尾数是纯小数，M＜1，当运算结果的尾数的小数位进到小数点前面时，需要进行右规，将尾数右移一位阶码加1（基数为2时），需要右规时，只需进行一次，左规可能要进行多次。</p>
+<p>当阶码全为1时，表明该数是一个特殊值，可能为$+∞$、$-∞$或<code>NaN</code>(Not a Number)。</p>
+<img src="/.io//image-20220708093703792.png" alt="image-20220708093703792">
+
+<h6 id="3-IEEE754标准"><a href="#3-IEEE754标准" class="headerlink" title="(3) IEEE754标准"></a>(3) IEEE754标准</h6><p>按照IEEE754标准，常用的浮点数格式如下：</p>
+<img src="/.io//image-20220708102215311.png" alt="image-20220708102215311">
+
+<p>32位单精度格式：1位符号+8位阶码+23位尾数</p>
+<p>64位双精度格式：1位符号+11位阶码+52位尾数</p>
+<p>IEEE754标准的长短浮点数，是尾数采取隐藏位策略的原码表示，且阶码用移码表示的浮点数。</p>
+<p>对于规格化的二进制浮点数，数值的最高位总是”1”，既然第一位总是”1”，那么我们就不需要显式地表示它，将这个”1”隐藏，称为隐藏位，因此23位尾数可以表示出24位有效数字。</p>
+<p>短浮点数与长浮点数都采用隐藏尾数最高数位的方法，因此可以多表示一位尾数。</p>
+<p>对于短浮点数，偏置值为127；对于长浮点数，偏置值为1023。存储浮点数阶码之前，偏置值要先加到阶码真值上。因此，IEEE754标准中，规格化短浮点数的真值为：<br>$$<br>(-1)^{S}×1.M×2^{E-127}<br>$$<br>规格化长浮点数的真值为：<br>$$<br>(-1)^{S}×1.M×2^{E-1023}<br>$$</p>
+<h6 id="4-定点、浮点表示的区别"><a href="#4-定点、浮点表示的区别" class="headerlink" title="(4) 定点、浮点表示的区别"></a>(4) 定点、浮点表示的区别</h6><p>若定点数与浮点数的字长相同，则浮点数所能表示的范围更大，但精度更低；</p>
+<p>在定点运算中，当运算结果超出数的表示范围时，发生溢出；浮点运算中，运算结果超出尾数的表示范围却不一定溢出，只有当规格化后阶码超出所能表示的范围时，才发生溢出。</p>
+<h6 id="5-浮点数的加减运算"><a href="#5-浮点数的加减运算" class="headerlink" title="(5) 浮点数的加减运算"></a>(5) 浮点数的加减运算</h6><p>浮点数加减运算的特点是阶码运算与尾数运算分开进行，浮点数运算分为以下几步：</p>
+<ol>
+<li><p>对阶</p>
+<p>对阶的目的是使两个操作数的小数点位置对齐，即使得两个数的阶码相等。</p>
+<p>为此，先求差，然后以小阶向大阶看齐的原则，将阶码小的尾数右移，每移一位阶加1，直到两个数的阶码相等为止。尾数右移时，舍弃掉有效位会产生误差，影响精度。</p>
+</li>
+<li><p>尾数求和</p>
+<p>将对阶后的尾数按定点数加减法运算规则运算。尾数以原码表示，即进行原码加减法运算，或将原码转换为补码运算后，再将结果转换回原码。</p>
+</li>
+<li><p>规格化</p>
+<p>运算后的尾数不一定是规格化的，需要进一步进行规格化处理。左规一次相当于乘2，右规一次相当于除以2，需要右规时，只需进行1次。</p>
+</li>
+<li><p>舍入</p>
+<p>0舍1入法；</p>
+<p>末位恒置1法；</p>
+<p>截断法。</p>
+</li>
+<li><p>溢出判断</p>
+<img src="/.io//image-20220708114926685.png" alt="image-20220708114926685"></li>
+</ol>
+<h6 id="6-C语言中的浮点数类型"><a href="#6-C语言中的浮点数类型" class="headerlink" title="(6) C语言中的浮点数类型"></a>(6) C语言中的浮点数类型</h6><p>C语言中的<code>float</code>和<code>double</code>类型分别对应于IEEE754单精度浮点数和双精度浮点数，<code>long double</code>类型对应于扩展双精度浮点数。在C程序中等式的赋值和判断中会出现强制类型转换，以<code>char-&gt;int-&gt;long-&gt;double</code>和<code>float-&gt;double</code>最为常见，从前到后范围和精度都从小到大，转换过程没有损失。</p>
+<p><code>int</code>转换为<code>float</code>时，两者都是4个字节，不会发生溢出，但是由于<code>float</code>尾数连隐藏位一共24位，当<code>int</code>型数的第24~31位非0时，无法精确转换为24位浮点数的尾数，需要进行舍入处理，影响精度。</p>
+<p><code>float</code>或<code>double</code>类型转换为<code>int</code>时，会直接截断，仅保留整数部分。另外<code>int</code>表示范围更小，有可能会溢出。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Longfat</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://Longfater.github.io/2022/07/27/ji-zu-di-2-zhang-shu-ju-de-biao-shi-he-yun-suan/">https://Longfater.github.io/2022/07/27/ji-zu-di-2-zhang-shu-ju-de-biao-shi-he-yun-suan/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Longfat</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                                    <span class="chip bg-color">计算机组成原理</span>
+                                </a>
+                            
+                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%80%83%E7%A0%94408/">
+                                    <span class="chip bg-color">计算机考研408</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+    <div class="livere-card card" data-aos="fade-up">
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" class="card-content" data-id="city" data-uid="MTAyMC81NTY2NC8zMjEzMQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                let j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') {
+                    return;
+                }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript。</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</div>
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/07/27/ji-zu-di-3-zhang-cun-chu-xi-tong/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="计组第3章-存储系统">
+                        
+                        <span class="card-title">计组第3章-存储系统</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Longfat
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                        <span class="chip bg-color">计算机组成原理</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%80%83%E7%A0%94408/">
+                        <span class="chip bg-color">计算机考研408</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/07/26/ji-zu-di-1-zhang-ji-suan-ji-xi-tong-gai-shu/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="计组第1章 计算机系统概述">
+                        
+                        <span class="card-title">计组第1章 计算机系统概述</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-26
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Longfat
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                        <span class="chip bg-color">计算机组成原理</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%80%83%E7%A0%94408/">
+                        <span class="chip bg-color">计算机考研408</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022</span>
+            
+            <span id="year">2022</span>
+            <a href="/about" target="_blank">Longfat</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">17.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Longfater" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2094717311@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2094717311" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2094717311" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript">
+    //只在桌面版网页启用特效
+    var windowWidth = $(window).width();
+    if (windowWidth > 768) {
+        document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>');
+    }
+    </script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
