@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="龙胖的博客" type="application/atom+xml">
-
+<meta name="generator" content="Hexo 6.1.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="龙胖的博客" type="application/atom+xml">
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
@@ -484,13 +484,13 @@ B2O_{w}(\vec{x})=-x_{w-1}(2^{w-1}-1)+\sum_{i=0}^{w-2}x_{i}2^{i}</script><p>由�
 <h6 id="3-并行进位加法器"><a href="#3-并行进位加法器" class="headerlink" title="(3) 并行进位加法器"></a>(3) 并行进位加法器</h6><p><strong>令$G_{i}=A_{i}B_{i}$,称为进位产生函数，即进位信号；$P_{i}=A_{i}⊕B_{i}$,称为进位传递函数，即进位传递信号。</strong></p>
 <p>$C_{i}$仅与$A_{i}$、$B_{i}$和最低进位$C_{0}$有关，相互间的进位没有依赖关系。只要$A_{1}$~$A_{n}$ ,$B_{1}$~$B_{n}$和$C_{0}$同时到达，就可以几乎同时形成$C_{1}$ ~ $C_{4}$,并且同时生成各位的和。</p>
 <p>实现上述逻辑的电路称为先行进位部件，简称CLA部件。通过这种进位方式实现的加法器称为全先行进位加法器。</p>
-<p><img src="/images/计组第2章-数据的表示和运算/image-20220706182924797.png" alt="" style="zoom: 50%;"></p>
+<p><img src="/images/计组第2章-数据的表示和运算/image-20220727212359897.png" style="zoom:80%;"></p>
 <p>这种进位方式是快速的，与位数无关。但随着加法器位数的增加，$C_{i}$的逻辑表达式会变得越来越长，这会使电路结构越来越复杂，所以可以将加法器部件先分组，采取组内并行进位，组间再并行进位的方式，可以控制每个部分的复杂性，同时也进一步提高了运算速度。</p>
-<h6 id="4-带标志加法器"><a href="#4-带标志加法器" class="headerlink" title="(4) 带标志加法器"></a>(4) 带标志加法器</h6><p><img src="/images/计组第2章-数据的表示和运算/image-20220706184853883.png" alt="" style="zoom: 80%;"></p>
+<h6 id="4-带标志加法器"><a href="#4-带标志加法器" class="headerlink" title="(4) 带标志加法器"></a>(4) 带标志加法器</h6><p><img src="/images/计组第2章-数据的表示和运算/image-20220727212622458.png" style="zoom:80%;"></p>
 <p>在无符号加法器的基础上添加了溢出标志OF，符号标志SF，零标志ZF，进位/借位标志CF。值得注意的是，为了加快加法运算的速度，实际电路一定使用多级先行进位方式。</p>
 <h6 id="5-算术逻辑单元ALU"><a href="#5-算术逻辑单元ALU" class="headerlink" title="(5) 算术逻辑单元ALU"></a>(5) 算术逻辑单元ALU</h6><p>ALU的核心是带标志加法器，同时也能执行与或非等逻辑运算。ALU基本结构如图所示，<code>ALUop</code>是操作控制端，用来决定ALU所执行的处理功能，<code>ALUop</code>的位数决定了操作的种类数量。</p>
 <p>MUX是多路选择开关，它从多个输入信号中选择一个送到输出端。</p>
-<p><img src="/images/计组第2章-数据的表示和运算/image-20220706190140139.png" alt=""></p>
+<p><img src="/images/计组第2章-数据的表示和运算/image-20220727212743794.png" style="zoom:80%;"></p>
 <h5 id="2-定点数的移位运算"><a href="#2-定点数的移位运算" class="headerlink" title="2.定点数的移位运算"></a>2.定点数的移位运算</h5><h6 id="1-算术移位"><a href="#1-算术移位" class="headerlink" title="(1) 算术移位"></a>(1) 算术移位</h6><p><strong>算术移位：符号位不变、数码位置变化</strong>。</p>
 <p>算术移位的对象是有符号数，在移位过程中符号位保持不变。</p>
 <p>对于正数，由于<code>原码 = 反码 = 补码 = 真值</code>，因此移位后出现的空位全部补0。对于负数，因为原码、反码、补码的表示形式不同，因此当机器数移位时，对其空位的添补规则也不同。</p>
@@ -573,7 +573,8 @@ B2O_{w}(\vec{x})=-x_{w-1}(2^{w-1}-1)+\sum_{i=0}^{w-2}x_{i}2^{i}</script><p>由�
 </ol>
 <p><img src="/images/计组第2章-数据的表示和运算/image-20220707093540297.png" alt=""></p>
 <p><img src="/images/计组第2章-数据的表示和运算/image-20220707093601666.png" alt=""></p>
-<h6 id="5-原码除法运算"><a href="#5-原码除法运算" class="headerlink" title="(5) 原码除法运算"></a>(5) 原码除法运算</h6><h6 id="6-◒补码不恢复余数除法"><a href="#6-◒补码不恢复余数除法" class="headerlink" title="(6) ◒补码不恢复余数除法"></a>(6) ◒补码不恢复余数除法</h6><p>补码一位除法的特点是，符号位与数值位一起参与运算，商符自然形成。</p>
+<h6 id="5-原码除法运算"><a href="#5-原码除法运算" class="headerlink" title="(5) 原码除法运算"></a>(5) 原码除法运算</h6><p><img src="/images/计组第2章-数据的表示和运算/image-20220727221403134.png" alt=""></p>
+<h6 id="6-◒补码不恢复余数除法"><a href="#6-◒补码不恢复余数除法" class="headerlink" title="(6) ◒补码不恢复余数除法"></a>(6) ◒补码不恢复余数除法</h6><p>补码一位除法的特点是，符号位与数值位一起参与运算，商符自然形成。</p>
 <p>除法第一步根据被除数和除数的符号决定做加法还是减法；上商的原则根据余数和被除数的符号位共同决定，同号上商”1”，异号上商”0”；最后一步商恒置”1”。</p>
 <p>加减法的交替规则如下：</p>
 <ol>
@@ -586,7 +587,7 @@ B2O_{w}(\vec{x})=-x_{w-1}(2^{w-1}-1)+\sum_{i=0}^{w-2}x_{i}2^{i}</script><p>由�
 <p><img src="/images/计组第2章-数据的表示和运算/image-20220707095952702.png" alt=""></p>
 <p><img src="/images/计组第2章-数据的表示和运算/image-20220707100006747.png" alt=""></p>
 <p><img src="/images/计组第2章-数据的表示和运算/image-20220707100018482.png" alt=""></p>
-<h6 id="7-除法运算电路"><a href="#7-除法运算电路" class="headerlink" title="(7) 除法运算电路"></a>(7) 除法运算电路</h6><p><img src="/images/计组第2章-数据的表示和运算/image-20220707105924745.png" alt=""></p>
+<h6 id="7-除法运算电路"><a href="#7-除法运算电路" class="headerlink" title="(7) 除法运算电路"></a>(7) 除法运算电路</h6><p><img src="/images/计组第2章-数据的表示和运算/image-20220727221206654.png" alt=""></p>
 <h5 id="5-C语言整数类型转换"><a href="#5-C语言整数类型转换" class="headerlink" title="5.C语言整数类型转换"></a>5.C语言整数类型转换</h5><h6 id="1-有符号数和无符号数的转换"><a href="#1-有符号数和无符号数的转换" class="headerlink" title="(1) 有符号数和无符号数的转换"></a>(1) 有符号数和无符号数的转换</h6><ol>
 <li>强制类型转换的原理</li>
 </ol>

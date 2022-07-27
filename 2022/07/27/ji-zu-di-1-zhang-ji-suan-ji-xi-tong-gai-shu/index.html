@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="龙胖的博客" type="application/atom+xml">
-
+<meta name="generator" content="Hexo 6.1.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="龙胖的博客" type="application/atom+xml">
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
@@ -472,9 +472,10 @@
 <blockquote>
 <p>吞吐量和响应时间：吞吐量指系统在单位时间内处理请求的数量。</p>
 <p><strong>主频和CPU时钟周期</strong>：CPU时钟周期是CPU中最小的时间单位，执行指令的最小动作至少需要一个时钟周期。主频是CPU时钟周期的倒数，单位为Hz，指CPU内核工作的时钟频率，即CPU内数字脉冲信号的振荡频率。f=1/T，主频=外频×倍频。</p>
-<p><strong>CPI</strong>：即执行一条指令所需的时钟周期数，一般计算的是平均CPI。CPI=∑(程序中各类指令的CPI×程序中该类指令的比例)</p>
+<p><strong>CPI</strong>：即执行一条指令所需的时钟周期数，一般计算的是平均CPI：</p>
+<p>​          CPI=∑(程序中各类指令的CPI×程序中该类指令的比例)。</p>
 <p>IPC(Instruction per Clock):每个时钟周期内执行的指令条数（并行）。</p>
-<p>CPU执行时间=CPU时钟周期数/主频=(指令条数×CPI)/主频 故CPU的性能取决于3个要素：主频、CPI、指令条数。</p>
+<p>CPU执行时间=CPU时钟周期数/主频=(指令条数×CPI)/主频，故CPU的性能取决于3个要素：主频、CPI、指令条数。</p>
 <p>MIPS：即每秒钟执行多少百万条指令。 MIPS=指令条数/(执行时间×10⁶)=主频/(CPI×10⁶)</p>
 <p>MFLOPS：即每秒钟执行多少百万次浮点运算。</p>
 </blockquote>
