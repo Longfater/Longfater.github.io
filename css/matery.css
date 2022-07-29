@@ -550,13 +550,14 @@ header .go-back i {
     height: 40vh !important;
 }
 
+/*背景颜色遮罩
 .bg-cover:after {
     -webkit-animation: rainbow 60s infinite;
     animation: rainbow 60s infinite;
 }
+*/
 
 .bg-cover:before,
-/*背景颜色遮罩
 .bg-cover:after {
     position: absolute;
     z-index: 1;
@@ -567,7 +568,6 @@ header .go-back i {
     top: 0;
     content: "";
 }
-*/
 
 .bg-cover .container {
     position: relative;
