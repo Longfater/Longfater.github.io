@@ -1,0 +1,1763 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="操作系统3：存储器管理, 龙胖的博客">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>操作系统3：存储器管理 | 龙胖的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="龙胖的博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">龙胖的博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">龙胖的博客</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">操作系统3：存储器管理</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/OS/">
+                                <span class="chip bg-color">OS</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-10-27
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-10-27
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    14.7k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    50 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="第四章-存储器管理"><a href="#第四章-存储器管理" class="headerlink" title="第四章 存储器管理"></a>第四章 存储器管理</h1><h4 id="4-1-存储器的层次结构"><a href="#4-1-存储器的层次结构" class="headerlink" title="4.1 存储器的层次结构"></a>4.1 存储器的层次结构</h4><h5 id="1-多层结构的存储器系统"><a href="#1-多层结构的存储器系统" class="headerlink" title="1. 多层结构的存储器系统"></a>1. 多层结构的存储器系统</h5><p>1）存储器的多层结构</p>
+<p>对于通用计算机而言，存储层次至少应具有三级：最高层为CPU寄存器，中间为主存，最底层是辅存。</p>
+<p>在较高级的计算机中，还可以根据具体的功能细分为：寄存器，高速缓存，主存储器，磁盘缓存，固定磁盘，可移动存储介质。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210806153845639-1342588523.png" alt="img" style="zoom:80%;"></p>
+<p>2）可执行存储器</p>
+<p>在计算机系统的存储层次中，寄存器和主存又被称为可执行存储器，进程可以在很少的时钟周期内使用一条load或store指令对可执行存储器进行访问，但对辅存的访问则需要通过I/O设备实现，所需耗费的时间远远高于访问可执行存储器。</p>
+<h5 id="2-主存储器与寄存器"><a href="#2-主存储器与寄存器" class="headerlink" title="2. 主存储器与寄存器"></a>2. 主存储器与寄存器</h5><p>1）主存储器</p>
+<p>主存储器简称内存或主存，用于保存进程运行时的程序和数据。由于主存访问速度远低于CPU执行指令的速度，为缓和这一矛盾，在计算机系统中引入寄存器和高速缓存Cache。</p>
+<p>2）寄存器</p>
+<p>寄存器拥有与处理机相同的速度，故对寄存器的访问速度最快，完全能与CPU协调工作，但价格十分昂贵。</p>
+<p>访问速度：寄存器&gt;高速缓存Cache&gt;主存&gt;辅存。</p>
+<h5 id="3-高速缓存和磁盘缓存"><a href="#3-高速缓存和磁盘缓存" class="headerlink" title="3. 高速缓存和磁盘缓存"></a>3. 高速缓存和磁盘缓存</h5><p>1）高速缓存cache</p>
+<p>高速缓存cache是介于寄存器和主存之间的存储器，主要用于备份主存中的最常用数据，以减少处理机对主存的访问次数，大幅度地提高程序执行速度。</p>
+<p>2）磁盘缓存</p>
+<p>由于目前磁盘的I/O速度远低于对主存的访问速度，为了缓和两者之间在速度上的不匹配，而设置了磁盘缓存。磁盘缓存即利用主存中的部分存储空间暂时存放频繁使用的一部分磁盘数据和信息，以减少访问磁盘的次数。</p>
+<p>磁盘缓存与高速缓存不同，高速缓存是实际存在的存储器，而磁盘缓存则是利用了主存的部分存储空间。</p>
+<h5 id="4-内存管理的功能"><a href="#4-内存管理的功能" class="headerlink" title="4. 内存管理的功能"></a>4. 内存管理的功能</h5><p>内存管理的主要功能有：</p>
+<ul>
+<li>内存空间的分配与回收</li>
+<li>地址转换</li>
+<li>内存空间的扩充</li>
+<li>内存共享</li>
+<li>存储保护</li>
+</ul>
+<h4 id="4-2-程序的装入和链接"><a href="#4-2-程序的装入和链接" class="headerlink" title="4.2 程序的装入和链接"></a>4.2 程序的装入和链接</h4><p>用户程序要在系统中运行，必须先将它装入内存，然后再将其转变为一个可执行程序，通常都要经过编译、链接和装入三个步骤。</p>
+<p>编译：由编译程序（Compiler）对用户源程序进行编译，形成若干个目标模块（Object Moudle）；</p>
+<p>链接：由链接程序（Linker）将编译后形成的一组目标模块以及它们所需要的库函数链接在一起，形成一个完整的装入模块（Load Moudle）。</p>
+<p>装入：由装入程序（Loader）将装入模块装入内存。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210806160856292-1556606790.png" alt="img" style="zoom: 67%;"></p>
+<h5 id="1-程序的装入"><a href="#1-程序的装入" class="headerlink" title="1. 程序的装入"></a>1. 程序的装入</h5><p>1）绝对装入方式 （物理地址=逻辑地址）</p>
+<p>当计算机系统很小，且仅能运行单道程序时，完全有可能知道程序将驻留在内存的什么位置。此时可以采用绝对装入方式。用户程序编译后，将产生绝对地址（即物理地址），绝对装入程序便可按照装入模块中的地址，将程序和数据装入内存。</p>
+<p>2）可重定位装入方式 （物理地址=逻辑地址+真实起始地址）</p>
+<p>在多道程序环境下，编译程序不可能预知经编译后的目标模块应放在内存中的何处。因此，对于用户程序编译所形成的目标模块，它们的起始地址通常都是从0开始的，而程序中的其它地址则是相对于起始地址计算的，即装入模块中的所有逻辑地址都是相对于起始地址0的偏移量。当模块装入内存后即获得一个真实的起始地址，则模块中其它逻辑地址应加上这个真实起始地址才能得到对应的物理地址。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210806191533284-514654663.png" alt="img" style="zoom:67%;"></p>
+<p>通常，把在装入时对目标程序中指令和数据地址的修改过程称为重定位。又因为地址变换通常是在进程装入时一次完成的，以后不再改变，故称为静态重定位。</p>
+<p>3）动态运行时的装入方式</p>
+<p>可重定位装入方式可将装入模块装入到内存中任何允许的位置，故可用于多道程序环境。但该方式并不允许程序运行时在内存中移动位置。程序若在内存中移动，并须对程序和数据的地址进行修改后方能运行，较为麻烦，在这种情况下，应采取动态运行时装入的方式。</p>
+<p>动态运行时的装入程序在把装入模块装入内存后，并不立即把装入模块中的逻辑地址转换为物理地址，而是把这种地址转换推迟到程序真正要执行时才进行。为使地址转换不影响指令执行的速度，这种方式需要一个重定位寄存器的支持。</p>
+<h5 id="2-程序的链接"><a href="#2-程序的链接" class="headerlink" title="2. 程序的链接"></a>2. 程序的链接</h5><p>在对目标模块进行链接时，根据链接时间的不同，可分为如下三种：</p>
+<p>1）静态链接</p>
+<p>事先链接，在程序运行之前，先将各目标模块及它们所需的库函数链接成一个完整的装配模块，以后不再拆开。</p>
+<p>在将若干个目标模块装配成一个装入模块时，需解决以下两个问题：</p>
+<ul>
+<li>对相对地址进行修改。</li>
+<li>变换外部调用符号。</li>
+</ul>
+<p>这种先进行链接所形成的一个完整的装入模块，又称为可执行文件。通常都不再把它拆开，要运行时可直接将它装入内存。</p>
+<p>2）装入时动态链接</p>
+<p>这是指将用户源程序编译后所得到的一组目标模块，在装入内存时，采用边装入边链接的链接方式。</p>
+<p>装入时动态链接方式有以下优点：</p>
+<ul>
+<li>便于修改和更新</li>
+<li>便于实现对目标模块的共享</li>
+</ul>
+<p>3）运行时动态链接</p>
+<p>将对某些模块的链接推迟到程序执行时才进行。亦即，在执行过程中，当发现一个被调用模块尚未装入内存时，立即由OS去找到该模块，并将之装入内存，将其链接到调用者模块上。凡在执行过程中未被用到的目标模块，都不会被调入内存和被链接到装入模块上，这样不仅能加快程序的装入过程，而且可节省大量的内存空间。</p>
+<h4 id="4-3-连续分配存储管理方式"><a href="#4-3-连续分配存储管理方式" class="headerlink" title="4.3 连续分配存储管理方式"></a>4.3 连续分配存储管理方式</h4><blockquote>
+<p>连续分配存储管理方式为一个用户程序分配一个连续的内存空间，即程序中代码或数据的逻辑地址相邻，体现在内存空间分配时物理地址的相邻。连续分配方式可分为四类：单一连续分配、固定分区分配、动态分区分配以及动态可重定位分区分配算法四种方式。</p>
+</blockquote>
+<h5 id="1-单一连续分配"><a href="#1-单一连续分配" class="headerlink" title="1. 单一连续分配"></a>1. 单一连续分配</h5><p>在单道程序环境下，当时的存储器管理方式是把内存分为系统区和用户区两部分，系统区仅提供给OS使用，它通常是放在内存的低址部分。而在用户区内存中，仅装有一道用户程序，即整个内存的用户空间由该程序独占。这样的存储器分配方式被称为单一连续分配方式。</p>
+<h5 id="2-固定分区分配"><a href="#2-固定分区分配" class="headerlink" title="2. 固定分区分配"></a>2. 固定分区分配</h5><p>为了能在内存中装入多道程序，且使这些程序之间又不会发生相互干扰，于是将整个用户空间划分为若干个固定大小的区域，在每个分区中只装入一道作业，这样就形成了最早的、也是最简单的一种可运行多道程序的分区式存储管理方式。</p>
+<p>1）划分分区的方法</p>
+<p>（1）分区大小相等</p>
+<p>即所有的内存分区大小相等，其缺点是缺乏灵活性，当程序太小时，会造成内存空间的浪费，当程序太大时，一个分区又不足以装下该程序，致使该程序无法运行。</p>
+<p>（2）分区大小不等</p>
+<p>为了增加存储器分配的灵活性，应将存储器分区划分为若干个大小不等的分区。通常，可把内存划分成含有多个较小的分区、适量的中等分区及少量的大分区。</p>
+<p>2）内存分配</p>
+<p>为了便于内存分配，通常将分区按其大小进行排队，并为之建立一张分区使用表，其中各表项包括每个分区的起始地址、大小及状态。</p>
+<h5 id="3-动态分区分配"><a href="#3-动态分区分配" class="headerlink" title="3. 动态分区分配"></a>3. 动态分区分配</h5><p>动态分区分配又称为可变分区分配，它是根据进程的实际需要，动态地为之分配内存空间。</p>
+<p>在实现动态分区分配时，将涉及到分区分配中所用的数据结构、分区分配算法和分区的分配与回收操作这样三方面的问题。</p>
+<p>1）动态分区分配中的数据结构</p>
+<p>为了实现动态分区分配，系统中必须配置相应的数据结构来描述空闲分区和已分配分区的情况。常用的数据结构有以下 2 种形式，第一种是<strong>空闲分区表</strong>，它在系统每个空闲分区占一个表目，表目中包括分区号、分区大小和分区始址等数据项。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分区号</th>
+<th>大小</th>
+<th>起始地址</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>12</td>
+<td>20</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>2</td>
+<td>32</td>
+<td>32</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>3</td>
+<td>64</td>
+<td>64</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>4</td>
+<td>128</td>
+<td>128</td>
+<td>空闲</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>第二种是<strong>空闲分区链</strong>，每个分区的起始部分设置一些用于控制分区分配的信息，通过前、后向链接指针将所有的空闲分区链接成一个双向链。<br><img src="source/images/操作系统3：存储器管理/1774310-20210807142822348-1192454029.png" alt="img" style="zoom:67%;"></p>
+<p>2）动态分区分配算法</p>
+<p>基于顺序搜索的动态分区分配算法：首次适应算法、循环首次适应算法、最佳适应算法、最坏适应算法。</p>
+<p>基于索引搜索的动态分区分配算法：快速适应算法、伙伴系统、哈希算法。</p>
+<p>3）分区分配操作</p>
+<p>（1）分配内存</p>
+<p>系统应利用某种分配算法，从空闲分区链(表)中找到所需大小的分区。设请求的分区大小为 u.size，表中每个空闲分区的大小可表示为 m.size。若 m.size - u.size ≤ size(size 是事先规定的不再切割的剩余分区的大小)，说明多余部分太小可不再切割，将整个分区分配给请求者。如果多余部分超过 size，便从该分区中按请求的大小划分出一块内存空间分配出去，余下的部分仍留在空闲分区链(表)中，然后将分配区的首址返回给调用者。<br>例如当前的内存分配状态如图所示，内存分配表如图所示。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分区号</th>
+<th>大小</th>
+<th>起始地址</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>20</td>
+<td>5</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5</td>
+<td>35</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>3</td>
+<td>15</td>
+<td>55</td>
+<td>空闲</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="../../../../Download/文档/操作系统笔记/source/images/第四章 存储器管理/1774310-20210808135130427-515015169.png" alt="img" style="zoom:67%;"><img src="../../../../Download/文档/操作系统笔记/source/images/第四章 存储器管理/1774310-20210808135449463-1125684133.png" alt="img" style="zoom:67%;"><img src="source/images/操作系统3：存储器管理/1774310-20210808140015206-1889854015.png" alt="img" style="zoom:67%;"><br>现在需要插入大小为 5M 的进程三，通过某种算法后插入分区 1，修改后的内存分配表和内存状态如下。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分区号</th>
+<th>大小</th>
+<th>起始地址</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>15</td>
+<td>10</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5</td>
+<td>35</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>3</td>
+<td>15</td>
+<td>55</td>
+<td>空闲</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>如果通过某种算法后插入分区 2，修改后的内存分配表可以把分区 2 删除。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分区号</th>
+<th>大小</th>
+<th>起始地址</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>20</td>
+<td>5</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>3</td>
+<td>15</td>
+<td>55</td>
+<td>空闲</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>（2）回收内存</p>
+<p>当进程运行完毕释放内存时，系统根据回收区的首址，从空闲区链(表)中找到相应的插入点，此时可能出现以下四种情况之一。</p>
+<p>情况一：</p>
+<p>第一种情况是回收区与插入点的前一个空闲分区 F1。此时应将回收区与插入点的前一分区合并，不必为回收分区分配新表项，而只需修改其前一分区 F1 的大小。例如内存分配表和内存状态如下，此时要回收进程 1。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分区号</th>
+<th>大小</th>
+<th>起始地址</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>20</td>
+<td>5</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>3</td>
+<td>15</td>
+<td>55</td>
+<td>空闲</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210808140015206-1889854015.png" alt="img" style="zoom:67%;"><img src="../../../../Download/文档/操作系统笔记/source/images/第四章 存储器管理/1774310-20210808140430171-399569346.png" alt="img" style="zoom:67%;"><br>将回收的空间和分区 1 和并，然后修改分区大小即可。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分区号</th>
+<th>大小</th>
+<th>起始地址</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>30</td>
+<td>5</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>3</td>
+<td>15</td>
+<td>55</td>
+<td>空闲</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>情况二：</p>
+<p>第二种情况是回收分区与插入点的后一空闲分区 F2 相邻接，此时也可将两分区合并形成新的空闲分区，但用回收区的首址作为新空闲区的首址，大小为两者之和。例如内存分配表和内存状态如下，此时要回收进程 2。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分区号</th>
+<th>大小</th>
+<th>起始地址</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>20</td>
+<td>5</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>3</td>
+<td>15</td>
+<td>55</td>
+<td>空闲</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210808140015206-1889854015.png" alt="img" style="zoom:67%;"><img src="../../../../Download/文档/操作系统笔记/source/images/第四章 存储器管理/1774310-20210808140757759-1490347801.png" alt="img" style="zoom:67%;"><br>将回收的空间和分区 3 和并，除了修改分区大小还要修改起始地址。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分区号</th>
+<th>大小</th>
+<th>起始地址</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>20</td>
+<td>5</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>3</td>
+<td>30</td>
+<td>40</td>
+<td>空闲</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>情况三：</p>
+<p>第三种情况是回收区同时与插入点的前、后两个分区邻接，此时将三个分区合并，使用 F1 的表项和 F1 的首址并取消F2的表项，大小为三者之和。例如内存分配表和内存状态如下，此时要回收进程 1。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分区号</th>
+<th>大小</th>
+<th>起始地址</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>15</td>
+<td>10</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5</td>
+<td>35</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>3</td>
+<td>15</td>
+<td>55</td>
+<td>空闲</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="../../../../Download/文档/操作系统笔记/source/images/第四章 存储器管理/1774310-20210808135449463-1125684133.png" alt="img" style="zoom:67%;"><img src="source/images/操作系统3：存储器管理/1774310-20210808141905297-131463450.png" alt="img" style="zoom:67%;"><br>将回收的空间和分区 1、2 和并，然后修改分区大小即可。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分区号</th>
+<th>大小</th>
+<th>起始地址</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>30</td>
+<td>10</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>3</td>
+<td>15</td>
+<td>55</td>
+<td>空闲</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>情况四：</p>
+<p>第四种情况是回收区既不与 F1 邻接又不与 F2 邻接，这时应为回收区单独建立一个新表项，填写回收区的首址和大小，并根据其首址插入到空闲链中的适当位置。例如内存分配表和内存状态如下，此时要回收进程 3。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分区号</th>
+<th>大小</th>
+<th>起始地址</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>20</td>
+<td>5</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>3</td>
+<td>15</td>
+<td>55</td>
+<td>空闲</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210808140015206-1889854015.png" alt="img" style="zoom:67%;"><img src="../../../../Download/文档/操作系统笔记/source/images/第四章 存储器管理/1774310-20210808151220610-1325146759.png" alt="img" style="zoom:67%;"><br>这时就需要向内存分配表加入一个新条目，并且写上大小和起始地址。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分区号</th>
+<th>大小</th>
+<th>起始地址</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>20</td>
+<td>5</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>3</td>
+<td>15</td>
+<td>55</td>
+<td>空闲</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5</td>
+<td>35</td>
+<td>空闲</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h5 id="4-基于顺序搜索的动态分区分配算法"><a href="#4-基于顺序搜索的动态分区分配算法" class="headerlink" title="4. 基于顺序搜索的动态分区分配算法"></a>4. 基于顺序搜索的动态分区分配算法</h5><p>为了实现动态分区分配，通常是将系统中的空闲分区链接成一个链。所谓顺序搜索，是指依次搜索空闲分区链上的空闲分区，去寻找一个其大小能满足要求的分区。</p>
+<p>1）首次适应（first fit,FF）算法</p>
+<p>FF算法要求空闲分区链以地址递增的次序链接。在分配内存时，从链首开始顺序查找，直至找到一个大小能满足要求的空闲分区为止。该算法倾向于利用低址部分的空闲分区，从而保留了高址部分的大空闲区，这为以后到达的大作业分配大的内存空间创造了条件。其缺点是低址部分不断被划分，会留下很多难以利用的、很小的空闲分区，称为碎片。而每次查找又都是从低址部分开始的，这无疑又会增加查找可用空闲分区时的开销。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210808151858269-1262905384.png" alt="img" style="zoom:67%;"></p>
+<p>2）循环首次适应（next fit,NF）算法</p>
+<p>循环首次适应算法在为进程分配内存空间时，不再是每次都从链首开始查找，而是从上次找到的空闲分区的下一个空闲分区开始查找，直至找到一个能满足要求的空闲分区。为实现该算法，应设置一个起始查寻指针，用于指示下一次起始查询的空闲分区，并采用循环查找方式。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210808152319108-419288793.png" alt="img" style="zoom:67%;"></p>
+<p>3）最佳适应（best fit,BF）算法</p>
+<p>所谓“最佳”是指，每次为作业分配内存时，总是能把满足要求、又是最小的空闲分区分配给作业，避免“大材小用”。为了加速寻找，该算法要求将所有的空闲分区按其容量以从小到大的顺序形成一空闲分区链。孤立地看，最佳适应算法似乎是最佳的，然而在宏观上却不一定。因为每次分配后所切割下来的剩余部分总是最小的，这样，在存储器中会留下许多难以利用的碎片。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210808152512930-1737564250.png" alt="img" style="zoom:67%;"></p>
+<p>4）最坏适应（worst fit,WF）算法</p>
+<p>最坏适应算法选择空闲分区的策略正好与最佳适应算法相反：它在扫描整个空闲分区链时，总是挑选一个最大的空闲分区，从中分割一部分给作业使用，其缺点是会导致存储器中缺乏大的空闲分区，优点是可使剩下的空闲分区不至于太小，产生碎片的可能性最小，同时该算法的查找效率很高，因为该算法要求空闲分区按容量从大到小排序，查找时，只要看第一个 分区能否满足作业要求即可。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210808152740243-43186705.png" alt="img" style="zoom:67%;"></p>
+<h5 id="5-基于索引搜索的动态分区分配算法"><a href="#5-基于索引搜索的动态分区分配算法" class="headerlink" title="5. 基于索引搜索的动态分区分配算法"></a>5. 基于索引搜索的动态分区分配算法</h5><p>1）快速适应算法</p>
+<p>该算法又称为分类搜索法，是将空闲分区根据其容量大小进行分类，对于每一类具有相同容量的所有空闲分区，单独设立一个空闲分区链表，这样系统中存在多个空闲分区链表。同时，在内存中设立一张管理索引表，其中的每一个索引表项对应了一种空闲分区类型，并记录了该类型空闲分区链表表头的指针。</p>
+<p>该算法在搜索可用空闲分区时分为两步：第一步是根据进程的长度，从索引表中去寻找能容纳它的最小空闲区链表；第二步是从链表中取下第一块进行分配即可。另外，该算法不会对任何分区进行分割，所以不会产生碎片。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210808154652546-363602472.png" alt="img" style="zoom:67%;"></p>
+<p>2）伙伴系统</p>
+<p><strong>伙伴系统(buddy system)</strong>算法规定无论已分配分区或空闲分区，其大小均为 2 的 k 次幂(k 为整数，1 ≤ k ≤ m)。将这些空闲分区按分区的大小进行分类，对于具有相同大小的所有空闲分区，单独设立一个空闲分区双向链表。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20220116192839497-722241483.png" alt="img" style="zoom: 67%;"></p>
+<p>当需要为进程分配一个长度为 n 的存储空间时，首先计算一个 i (2^i-1 &lt; n ≤ 2^i)，然后在空闲分区大小为 2^i 的空闲分区链表中查找。若找到即把该空闲分区分配给进程。如果找不到表明长度为 2^i 的空闲分区已经耗尽，则在分区大小为 2^i+1 的空闲分区链表中寻找。若存在 2^i+1 的一个空闲分区，则把该空闲分区分为相等的两个分区，其中的一个分区用于分配，而把另一个加入分区大小为 2^i 的空闲分区链表中。如果还是找不到就继续搜索，以此类推。</p>
+<p>在伙伴系统中，对于一个大小为 2^k，地址为 x 的内存块，其伙伴块的地址则用 buddyk(x)表示，其通式为：<br><img src="source/images/操作系统3：存储器管理/1774310-20210808155250765-962288082.png" alt="img" style="zoom: 80%;"><br>在回收空闲分区时，需要对空闲分区进行合并，所以其时间性能比快速适应算法差.但由于它采用了索引搜索算法，比顺序搜索算法好。由于对空闲分区进行合并，减少了小的空闲分区，提高了空闲分区的可使用率，故优于快速适应算法，比顺序搜索法略差。</p>
+<p>3）哈希算法</p>
+<p>哈希算法就是利用哈希快速查找的优点，以及空闲分区在可利用空闲区表中的分布规律建立哈希函数。构造一张以空闲分区大小为关键字的哈希表，该表的每一个表项记录了一个对应的空闲分区链表表头指针。当进行空闲分区分配时，根据所需空闲分区大小通过哈希函数计算，从中得到相应的空闲分区链表，实现最佳分配策略。<br><img src="source/images/操作系统3：存储器管理/1774310-20210808155520966-137472263.png" alt="img" style="zoom:67%;"></p>
+<h5 id="6-动态可重定位分区分配"><a href="#6-动态可重定位分区分配" class="headerlink" title="6. 动态可重定位分区分配"></a>6. 动态可重定位分区分配</h5><p>1）紧凑</p>
+<p>通过移动内存中作业的位置，把原来多个分散的小分区（碎片）拼接成一个大分区的方法，称为紧凑。在每次紧凑后，都必须对移动了的程序或数据进行重定位。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210808160005788-1126592807.png" alt="img" style="zoom:67%;"><img src="../../../../Download/文档/操作系统笔记/source/images/第四章 存储器管理/1774310-20210808160224120-2121704243.png" alt="img" style="zoom:67%;"></p>
+<p>2）动态重定位</p>
+<p>把在装入时对目标程序中指令和数据地址的修改过程称为重定位。而把地址变换过程是在程序执行期间，随着对每条指令或数据的访问自动进行的，称为动态重定位。</p>
+<p>3）动态重定位分区分配算法</p>
+<p>动态重定位分区分配算法与动态分区分配算法的差别仅在于：在这种分配算法中，增加了紧凑的功能。</p>
+<h4 id="4-4-覆盖与交换"><a href="#4-4-覆盖与交换" class="headerlink" title="4.4 覆盖与交换"></a>4.4 覆盖与交换</h4><h5 id="1-覆盖技术"><a href="#1-覆盖技术" class="headerlink" title="1. 覆盖技术"></a>1. 覆盖技术</h5><p>覆盖的基本思想是：由于程序运行时并非任何时候都要访问程序及数据的各个部分，因此可把用户空间划分成一个固定区和若干覆盖区。将经常活跃的部分放在固定区，其余部分按调用关系分段。首先将那些即将要访问的段放入覆盖区，其它段放在外存中，在需要调用前，系统再将其调入覆盖区，替换覆盖区中原有的段。</p>
+<p>覆盖技术的特点是：打破了必须将一个进程的全部信息装入主存后才能运行的限制。</p>
+<p>缺点：必须由程序员声明覆盖结构， 对用户不透明， 增加了用户的编程负担，覆盖技术只用于早期的操作系统中。</p>
+<p><img src="source/images/操作系统3：存储器管理/e7a55d65c9d472ae9da88f25b4fdeb9d.png" alt="img" style="zoom:75%;"></p>
+<h5 id="2-交换技术"><a href="#2-交换技术" class="headerlink" title="2. 交换技术"></a>2. 交换技术</h5><p>交换的基本思想是：把处于等待状态（或在CPU调度原则下被剥夺运行权利）的程序从内存移到辅存，把内存空间腾出来，这一过程又称换出；把准备好竞争CPU运行的程序从辅存移到内存，这一过程又称换入。</p>
+<blockquote>
+<p>内存空间紧张时, 系统将内存中某些进程暂时换出外存，把外存中某些已具备运行条件的进程换入内存(即<strong>进程在内存与磁盘间动态调度</strong>)。</p>
+</blockquote>
+<p>交换技术主要在不同进程之间进行，而覆盖则用于同一个程序或进程中。</p>
+<p>对于主存无法存放用户程序的矛盾，现代操作系统是通过虚拟存储技术来解决的，而覆盖技术已经成为历史。</p>
+<h4 id="4-5-分页存储管理方式"><a href="#4-5-分页存储管理方式" class="headerlink" title="4.5 分页存储管理方式"></a>4.5 分页存储管理方式</h4><p>连续分配管理方式会形成许多碎片，虽然可以通过紧凑方法将碎片拼接成可用的大块空间，但须为之付出很大开销。如果允许一个进程直接分散地装入到许多不邻接的分区中，便可充分的利用内存空间，而无需再紧凑。</p>
+<p>基于这一思想产生了离散分配方式，根据在离散分配时所分配地址空间的基本单位的不同，又可将离散分配方式分为以下三种：</p>
+<p>（1）分页存储管理方式：在该方式中，将用户程序的地址空间分为若干个固定大小的区域，称为页。相应地，也将内存空间分为若干个物理块，称为页框，页和块的大小相同。这样可以将用户程序的任一页放入任一物理块中，实现了离散分配。</p>
+<p>（2）分段存储管理方式：段式存储管理方式按照用户进程中的自然段划分逻辑空间，以满足用户和程序员方便编程、信息保护和共享、动态增长以及动态链接等多方面的需要。</p>
+<p>（3）段页式存储管理方式：结合分段和分页管理方式，综合两者的优点，先根据用户程序分段，再将每段分页。</p>
+<h5 id="1-基本方法"><a href="#1-基本方法" class="headerlink" title="1. 基本方法"></a>1. 基本方法</h5><p>1）页面和物理块</p>
+<p>（1）页面</p>
+<p>分页存储管理是<strong>将一个进程的逻辑地址空间分成若干个大小相等的片，称为页面或页</strong>，并为各页加以编号，从 0 开始，如第 0 页、第 1 页等。相应地，也<strong>把内存空间分成与页面相同大小的若干个存储块，称为(物理)块或页框(frame)</strong>，也同样为它们加以编号，如 0#块、1#块等等。在为进程分配内存时，以块为单位将进程中的若干个页分别装入到多个可以不相邻接的物理块中。由于进程的最后一页经常装不满一块而形成了不可利用的碎片，称之为“<strong>页内碎片</strong>”。</p>
+<p>（2）页面大小</p>
+<p>在分页系统中的页面其大小应适中。页面若太小，一方面虽然可使内存碎片减小，从而减少了内存碎片的总空间，有利于提高内存利用率，但另一方面也会使每个进程占用较多的页面，从而导致进程的页表过长，占用大量内存；此外，还会降低页面换进换出的效率。然而，如果选择的页面较大，虽然可以减少页表的长度，提高页面换进换出的速度，但却又会使页内碎片增大。因此，页面的大小应选择适中，且页面大小应是 2 的幂，通常为 512 B～8 KB。</p>
+<p>2）地址结构</p>
+<p>分页地址中的地址结构如下：</p>
+<p><img src="source/images/操作系统3：存储器管理/v2-11982304658dcb5ee2a0bb2323ceacf8_1440w.png" alt="img" style="zoom:80%;"></p>
+<p>它含有两部分：前一部分为<strong>页号 P</strong>，后一部分为<strong>位移量 W</strong>(即页内地址)。图中的地址长度为 32 位，其中 0～11 位为页内地址，即每页的大小为 4 KB；12～31 位为页号，地址空间最多允许有 1 M 页。</p>
+<p>对于某特定机器，其地址结构是一定的。若给定一个逻辑地址空间中的地址为 A，页面的大小为 L，则页号 P 和页内地址 d 可按下式求得：</p>
+<p><img src="source/images/操作系统3：存储器管理/image-20220824172109340.png" alt="image-20220824172109340" style="zoom: 67%;"></p>
+<p>其中，INT 是整除函数，MOD 是取余函数。即<code>P=A/L,d=A%L</code>。例如，其系统的页面大小为 1 KB，设 A = 2170 B，则由上式可以求得 P = 2，d = 122。</p>
+<p>3）页表</p>
+<p>在分页系统中，允许将进程的各个页离散地存储在内存不同的物理块中，但系统应能保证进程的正确运行，即能在内存中找到每个页面所对应的物理块。为此，系统又为每个进程建立了一张页面映像表，简称页表。在进程地址空间内的所有页(0～n)，依次在页表中有一页表项，其中记录了相应页在内存中对应的物理块号，见下图的中间部分。在配置了页表后，进程执行时，通过查找该表，即可找到每页在内存中的物理块号。可见，<strong>页表的作用是实现从页号到物理块号的地址映射</strong>。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210808230851706-1419585523.png" alt="img" style="zoom:67%;"></p>
+<p>即使在简单的分页系统中，也常在页表的表项中设置一存取控制字段，用于对该存储块中的内容加以保护。当存取控制字段仅有一位时，可用来规定该存储块中的内容是允许读/写，还是只读；若存取控制字段为二位，则可规定为读/写、只读和只执行等存取方式。如果有一进程试图去写一个只允许读的存储块时，将引起操作系统的一次中断。如果要利用分页系统去实现虚拟存储器，则还须增设一数据项。</p>
+<h5 id="2-地址变换机构"><a href="#2-地址变换机构" class="headerlink" title="2. 地址变换机构"></a>2. 地址变换机构</h5><p>1）基本地址变换机构</p>
+<p>为了能将用户地址空间中的逻辑地址变换为内存空间中的物理地址，在系统中必须设置地址变换机构。该机构的基本任务是实现从逻辑地址到物理地址的转换。由于页内地址和物理地址是一一对应的(例如，对于页面大小是 1 KB 的页内地址是 0～1023，其相应的物理块内的地址也是 0～1023，无须再进行转换)，因此，<strong>地址变换机构的任务实际上只是将逻辑地址中的页号，转换为内存中的物理块号</strong>。又因为页面映射表的作用就是用于实现从页号到物理块号的变换，因此，地址变换任务是借助于页表来完成的。</p>
+<p>页表的功能可以由一组专门的寄存器来实现。一个页表项用一个寄存器。由于寄存器具有较高的访问速度，因而有利于提高地址变换的速度；但由于寄存器成本较高，且大多数现代计算机的页表又可能很大，使页表项的总数可达几千甚至几十万个，显然这些页表项不可能都用寄存器来实现，因此，<strong>页表大多驻留在内存中</strong>。在系统中只设置一个页表寄存器 PTR(Page-Table Register)，在其中存放页表在内存的始址和页表的长度。平时，进程未执行时，页表的始址和页表长度存放在本进程的 PCB 中。当调度程序调度到某进程时，才将这两个数据装入页表寄存器中。因此，在单处理机环境下，虽然系统中可以运行多个进程，但只需一个页表寄存器。</p>
+<p>当进程要访问某个逻辑地址中的数据时，分页地址变换机构会自动地将有效地址(相对地址)分为页号和页内地址两部分，再以页号为索引去检索页表。查找操作由硬件执行。在执行检索之前，先将页号与页表长度进行比较，如果页号大于或等于页表长度，则表示本次所访问的地址已超越进程的地址空间。于是，这一错误将被系统发现并产生一地址越界中断。若未出现越界错误，则<strong>将页表始址与页号和页表项长度的乘积相加，便得到该表项在页表中的位置，于是可从中得到该页的物理块号</strong>，将之装入物理地址寄存器中。与此同时，再将有效地址寄存器中的页内地址送入物理地址寄存器的块内地址字段中。这样便完成了从逻辑地址到物理地址的变换。下图为分页系统的地址变换机构。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210808233819512-1829312549.png" alt="img" style="zoom: 80%;"></p>
+<p>2）具有快表的地址变换机构</p>
+<p>由于页表是存放在内存中的，这使 CPU 在每存取一个数据时，都要两次访问内存。第一次是访问内存中的页表，从中找到指定页的物理块号，再将块号与页内偏移量 W 拼接，以形成物理地址。第二次访问内存时，才是从第一次所得地址中获得所需数据(或向此地址中写入数据)。因此，采用这种方式将使计算机的处理速度降低近 1/2。可见，以此高昂代价来换取存储器空间利用率的提高，是得不偿失的。</p>
+<p>为了提高地址变换速度，可在地址变换机构中增设一个具有并行查寻能力的特殊高速缓冲寄存器，又称为“联想寄存器”(Associative Memory)，或称为“快表”，在 IBM 系统中又取名为 TLB(Translation Lookaside Buffer)，用以存放当前访问的那些页表项。此时的地址变换过程是：<strong>在 CPU 给出有效地址后，由地址变换机构自动地将页号 P 送入高速缓冲寄存器，并将此页号与高速缓存中的所有页号进行比较，若其中有与此相匹配的页号，便表示所要访问的页表项在快表中。于是，可直接从快表中读出该页所对应的物理块号，并送到物理地址寄存器中。</strong>如在块表中未找到对应的页表项，则还须再访问内存中的页表，找到后，把从页表项中读出的物理块号送地址寄存器；同时，再将此页表项存入快表的一个寄存器单元中，亦即，重新修改快表。但如果联想寄存器已满，则 OS 必须找到一个老的且已被认为不再需要的页表项，将它换出。下图为具有快表的地址变换机构。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210809005149697-1877838704.png" alt="img" style="zoom: 80%;"></p>
+<h5 id="3-访问内存的有效时间"><a href="#3-访问内存的有效时间" class="headerlink" title="3. 访问内存的有效时间"></a>3. 访问内存的有效时间</h5><p>从进程发出指定逻辑地址的访问请求，经过地址变换，到在内存中找到对应的实际物理地址单元并取出数据，所需要花费的总时间称为内存的<strong>有效访问时间(Effective AccessTime，EAT)</strong>。<br>假设访问一次内存的时间为 t，在基本分页存储管理方式中，有效访问时间分为 2 次访问内存时间之和：</p>
+<figure class="highlight ini"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">EAT</span> = t + t = <span class="number">2</span>t</span><br></pre></td></tr></tbody></table></figure>
+<p>在引入快表的分页存储管理方式中，如果快表命中可以直接得到逻辑页所对应的物理块号，减少了一次内存访问。命中率是指使用快表并在其中成功查找到所需页面的表项的比率，引入 TLB 的分页存储管理方式的 EAT 计算公式如下，其中 λ 表示查找快表所需要的时间，a 表示命中率，t 表示访问一次内存所需要的时间。</p>
+<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EAT = a × λ + (t + λ)(1 - a) + t </span><br><span class="line">    = 2t + λ - t x a</span><br></pre></td></tr></tbody></table></figure>
+<p>例如某系统使用基本分页存储管理，并采用了具有快表的地址变换机构。访问一次快表耗时 1us，访问一次内存耗时 100us，若快表的命中率为 90%，访问一个逻辑地址的平均耗时通过计算可以得到。</p>
+<figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">快表和慢表分开查找：(1 + 100) <span class="emphasis">* 0.9 + (1 + 100 + 100) *</span> 0.1 = 111 us</span><br><span class="line">快表和慢表同时查找：(1 + 100) <span class="emphasis">* 0.9 + (100 + 100)     *</span> 0.1 = 110.9 us</span><br></pre></td></tr></tbody></table></figure>
+<p>若未采用快表机制，则访问一个逻辑地址需要 100 + 100 = 200us，显然引入快表机制后访问一个逻辑地址的速度被加快。</p>
+<h5 id="4-两级和多级页表"><a href="#4-两级和多级页表" class="headerlink" title="4. 两级和多级页表"></a>4. 两级和多级页表</h5><p>现代的大多数计算机系统，都支持非常大的逻辑地址空间($2^{32}B$~$2^{64}B$​)。在这样的环境下，页表就变得非常大，要占用相当大的内存空间。例如，对于一个具有 32 位逻辑地址空间的分页系统，规定页面大小为 4 KB 即 $2^{12}$ B，则在每个进程页表中的页表项可达 1 兆个之多。又因为每个页表项占用一个字节，故每个进程仅仅其页表就要占用 1 MB 的内存空间，而且还要求是连续的。显然这是不现实的，我们可以采用下述两个方法来解决这一问题：</p>
+<ul>
+<li>采用离散分配方式来解决难以找到一块连续的大内存空间的问题；</li>
+<li>只将当前需要的部分页表项调入内存，其余的页表项仍驻留在磁盘上，需要时再调入。</li>
+</ul>
+<p>1）两级页表</p>
+<p>对于要求连续的内存空间来存放页表的问题，可利用将页表进行分页，并离散地将各个页面分别存放在不同的物理块中的办法来加以解决，同样也要为离散分配的页表再建立一张页表，称为外层页表(Outer Page Table)，在每个页表项中记录了页表页面的物理块号。下面我们仍以前面的 32 位逻辑地址空间为例来说明。当页面大小为 4 KB 时( 12 位)，若采用一级页表结构，应具有 20 位的页号，即页表项应有 1 兆个；在采用两级页表结构时，再对页表进行分页，使每页中包含 $2^{10}$ (即 1024) 个页表项，最多允许有 $2^{10}$ 个页表分页；或者说，外层页表中的外层页内地址 P2为 10 位，外层页号 P1也为 10 位。此时的逻辑地址结构可描述如下：</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210809151345496-1882693214.png" alt="img" style="zoom:80%;"></p>
+<p>由图可以看出，在页表的每个表项中存放的是进程的某页在内存中的物理块号，如第0#页存放在 1#物理块中；1#页存放在 4#物理块中。而在外层页表的每个页表项中，所存放的是某页表分页的首址，如第 0#页表是存放在第 1011#物理块中。我们可以利用外层页表和页表这两级页表，来实现从进程的逻辑地址到内存中物理地址间的变换。</p>
+<p>为了地址变换实现上的方便起见，在地址变换机构中同样需要增设一个外层页表寄存器，用于存放外层页表的始址，并利用逻辑地址中的外层页号，作为外层页表的索引，从中找到指定页表分页的始址，再利用 P2 作为指定页表分页的索引，找到指定的页表项，其中即含有该页在内存的物理块号，用该块号和页内地址 d 即可构成访问的内存物理地址。下图为两级页表时的地址变换机构。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210809153421054-440132979.png" alt="img" style="zoom:80%;"></p>
+<p>上述对页表施行离散分配的方法，虽然解决了对大页表无需大片存储空间的问题，但并未解决用较少的内存空间去存放大页表的问题。换言之，只用离散分配空间的办法并未减少页表所占用的内存空间。解决方法是把当前需要的一批页表项调入内存，以后再根据需要陆续调入。在采用两级页表结构的情况下，对于正在运行的进程，必须将其外层页表调入内存，而对页表则只需调入一页或几页。为了表征某页的页表是否已经调入内存，还应在外层页表项中增设一个状态位 S，其值若为 0，表示该页表分页尚未调入内存；否则，说明其分页已在内存中。进程运行时，地址变换机构根据逻辑地址中的 P1，去查找外层页表；若所找到的页表项中的状态位为 0，则产生一中断信号，请求 OS 将该页表分页调入内存。</p>
+<p>2）多级页表</p>
+<p>当使用的计算机的位数不同时，可能会继续拓展到多级页表，将外层页表再进行分页，将各分页离散地装入到不相邻接的物理块中，再利用第 2 级的外层页表来映射它们之间的关系。若采用多级页表机制，则各级页表的大小不能超过一个页面。例如某系统按字节编址，采用 40 位逻辑地址，页面大小为 4KB，页表项大小为 4B，假设采用纯页式存储，则要采用几级页表？页内偏移量为几位?<br>首先页面大小 = 4KB = 2^12B，按字节编址的页内偏移量为 12 位。页号 = 40 - 12 = 28 位，页面大小 = 2^12B，页表项大小 = 4B，则每个页面可存放 212 / 4 = 210 个页表项。此时需要 10 位二进制位才能映射到 210 个页表项，因此每一级的页表对应页号应为 10 位。总共 28 位的页号至少要分为三级。</p>
+<h5 id="5-反置页表"><a href="#5-反置页表" class="headerlink" title="5. 反置页表"></a>5. 反置页表</h5><p>1）反置页表的引入</p>
+<p>在分页系统中为每个进程配置了一张页表，进程逻辑地址空间中的每一页在页表中都对应有一个页表项。在现代计算机系统中，通常允许一个进程的逻辑地址空间非常大，因此就需要有许多的页表项，而因此也会占用大量的内存空间。为了减少页表占用的内存空间，引入了反置页表。<strong>反置页表(Inverted Page Table)</strong>则为每一个物理块设置一个页表项，并将它们按物理块的编号排序，其中的内容则是页号和其所隶属进程的标识符。</p>
+<p>2）地址变换</p>
+<p>在利用反置页表进行地址变换时，是根据进程标识符和页号检索反置页表。如果检索到与之匹配的页表项，则该页表项(中)的序号 i 便是该页所在的物理块号，可用该块号与页内地址一起构成物理地址送内存地址寄存器。若检索了整个反置页表仍未找到匹配的页表项，则表明此页尚未装入内存。对于不具有请求调页功能的存储器管理系统，此时则表示地址出错。</p>
+<p>然而在该表中只包含了已经调入内存的页面，并未包含尚未调入内存的页面，因此还必须为每个进程建立一个外部页表。(External Page Table)。该页表与传统的页表一样，当所访问的页面在内存时，并不需要访问外部页表，仅当发现所需之页面不在内存时才使用。在页表中包含了各个页在外存的物理位置，通过它可将所需之页面调入内存。</p>
+<p>由于在反置页表中是为每一个物理块设置一个页表项，当内存容量很大时，页表项的数目还是会非常大的。要利用进程标识符和页号去检索这样大的一张线性表是相当费时的，可利用 Hash 算法来进行检索。</p>
+<h4 id="4-6-分段存储管理方式"><a href="#4-6-分段存储管理方式" class="headerlink" title="4.6 分段存储管理方式"></a>4.6 分段存储管理方式</h4><p>在实现对程序和数据的共享时，是以信息的逻辑单位为基础的。在分段存储管理方式中，作业的地址空间被划分为若干个段，每个段定义了一组逻辑信息。在分段系统中，实现共享则容易得多，只需在每个进程的段表中为文本编辑程序设置一个段表项。</p>
+<p>如果说推动存储管理方式从固定分区到动态分区分配，进而又发展到分页存储管理方式的主要动力，是提高内存利用率，那么，引入分段存储管理方式的目的，则主要是为了满足用户（程序员）在编程和使用上多方面的要求，其中有些要求是其它几种存储管理方式所难以满足的。因此，这种存储管理方式已成为当今所有存储管理方式的基础。</p>
+<h5 id="1-分段存储管理方式的引入"><a href="#1-分段存储管理方式的引入" class="headerlink" title="1. 分段存储管理方式的引入"></a>1. 分段存储管理方式的引入</h5><p>引入分段存储管理方式，主要是为了满组用户和程序员的下述一系列需要：</p>
+<p><strong>1) 方便编程</strong></p>
+<p>通常，用户把自己的作业按照逻辑关系划分为若干个段，每个段都是从0开始编址，并有自己的名字和长度。因此，希望要访问的逻辑地址是由段名(段号)和段内偏移量(段内地址)决定的。例如，下述的两条指令便是使用段名和段内地址：</p>
+<p><strong>LOAD 1，[A] |〈D〉；</strong></p>
+<p><strong>STORE 1，[B] |〈C〉；</strong></p>
+<p>其中，前一条指令的含义是将分段A中D单元内的值读入 <a target="_blank" rel="noopener" href="https://siaoyin.com/Info/7457733957403597544">寄存器</a> 1；后一条指令的含义是将寄存器1的内容存入B分段的C单元中。</p>
+<p><strong>2) 信息共享</strong></p>
+<p>在实现对程序和数据的共享时，是以信息的逻辑单位为基础的。比如，共享某个例程和函数。分页系统中的“页”只是存放信息的物理单位(块)，并无完整的意义，不便于实现共享；然而段却是信息的逻辑单位。由此可知，为了实现段的共享，希望存储管理能与用户程序分段的组织方式相适应。</p>
+<p><strong>3) 信息保护</strong></p>
+<p>信息保护同样是对信息的逻辑单位进行保护，因此，分段管理方式能更有效和方便地实现信息保护功能。</p>
+<p><strong>4) 动态增长</strong></p>
+<p>在实际应用中，往往有些段，特别是数据段，在使用过程中会不断地增长，而事先又无法确切地知道数据段会增长到多大。前述的其它几种存储管理方式，都难以应付这种动态增长的情况，而分段存储管理方式却能较好地解决这一问题。</p>
+<p><strong>5) 动态链接</strong></p>
+<p>动态链接是指在作业运行之前，并不把几个目标程序段链接起来。要运行时，先将主程序所对应的目标程序装入内存并启动运行，当运行过程中又需要调用某段时，才将该段(目标程序)调入内存并进行链接。可见，动态链接也要求以段作为管理的单位。</p>
+<h5 id="2-分段系统的基本原理"><a href="#2-分段系统的基本原理" class="headerlink" title="2. 分段系统的基本原理"></a>2. 分段系统的基本原理</h5><p>1）分段</p>
+<p>在分段存储管理方式中，作业的地址空间被划分为若干个段，每个段定义了一组逻辑信息。例如，有主程序段MAIN、子程序段X、数据段D及栈段S等，如图4-17所示。每个段都有自己的名字。为了实现简单起见，通常可用一个段号来代替段名，每个段都从0开始编址，并采用一段连续的地址空间。段的长度由相应的逻辑信息组的长度决定，因而各段长度不等。整个作业的地址空间由于是分成多个段，因而是二维的，亦即，其逻辑地址由段号(段名)和段内地址所组成。</p>
+<p>分段地址中的地址具有如下结构：</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210809202153407-723123847.png" alt="img" style="zoom:67%;"></p>
+<p>在该地址结构中，允许一个作业最长有 64 K个段，每个段的最大长度为64 KB。分段方式已得到许多编译程序的支持，编译程序能自动地根据源程序的情况而产生若干个段。例如，Pascal编译程序可以为全局变量、用于存储相应参数及返回地址的过程调用栈、每个过程或函数的代码部分、每个过程或函数的局部变量等等，分别建立各自的段。类似地，Fortran编译程序可以为公共块(Common block)建立单独的段，也可以为数组分配一个单独的段。装入程序将装入所有这些段，并为每个段赋予一个段号。</p>
+<p>2）段表</p>
+<p>在前面所介绍的动态分区分配方式中，系统为整个进程分配一个连续的内存空间。而在分段式存储管理系统中，则是为每个分段分配一个连续的分区，而进程中的各个段可以离散地移入内存中不同的分区中。为使程序能正常运行，亦即，能从物理内存中找出每个逻辑段所对应的位置，应像分页系统那样，在系统中为每个进程建立一张段映射表，简称“段表”。每个段在表中占有一个表项，其中记录了该段在内存中的起始地址(又称为“基址”)和段的长度，如右图所示。段表可以存放在一组寄存器中，这样有利于提高地址转换速度，但更常见的是将段表放在内存中。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210809204111777-1592732636.png" alt="img" style="zoom: 67%;"></p>
+<p>3）地址变换机构</p>
+<p>为了实现从进程的逻辑地址到物理地址的变换功能，在系统中设置了段表寄存器，用于存放段表始址和段表长度TL。在进行地址变换时，系统将逻辑地址中的段号与段表长度TL进行比较。若S&gt;TL，表示段号太大，是访问越界，于是产生越界中断信号；若未越界，则根据段表的始址和该段的段号，计算出该段对应段表项的位置，从中读出该段在内存的起始地址，然后，再检查段内地址d是否超过该段的段长SL。若超过，即d&gt;SL，同样发出越界中断信号；若未越界，则将该段的基址d与段内地址相加，即可得到要访问的内存物理地址。</p>
+<p>下图示出了分段系统的地址变换过程。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210809205219873-404407898.png" alt="img" style="zoom:80%;"></p>
+<p>像分页系统一样，当段表放在内存中时，每要访问一个数据，都须访问两次内存，从而极大地降低了计算机的速率。解决的方法也和分页系统类似，再增设一个联想存储器，用于保存最近常用的段表项。由于一般情况是段比页大，因而段表项的数目比页表项的数目少，其所需的联想存储器也相对较小，便可以显著地减少存取数据的时间，比起没有地址变换的常规存储器的存取速度来仅慢约10%～15%。</p>
+<h5 id="3-信息共享"><a href="#3-信息共享" class="headerlink" title="3. 信息共享"></a>3. 信息共享</h5><p>分段系统的一个突出优点，是易于实现段的共享，即允许若干个进程共享一个或多个分段，且对段的保护也十分简单易行。在分页系统中，虽然也能实现程序和数据的共享，但远不如分段系统来得方便。我们通过一个例子来说明这个问题。例如，有一个多用户系统，可同时接纳40个用户，他们都执行一个文本编辑程序(Text Editor)。如果文本编辑程序有160 KB的代码和另外40 KB的数据区，则总共需有 8 MB的内存空间来支持40个用户。如果160 KB的代码是可重入的（reentrant），则无论是在分页系统还是在分段系统中，该代码都能被共享，在内存中只需保留一份文本编辑程序的副本，此时所需的内存空间仅为1760 KB(40×40+160)，而不是8000 KB。</p>
+<p>假定每个页面的大小为4 KB，那么，160 KB的代码将占用40个页面，数据区占10个页面。为实现代码的共享，应在每个进程的页表中都建立40个页表项，它们的物理块号都是21#～60#。在每个进程的页表中，还须为自己的数据区建立页表项，它们的物理块号分别是61#～70#、71#～80#、81#～90#，…，等等。下图是分页系统中共享editor的示意。</p>
+<p><img src="source/images/操作系统3：存储器管理/image-20220824173248052.png" alt="image-20220824173248052" style="zoom:67%;"></p>
+<p>在分段系统中，实现共享则容易得多，只需在每个进程的段表中为文本编辑程序设置一个段表项。下图是分段系统中共享editor的示意图。</p>
+<p><img src="source/images/操作系统3：存储器管理/image-20220824173319597.png" alt="image-20220824173319597" style="zoom:67%;"></p>
+<p>可重入代码(Reentrant Code)又称为“纯代码”(Pure Code)，是一种允许多个进程同时访问的代码。为使各个进程所执行的代码完全相同，绝对不允许可重入代码在执行中有任何改变。因此，可重入代码是一种不允许任何进程对它进行修改的代码。但事实上，大多数代码在执行时都可能有些改变，例如，用于控制程序执行次数的变量以及指针、信号量及数组等。为此，在每个进程中，都必须配以局部数据区，把在执行中可能改变的部分拷贝到该数据区，这样，程序在执行时，只需对该数据区（属于该进程私有）中的内容进行修改，并不去改变共享的代码，这时的可共享代码即成为可重入码。</p>
+<h5 id="4-分段和分页的主要区别"><a href="#4-分段和分页的主要区别" class="headerlink" title="4. 分段和分页的主要区别"></a>4. 分段和分页的主要区别</h5><p>分页和分段系统有许多相似之处。比如，两者都采用离散分配方式，且都要通过地址映射机构来实现地址变换。但在概念上两者完全不同，主要表现在下述三个方面。</p>
+<p>(1) 页是信息的物理单位，分页是为实现离散分配方式，以消减内存的外零头，提高内存的利用率。或者说，分页仅仅是由于系统管理的需要而不是用户的需要。段则是信息的逻辑单位，它含有一组其意义相对完整的信息。分段的目的是为了能更好地满足用户的需要。</p>
+<p>(2) 页的大小固定且由系统决定，由系统把逻辑地址划分为页号和页内地址两部分，是由机器硬件实现的，因而在系统中只能有一种大小的页面；而段的长度却不固定，决定于用户所编写的程序，通常由编译程序在对源程序进行编译时，根据信息的性质来划分。</p>
+<p>(3) 分页的作业地址空间是一维的，即单一的线性地址空间，程序员只需利用一个记忆符，即可表示一个地址；而分段的作业地址空间则是二维的，程序员在标识一个地址时，既需给出段名，又需给出段内地址。</p>
+<h5 id="5-段页式存储管理方式"><a href="#5-段页式存储管理方式" class="headerlink" title="5. 段页式存储管理方式"></a>5. 段页式存储管理方式</h5><p>前面所介绍的分页和分段存储管理方式都各有其优缺点。分页系统能有效地提高内存利用率，而分段系统则能很好地满足用户需要。如果能对两种存储管理方式“各取所长”，则可以将两者结合成一种新的存储管理方式系统。这种新系统既具有分段系统的便于实现、分段可共享、易于保护、可动态链接等一系列优点，又能像分页系统那样很好地解决内存的外部碎片问题，以及可为各个分段离散地分配内存等问题。把这种结合起来形成的新系统称为“段页式系统”。</p>
+<p>1）基本原理</p>
+<p>段页式系统的基本原理，是分段和分页原理的结合，即先将用户程序分成若干个段，再把每个段分成若干个页，并为每一个段赋予一个段名。下图一个作业地址空间的结构。该作业有三个段，页面大小为 4 KB。</p>
+<p><img src="source/images/操作系统3：存储器管理/image-20220824173406111.png" alt="image-20220824173406111" style="zoom:67%;"></p>
+<p>在段页式系统中，其地址结构由段号、段内页号及页内地址三部分所组成，如上图所示。</p>
+<p>在段页式系统中，为了实现从逻辑地址到物理地址的变换，系统中需要同时配置段表和页表。段表的内容不再是内存始址和段长，而是页表始址和页表长度。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210809221054415-1013582389.png" alt="img" style="zoom: 67%;"></p>
+<p>2）地址变换过程</p>
+<p>在段页式系统中，为了便于实现地址变换，须配置一个段表寄存器，其中存放段表始址和段表长 TL。进行地址变换时，首先利用段号 S，将它与段表长 TL 进行比较。若 S&lt;TL，表示未越界，于是利用段表始址和段号来求出该段所对应的段表项在段表中的位置，从中得到该段的页表始址，并利用逻辑地址中的段内页号 P 来获得对应页的页表项位置，从中读出该页所在的物理块号 b，再利用块号 b 和页内地址来构成物理地址。下图是段页式系统中的地址变换机构。</p>
+<p><img src="source/images/操作系统3：存储器管理/1774310-20210809224418501-1762243473.png" alt="img"></p>
+<p>在段页式系统中，为了获得一条指令或数据，须三次访问内存。第一次访问是访问内存中的段表，从中取得页表始址；第二次访问是访问内存中的页表，从中取出该页所在的物理块号，并将该块号与页内地址一起形成指令或数据的物理地址；第三次访问才是真正从第二次访问所得的地址中，取出指令或数据。</p>
+<p>显然，这使访问内存的次数增加了近两倍。为了提高执行速度，在地址变换机构中增设一个高速缓冲寄存器。每次访问它时，都须同时利用段号和页号去检索高速缓存，若找到匹配的表项，便可从中得到相应页的物理块号，用来与页内地址一起形成物理地址；若未找到匹配表项，则仍须再三次访问内存。由于它的基本原理与分页及分段的情况相似，故在此不再赘述。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Longfat</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://Longfater.github.io/2022/10/27/cao-zuo-xi-tong-3-cun-chu-qi-guan-li/">https://Longfater.github.io/2022/10/27/cao-zuo-xi-tong-3-cun-chu-qi-guan-li/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Longfat</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/OS/">
+                                    <span class="chip bg-color">OS</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+    <div class="livere-card card" data-aos="fade-up">
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" class="card-content" data-id="city" data-uid="MTAyMC81NTY2NC8zMjEzMQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                let j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') {
+                    return;
+                }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript。</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</div>
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/10/27/cao-zuo-xi-tong-4-xu-ni-cun-chu-qi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="操作系统4：虚拟存储器">
+                        
+                        <span class="card-title">操作系统4：虚拟存储器</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Longfat
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/OS/">
+                        <span class="chip bg-color">OS</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/10/27/cao-zuo-xi-tong-2-chu-li-ji-diao-du-yu-si-suo/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="操作系统2：处理机调度与死锁">
+                        
+                        <span class="card-title">操作系统2：处理机调度与死锁</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Longfat
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/OS/">
+                        <span class="chip bg-color">OS</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022</span>
+            
+            <span id="year">2022</span>
+            <a href="/about" target="_blank">Longfat</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">116.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Longfater" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2094717311@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2094717311" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2094717311" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

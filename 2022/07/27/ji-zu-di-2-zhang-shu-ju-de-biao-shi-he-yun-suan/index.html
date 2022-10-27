@@ -401,9 +401,6 @@
         <hr class="clearfix">
 
         
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.css">
-        
 
         
 
@@ -592,31 +589,24 @@ B2O_{w}(\vec{x})=-x_{w-1}(2^{w-1}-1)+\sum_{i=0}^{w-2}x_{i}2^{i}</script><p>由�
 <li>强制类型转换的原理</li>
 </ol>
 <p>C语言允许在不同的数据类型之间进行强制类型转换。</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">int main(){
-    short x=-4321;
-    unsigned short y=(unsigned short)x;
-    printf("x=%d, y=%u\n",x,y);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>{</span><br><span class="line">    <span class="type">short</span> x=<span class="number">-4321</span>;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">short</span> y=(<span class="type">unsigned</span> <span class="type">short</span>)x;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"x=%d, y=%u\n"</span>,x,y);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>在采用补码的机器上，上述代码会输出如下结果：</p>
-<pre class="line-numbers language-none"><code class="language-none">x=-4321,y=61215<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x=-4321,y=61215</span><br></pre></td></tr></tbody></table></figure>
 <p>这两个值看似没有任何关系，不过将它们转换为二进制表示时，我们就会发现其中的规律：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">x=11111111111111111110111100011111
-y=                1110111100011111<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">11111111111111111110111100011111</span></span><br><span class="line">y=                <span class="number">1110111100011111</span></span><br></pre></td></tr></tbody></table></figure>
 <p>可以发现x和y的二进制表示是一致的，只不过x进行了符号扩展。</p>
 <p>因此，<strong>强制类型转换的结果保持位值不变，仅改变了解释这些位值的方式。</strong></p>
 <ol>
 <li>有符号数与无符号数的相互转换方式</li>
 </ol>
 <p>【2016统考真题】有如下C语言程序段：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">short si = -32767;
-unsigned short usi = si;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">short</span> si = <span class="number">-32767</span>;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">short</span> usi = si;</span><br></pre></td></tr></tbody></table></figure>
 <p>执行上述两条语句后，<code>usi</code>的值为（  ）。</p>
-<pre class="line-numbers language-none"><code class="language-none">A. -32767	B. 32767	C. 32768	D. 32769<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A. -32767	B. 32767	C. 32768	D. 32769</span><br></pre></td></tr></tbody></table></figure>
 <p>【2019统考真题】考虑以下C语言代码：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">unsigned short usi = 65535;
-short si = usi;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">short</span> usi = <span class="number">65535</span>;</span><br><span class="line"><span class="type">short</span> si = usi;</span><br></pre></td></tr></tbody></table></figure>
 <p>执行上述程序段后，<code>si</code>的值是（  ）。</p>
-<pre class="line-numbers language-none"><code class="language-none">A. -1	B. -32767	C. -32768	D. -65535<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A. -1	B. -32767	C. -32768	D. -65535</span><br></pre></td></tr></tbody></table></figure>
 <p>【分析】：这两个题都是对无符号数与有符号数的相互转换的考察，我们要熟悉无符号数与有符号数的表示范围与转换规则。</p>
 <p><img src="/images/计组第2章-数据的表示和运算/image-20220707213217903.png" alt=""></p>
 <p><img src="/images/计组第2章-数据的表示和运算/image-20220707213230541.png" alt=""></p>
@@ -1229,7 +1219,7 @@ N=(-1)^{S}×M×R^{E}</script><p>其中，S为数符，取值0或1，用来决定
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">17.2k</span>&nbsp;字
+                class="white-color">116.2k</span>&nbsp;字
             
             
             
