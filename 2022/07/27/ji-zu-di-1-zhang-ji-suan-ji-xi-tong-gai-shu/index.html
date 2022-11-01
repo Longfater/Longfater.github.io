@@ -409,7 +409,7 @@
                 <h3 id="第一章-计算机系统概述"><a href="#第一章-计算机系统概述" class="headerlink" title="第一章 计算机系统概述"></a>第一章 计算机系统概述</h3><blockquote>
 <p>计算机系统组成（硬件+软件）</p>
 </blockquote>
-<h4 id="冯诺依曼基本思想"><a href="#冯诺依曼基本思想" class="headerlink" title="冯诺依曼基本思想"></a>冯诺依曼基本思想</h4><p>1.采用\”<strong>存储程序</strong>\”的工作方式:将事先编制好的程序和原始数据送入主存后才能执行，一旦程序启动，就无需操作人员的干预，计算机会自动逐条执行指令，直至程序执行结束。</p>
+<h4 id="冯诺依曼基本思想"><a href="#冯诺依曼基本思想" class="headerlink" title="冯诺依曼基本思想"></a>冯诺依曼基本思想</h4><p>1.采用"<strong>存储程序</strong>"的工作方式:将事先编制好的程序和原始数据送入主存后才能执行，一旦程序启动，就无需操作人员的干预，计算机会自动逐条执行指令，直至程序执行结束。</p>
 <p>2.计算机硬件系统由<strong>运算器</strong>、<strong>存储器</strong>、<strong>控制器</strong>、<strong>输入设备</strong>和<strong>输出设备</strong>5大部件组成。</p>
 <p>3.指令和数据以同等地位存储在存储器中，形式上没有区别（均为二进制数据），CPU区分它们的依据是<strong>指令周期的不同阶段</strong>。</p>
 <p>4.指令和数据均用二进制代码表示。指令由<strong>操作码</strong>和<strong>地址码</strong>组成。</p>
@@ -437,7 +437,10 @@
 <p>指令寄存器IR：存放当前的指令</p>
 <p>控制单元CU</p>
 </blockquote>
-<p><img src="/images/计组第1章-计算机系统概述/78B48B19BF429509004C6EC7AAF66760.png" alt="冯诺依曼机硬件组成" style="zoom:67%;"></p>
+<img src="/images/计组第1章-计算机系统概述/78B48B19BF429509004C6EC7AAF66760.png" alt="冯诺依曼机硬件组成" style="zoom:67%;">
+
+
+
 <h4 id="软件"><a href="#软件" class="headerlink" title="软件"></a>软件</h4><p>1.系统软件和应用软件</p>
 <p>系统软件是一组保证计算机系统高效、正确运行的基础软件，通常作为系统资源提供给用户使用。</p>
 <p>应用软件是指用户为解决某个应用领域中的各类问题而编制的程序。</p>
@@ -448,8 +451,11 @@
 <blockquote>
 <p>软件和硬件具有逻辑功能等价性</p>
 </blockquote>
-<p><img src="/images/计组第1章-计算机系统概述/678A13280398138D415B9429E8ADA563.png" alt="计算机层次结构" style="zoom:67%;"></p>
-<h4 id="计算机工作原理"><a href="#计算机工作原理" class="headerlink" title="计算机工作原理"></a>计算机工作原理</h4><p>1.\”存储程序\”的工作方式</p>
+<img src="/images/计组第1章-计算机系统概述/678A13280398138D415B9429E8ADA563.png" alt="计算机层次结构" style="zoom:67%;">
+
+
+
+<h4 id="计算机工作原理"><a href="#计算机工作原理" class="headerlink" title="计算机工作原理"></a>计算机工作原理</h4><p>1."存储程序"的工作方式</p>
 <blockquote>
 <p>程序执行前将程序所含的指令和数据送入主存，程序执行后自动逐条完成指令的取出和执行任务，无需操作人员干预。</p>
 </blockquote>
@@ -470,22 +476,30 @@
 <p>吞吐量和响应时间：吞吐量指系统在单位时间内处理请求的数量。</p>
 <p><strong>主频和CPU时钟周期</strong>：CPU时钟周期是CPU中最小的时间单位，执行指令的最小动作至少需要一个时钟周期。主频是CPU时钟周期的倒数，单位为Hz，指CPU内核工作的时钟频率，即CPU内数字脉冲信号的振荡频率。f=1/T，主频=外频×倍频。</p>
 <p><strong>CPI</strong>：即执行一条指令所需的时钟周期数，一般计算的是平均CPI：</p>
-<p>​          CPI=∑(程序中各类指令的CPI×程序中该类指令的比例)。</p>
+<p>​		  CPI=∑(程序中各类指令的CPI×程序中该类指令的比例)。</p>
 <p>IPC(Instruction per Clock):每个时钟周期内执行的指令条数（并行）。</p>
 <p>CPU执行时间=CPU时钟周期数/主频=(指令条数×CPI)/主频，故CPU的性能取决于3个要素：主频、CPI、指令条数。</p>
 <p>MIPS：即每秒钟执行多少百万条指令。 MIPS=指令条数/(执行时间×10⁶)=主频/(CPI×10⁶)</p>
 <p>MFLOPS：即每秒钟执行多少百万次浮点运算。</p>
 </blockquote>
-<p><img src="/images/计组第1章-计算机系统概述/image-20220706092517384.png" alt="全性能公式" style="zoom: 67%;"></p>
+<img src="/images/计组第1章-计算机系统概述/image-20220706092517384.png" alt="全性能公式" style="zoom: 67%;">
+
+
+
 <h4 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h4><p>计算机系统硬件组成</p>
-<p><img src="/images/计组第1章-计算机系统概述/计算机硬件组成.jpg" alt="计算机硬件组成" style="zoom:67%;"></p>
+<img src="/images/计组第1章-计算机系统概述/计算机硬件组成.jpg" alt="计算机硬件组成" style="zoom:67%;">
+
 <p>存储器层次结构（<strong>寄存器&gt;cache&gt;主存</strong>）</p>
-<p><img src="/images/计组第1章-计算机系统概述/存储器层次结构.jpg" alt="存储器层次结构" style="zoom:67%;"></p>
+<img src="/images/计组第1章-计算机系统概述/存储器层次结构.jpg" alt="存储器层次结构" style="zoom:67%;">
+
 <p>Amdahl定律</p>
-<p><img src="/images/计组第1章-计算机系统概述/Amdahl定律.jpg" alt="Amdahl定律" style="zoom: 67%;"></p>
+<img src="/images/计组第1章-计算机系统概述/Amdahl定律.jpg" alt="Amdahl定律" style="zoom: 67%;">
+
 <p>易混淆知识点</p>
 <blockquote>
 <p>在CPU中，IR、MAR、和MDR对各类程序员都是透明不可见的。</p>
+</blockquote>
+<blockquote>
 <p>bit：位或比特，一个二进制位即为一个比特，只能容纳一个0或者一个1。</p>
 <p>Byte：字节，1Byte = 8bits。</p>
 <p>字（word）与字长：字是指在计算机中作为一个整体被存取、传输、处理的一组二进制数据。一个字的位数即称为字长，32位计算机：1字=32位=4字节；64位计算机：1字=64位=8字节。</p>

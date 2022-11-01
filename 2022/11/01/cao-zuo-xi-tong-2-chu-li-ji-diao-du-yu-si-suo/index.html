@@ -1,0 +1,1432 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="操作系统2-处理机调度与死锁, 龙胖的博客">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>操作系统2-处理机调度与死锁 | 龙胖的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="龙胖的博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">龙胖的博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">龙胖的博客</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">操作系统2-处理机调度与死锁</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/OS/">
+                                <span class="chip bg-color">OS</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-11-01
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-11-01
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    10.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    36 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="第三章-处理机调度与死锁"><a href="#第三章-处理机调度与死锁" class="headerlink" title="第三章 处理机调度与死锁"></a>第三章 处理机调度与死锁</h1><blockquote>
+<p>在多道程序环境下，内存中存在着多个进程，其数目往往多于处理机的数目。这就要求系统能按照某种算法，动态地将处理机分配给处于就绪状态的一个进程，使之执行。分配处理机的任务由处理机调度程序完成。调度的实质是一种资源分配，处理机调度是对处理机资源进行分配。</p>
+</blockquote>
+<h4 id="3-1-处理机调度层次和调度算法的目标"><a href="#3-1-处理机调度层次和调度算法的目标" class="headerlink" title="3.1 处理机调度层次和调度算法的目标"></a>3.1 处理机调度层次和调度算法的目标</h4><p>一、处理机调度的层次</p>
+<h5 id="1-高级调度"><a href="#1-高级调度" class="headerlink" title="1. 高级调度"></a>1. 高级调度</h5><p>高级调度又称为长程调度或<strong>作业调度</strong>，它的调度对象是作业。其主要功能是根据某种算法，决定将外存上处于后备队列中的哪几个作业调入内存，为它们创建进程、分配必要的资源，并将它们放入就绪队列。高级调度主要用于多道批处理系统中，而在分时系统和实时系统中不设置高级调度。</p>
+<h5 id="2-低级调度"><a href="#2-低级调度" class="headerlink" title="2. 低级调度"></a>2. 低级调度</h5><p>低级调度又称为短程调度或<strong>进程调度</strong>，其所调度的对象是进程（或内核级线程）。其主要的功能是，根据某种算法，决定就绪队列中的哪个进程应获得处理机，并由分派程序将处理机分配给被选中的进程。进程调度是最基本的一种调度，在多道批处理、分时和实时三种类型的OS中，都必须配置进程调度。进程调度的运行频率最高，不宜使进程调度算法太复杂。</p>
+<h5 id="3-中级调度"><a href="#3-中级调度" class="headerlink" title="3. 中级调度"></a>3. 中级调度</h5><p>中级调度又称为<strong>内存调度</strong>。引入中级调度的主要目的是，提高内存利用率和系统吞吐量。为此，应把那些暂时不能运行的进程，调至外存等待，此时进程的状态称为就绪驻外存状态（或挂起状态）。当它们已具备运行条件且内存又稍有空闲时，由中级调度来决定，把外存上的那些已具备运行条件的就绪进程再重新调入内存，并修改其状态为就绪状态，挂在就绪队列上等待。</p>
+<p>中级调度实际上就是存储器管理中的对换功能，将在第四章中介绍。</p>
+<p>二、处理机调度算法的目标</p>
+<h5 id="4-调度算法的共同目标"><a href="#4-调度算法的共同目标" class="headerlink" title="4. 调度算法的共同目标"></a>4. 调度算法的共同目标</h5><p>1）资源利用率。为提高系统的资源利用率，应使系统中的处理机和其它所有资源都尽可能地保持忙碌状态。其中最重要的处理机利用率可以用以下方法计算：<br>$$<br>CPU利用率=\frac{CPU有效工作时间}{CPU有效工作时间+CPU空闲等待时间}<br>$$<br>2）公平性。公平性是指应使诸进程都获得合理的CPU时间，不会发生进程饥饿现象。</p>
+<p>3）平衡性。在系统中可能具有多种类型的进程，有的属于计算型作业，有的属于I/O型，调度算法应尽可能保持其平衡。</p>
+<p>4）策略强制执行。对所制定的策略其中包括安全策略，只要需要，就必须予以准确地执行，即使会造成某些工作的延迟也要执行。</p>
+<h5 id="5-批处理系统的目标"><a href="#5-批处理系统的目标" class="headerlink" title="5. 批处理系统的目标"></a>5. 批处理系统的目标</h5><p>1）平均周转时间短。所谓周转时间，是指从作业被提交给系统开始，到作业完成为止的这段时间间隔。它包括四部分时间：在外存后备队列上等待作业调度的时间、在内存就绪队列上等待进程调度的时间、进程在CPU上执行的时间，以及进程等待I/O操作完成的时间。</p>
+<p>对于每个用户而言，都希望自己作业的周转时间最短，而对于计算机系统的管理者而言，则希望作业的平均周转时间最短。作业的平均周转时间即为各作业周转时间的平均值。</p>
+<p>为了进一步反映调度的性能，更清晰地描述各进程在其周转时间中，等待和执行时间的具体分配状况，往往使用带权周转时间，即作业的周转时间$T$与系统为它提供服务的时间$T_{s}$之比,即$W=T/T_{S}$。</p>
+<p>故平均带权周转时间为各作业带权周转时间的平均值，即：<br>$$<br>W=\frac{1}{n}\sum_{i=1}^{n}{\frac{T_{i}}{T_{s}}}<br>$$<br>2）系统吞吐量高。由于吞吐量是指在单位时间内系统所完成的作业数，因而它与批处理作业的平均长度有关。</p>
+<p>3）处理机的利用率高。</p>
+<h5 id="6-分时系统的目标"><a href="#6-分时系统的目标" class="headerlink" title="6. 分时系统的目标"></a>6. 分时系统的目标</h5><p>1）响应时间快。所谓响应时间，是从用户通过键盘提交一个请求开始，直到屏幕上出现处理结果为之的一段时间间隔。</p>
+<p>2）均衡性。指系统响应时间的快慢应与用户所请求服务的复杂性相适应。</p>
+<h5 id="7-实时系统的目标"><a href="#7-实时系统的目标" class="headerlink" title="7. 实时系统的目标"></a>7. 实时系统的目标</h5><p>1）截至时间的保证。所谓截止时间，是指某任务必须开始执行的最迟时间，或必须完成的最迟时间。对于严格的实时系统，其调度方式和调度算法必须能保证这一点。</p>
+<p>2）可预测性。</p>
+<h4 id="3-2-作业与作业调度"><a href="#3-2-作业与作业调度" class="headerlink" title="3.2 作业与作业调度"></a>3.2 作业与作业调度</h4><p>在多道批处理系统中，作业是用户提交给系统的一项相对独立的工作。作业通过输入设备输入到磁盘存储器，并保存在一个后备作业队列中，再由作业调度程序将其从外存调入内存。</p>
+<h5 id="1-批处理系统中的作业"><a href="#1-批处理系统中的作业" class="headerlink" title="1. 批处理系统中的作业"></a>1. 批处理系统中的作业</h5><p>1）作业与作业步</p>
+<p>作业（Job）：作业不仅包含了通常的程序和数据，而且还应配有一份作业说明书，系统根据该说明书来对程序的运行进行控制。在批处理系统中，是以作业为基本单位从外存调入内存的。</p>
+<p>作业步（Job Step）：通常，在作业运行期间，每个作业都必须经过若干个相对独立又相互关联的顺序加工步骤才能得到结果，我们把其中的每个步骤称为一个作业步。</p>
+<p>2）作业控制块JCB</p>
+<p>为了管理和调度作业，在多道批处理系统中，为每个作业设置了一个作业控制块JCB，它是作业在系统中存在的标志，其中保存了系统对作业进行管理和调度所需的全部信息。</p>
+<p>通常在JCB中包含的内容有：作业标识、用户名称、用户账号、作业类型、作业状态、调度信息、资源需求、资源使用情况等。</p>
+<p>3）作业运行的阶段</p>
+<p>作业从进入系统到运行结束，通常需要经历收容、运行和完成三个阶段。相应地，作业也就有后备状态、运行状态和完成状态。</p>
+<h5 id="2-作业调度的主要任务"><a href="#2-作业调度的主要任务" class="headerlink" title="2. 作业调度的主要任务"></a>2. 作业调度的主要任务</h5><p>作业调度的主要任务是，根据JCB中的信息，检查系统中的资源能否满足作业对资源的需求，以及按照一定的调度算法，从外存的后备队列中选取某些作业调入内存，并为它们创建进程、分配必要的资源。然后再将新创建的进程排在就绪队列上等待调度。</p>
+<p>每次执行作业调度时，都需要做出两个决定：接纳多少作业和接纳哪些作业。</p>
+<p>对系统来说，希望装入较多的作业，有利于提高CPU的利用率和系统吞吐量。但如果内存中同时运行的作业太多，进程在运行时因为内存不足所发生的中断就会急剧增加。这将会使平均周转时间显著延长，影响到系统的服务质量。因此，多道程序度的确定是根据计算机的系统规模、运行速度、作业大小，以及能否获得较好的系统性能等情况作出适当的抉择的。</p>
+<p>接纳哪些作业取决于所采用的调度算法。</p>
+<h5 id="3-作业调度算法"><a href="#3-作业调度算法" class="headerlink" title="3. 作业调度算法"></a>3. 作业调度算法</h5><p>1）先来先服务（first-come first-served,FCFS）调度算法</p>
+<p>系统按照作业的先后到达次序来进行调度。或者说它是在优先考虑在系统中等待时间最长的作业，而不考虑该作业所需执行时间的长短。FCFS是最简单的调度算法，既可以用于作业调度，也可以用于进程调度。FCFS算法在单处理机系统中已很少作为主调度算法，但经常把它与其它调度算法相结合，形成一种更为有效的算法。</p>
+<p>特点：算法简单但效率低；对长作业有利，对短作业不利（相对于短作业优先和高响应比优先算法）；有利于CPU繁忙型作业，而不利于I/O繁忙型作业。</p>
+<p>2）短作业优先（short job first,SJF）调度算法</p>
+<p>短作业优先算法是以作业的长短来计算优先级，作业越短，其优先级越高。作业的长短是以作业所要求的运行时间来衡量的。SJF算法可以分别用于进程调度和作业调度。短作业优先算法的优点是作业的平均等待时间、平均周转时间最少，因为长作业在最后运行，不会出现长作业运行时有多个短作业同时等待的情况。</p>
+<p>短作业优先调度算法的缺点：</p>
+<ol>
+<li>必须预知作业的运行时间。</li>
+<li>对长作业非常不利，长作业的周转时间会明显的增长。</li>
+<li>在采用SJF算法时，人机无法实现交互。</li>
+<li>该调度算法没有考虑作业的紧迫程度，故不能保证紧迫性作业能够得到及时处理。</li>
+</ol>
+<p>3）优先级调度算法（PSA）</p>
+<p>在优先级调度算法中，基于作业的紧迫程度，由外部赋予作业相应的优先级，紧迫程度高的作业优先调度。这样就可以保证紧迫性作业优先运行。优先级调度算法可以作为作业调度算法，也可以作为进程调度算法。</p>
+<p>4）高响应比优先调度算法（HRRN）</p>
+<p>在批处理系统中，FCFS算法所考虑的只是作业的等待时间，而忽视了作业的运行时间。而SJF算法则正好相反，只考虑作业的运行时间，而忽视了作业的等待时间。高响应比优先调度算法则既考虑了作业的等待时间，又考虑了作业的运行时间。因此既照顾了短作业，又不致使长作业的等待时间过长，从而改善了处理机调度的性能。</p>
+<p>高响应比优先调度算法为每个作业引入一个动态的优先级，优先级随着等待时间的延长而增加，这使长作业的优先级在等待过程中不断增加，等到足够的时间后，必然有机会获得处理机。优先级的变化规律可描述为：<br>$$<br>优先权=\frac{等待时间+要求服务时间}{要求服务时间}<br>$$<br>等待时间与服务时间之和就是系统对该作业的响应时间，故优先级相当于响应比$R_{p}$。<br>$$<br>R_{P}=\frac{等待时间+要求服务时间}{要求服务时间}=\frac{响应时间}{要求服务时间}<br>$$<br>由上式可以看出：</p>
+<ol>
+<li>如果作业的等待时间相同，则要求服务的时间越短，其优先权越高，因而类似于SJF算法，有利于短作业。</li>
+<li>当要求服务的时间相同时，作业的优先权又决定于其等待时间，等待时间越长优先级越高，因而该算法又类似于FCFS算法。</li>
+<li>对于长作业的优先级，可以随等待时间的增加而提高，其等待时间足够长时，也可获得处理机。</li>
+</ol>
+<p>因此该算法实现了较好的折中。当然在利用该算法时，每次进行调度之前都需要先做响应比的计算，显然会增加系统开销。</p>
+<h4 id="3-3-进程调度"><a href="#3-3-进程调度" class="headerlink" title="3.3 进程调度"></a>3.3 进程调度</h4><p>进程调度是操作系统中必不可少的一种调度。</p>
+<h5 id="1-进程调度的任务、机制和方式"><a href="#1-进程调度的任务、机制和方式" class="headerlink" title="1. 进程调度的任务、机制和方式"></a>1. 进程调度的任务、机制和方式</h5><p>1）进程调度的任务</p>
+<p>进程调度的任务主要有三：</p>
+<p>（1）保存处理机的现场信息。在进行调度时首先要保存当前进程的处理机的现场信息，如程序计数器、多个寄存器中的内容等。</p>
+<p>（2）按某种算法选取进程。调度程序按某种算法从就绪队列中选取一个进程，将其状态改为运行状态，并准备把处理机分配给它。</p>
+<p>（3）把处理机分配给进程。由分派程序把处理机分配给该进程，此时需要将选中进程的进程控制块内有关处理机现场的信息装入处理器相应的各个寄存器内，把处理器的控制权交给该进程，让它从上次的断点处恢复运行。</p>
+<p>2）进程调度的机制</p>
+<p>为了实现进程调度，在进程调度机制中应包含如下三个基本部分。</p>
+<p>（1）排队器。为了提高进程调度的效率，应事先将系统中的所有就绪进程按照一定的策略排成一个或多个队列，以便调度程序能够尽快地找到它。以后每有一个进程转变为就绪状态时，排队器便将它插入到相应的就绪队列。</p>
+<p>（2）分派器。分派器依照进程调度程序所选定的进程，将其从就绪队列中取出，然后进行从分派器到新选出进程间的上下文切换，将处理机分配给新选出的进程。</p>
+<p>（3）上下文切换器。在对处理机进行切换时，会发生两对上下文切换操作：一、第一对上下文切换时，OS将保存当前进程的上下文，即把当前的处理机寄存器内容保存到该进程进程控制块的相应单元，再装入分派程序的上下文，以便分派程序运行。二、第二对上下文切换是移出分派程序的上下文，而把新选进程的CPU现场信息装入到处理机的各个相应寄存器中，以便新选进程运行。</p>
+<p>在进行上下文切换时需要执行大量的load和store等操作指令，需要花费大量的时间。现在已有靠硬件实现的方法来减少上下文切换的时间。一般采用两组寄存器，一组寄存器供处理机在系统态时使用，而另一组寄存器供应用程序使用，切换上下文只需改变指针，使其指向当前寄存器组即可。</p>
+<img src="/images/操作系统2-处理机调度与死锁/1774310-20210804135512985-298150332.png" alt="" style="zoom:80%;">
+
+<p>3）进程调度的方式</p>
+<p>（1）非抢占方式</p>
+<p>在采用非抢占方式时，一旦把处理机分配给某进程后，就一直让它运行下去，绝不会因为时钟中断或其它任何原因去抢占当前正在运行下进程的处理机，直至该进程完成或发生某事件而被阻塞时，才把处理机分配给其它进程。</p>
+<p>在采用非抢占调度方式时，可能引起进程调度的因素可归结为：</p>
+<ol>
+<li>正在执行的进程运行完毕，或因发生某事件而使其无法继续运行。</li>
+<li>正在执行中的进程因提出I/O请求而暂停执行。</li>
+<li>在进程通信或同步的过程中，执行了某种原语操作，如Block原语。</li>
+</ol>
+<p>这种调度方式的优点是实现简单、系统开销小，适用于大多数的批处理系统，但它不能用于分时系统和大多数实时系统。</p>
+<p>（2）抢占方式</p>
+<p>抢占调度方式允许调度进程根据某种原则去暂停执行某个正在运行的进程，将已分配给该进程的处理机重新分配给另一进程。对于批处理系统，可以防止一个长进程长时间的占用处理机，以确保处理机能为所有进程提供更为公平的服务。在分时系统中，只有使用抢占方式才有可能实现人机交互。在实时系统中，抢占方式能满足实时任务的需求。</p>
+<p>抢占不是一种任意性行为，必须遵循一定的原则，主要的原则有：</p>
+<ol>
+<li>优先权原则。允许优先级高的新到进程抢占当前进程的处理机。</li>
+<li>短进程优先原则。允许新到的短进程抢占当前长进程的处理机。</li>
+<li>时间片原则。即各进程按时间片轮转运行时，当正在执行的进程的一个时间片用完后，便停止该进程的执行而重新进行调度。</li>
+</ol>
+<h5 id="2-轮转调度算法"><a href="#2-轮转调度算法" class="headerlink" title="2. 轮转调度算法"></a>2. 轮转调度算法</h5><p>在分时系统中，最为简单也最为常见的是基于时间片的轮转调度算法。该算法采取了非常公平的处理机分配方式，既让就绪队列上的每一个进程每次仅运行一个时间片。如果就绪队列上有n个进程，则每个进程每次大约都可获得1/n的处理机时间。</p>
+<p>1）轮转法的基本原理</p>
+<p>在轮转法中，系统根据FCFS策略，将所有的就绪进程排成一个就绪队列，并可设置每隔一定时间间隔即产生一次中断，激活系统中的进程调度程序，完成一次调度，将CPU分配给队首进程，令其执行。当进程的时间片耗尽或者执行完毕时，系统再次将CPU分配给新的队首进程（或新到达的紧迫进程）。由此，就可以保证就绪队列中的所有进程在一个确定的时间段内，都能获得一次CPU执行。</p>
+<p>2）进程切换时机</p>
+<p>一、若时间片尚未用完，进程便已经执行完毕，就立即激活调度程序，将该进程从就绪队列中删除，再调度就绪队列的队首进程运行，并启动一个新的时间片。</p>
+<p>二、若时间片耗尽，则计时器中断处理程序被激活，如果该进程尚未执行完毕，调度程序将把它送入就绪队列的末尾。</p>
+<p>3）时间片大小的确定</p>
+<p>时间片过小，会频繁地执行进程调度和进程的上下文切换，增加系统开销；时间片过大，则无法满足短作业和交互式用户的需求。</p>
+<h5 id="3-优先级调度算法"><a href="#3-优先级调度算法" class="headerlink" title="3. 优先级调度算法"></a>3. 优先级调度算法</h5><p>1）优先级调度算法的类型</p>
+<p>（1）非抢占式优先级调度算法</p>
+<p>（2）抢占式优先级调度算法</p>
+<p>2）优先级的类型</p>
+<p>（1）静态优先级</p>
+<p>静态优先级是在进程创建时确定的，在进程的整个运行期间保持不变。</p>
+<p>确定进程优先级大小的因素有：进程类型（系统进程&gt;用户进程），进程对资源的需求（需求越少优先级越高），用户要求（紧迫程度）。静态优先级简单易行，系统开销小，但不够精确。</p>
+<p>（2）动态优先级</p>
+<p>动态优先级是指在创建进程之初，先赋予其一个优先级，然后其值随进程的推进或等待时间的增加而改变，以便获得更好的调度性能。前面介绍的作业调度算法中的高响应比优先调度算法就是典型的动态优先级。若所有的进程都拥有相同的优先级，则相当于先来先服务（FCFS）算法。</p>
+<h5 id="4-多队列调度算法"><a href="#4-多队列调度算法" class="headerlink" title="4. 多队列调度算法"></a>4. 多队列调度算法</h5><p>如前所述的各种调度算法，在系统中进设置一个进程的就绪队列，相应地也就只能应用一种调度算法，过于固定、单一，无法满足系统中不同用户对进程调度策略地不同要求，在多处理机系统中，这种单一调度策略的缺点更显突出。</p>
+<p>多队列调度算法将系统中的进程就绪队列从一个拆分为若干个，将不同类型或性质的进程固定分配在不同的就绪队列，不同的就绪队列可以按需采用不同的调度算法，一个就绪队列中的进程可以设置不同的优先级，不同的就绪队列本身也可以设置不同的优先级。</p>
+<h5 id="5-多级反馈队列调度算法"><a href="#5-多级反馈队列调度算法" class="headerlink" title="5. 多级反馈队列调度算法"></a>5. 多级反馈队列调度算法</h5><p>1）调度机制</p>
+<p>（1）设置多个就绪队列。并为每个队列赋予不同的优先级。第一个队列的优先级最高，其余队列的优先级逐个降低。</p>
+<p>（2）每个队列都采用FCFS算法。当新进程进入内存后，首先将它放入第一队列的末尾，按先来先服务原则等待调度。当轮到该进程执行时，如果它能在该时间片内完成，便可撤离系统。否则，即它在一个时间片结束时尚未完成，调度队列将其调入第二队列的末尾等待调度，依此类推。当进程最后被降到n级队列时，在第n队列中便按照轮转（RR）方式运行。</p>
+<p>（3）按队列优先级调度。调度程序首先调度最高优先级队列中的诸进程运行，仅当第一队列为空时才调度第二队列中的进程运行，以此类推。如果处理机正在第i队列中为某进程服务时又有新进程进入任一优先级更高的队列，则此时须立即把正在运行的进程放到第i队列的末尾，而把处理机分配给新到的高优先级进程。</p>
+<img src="/images/操作系统2-处理机调度与死锁/1774310-20210804162152080-1112528517.png" alt="" style="zoom:80%;">
+
+<p>2）调度算法的性能</p>
+<p>在多级反馈队列调度算法中，如果规定第一级队列的时间片略大于多数人机交互所需的处理时间，便能较好地满足各种类型用户的需求。</p>
+<h4 id="3-4-实时调度"><a href="#3-4-实时调度" class="headerlink" title="3.4 实时调度"></a>3.4 实时调度</h4><h5 id="1-实现实时调度的基本条件"><a href="#1-实现实时调度的基本条件" class="headerlink" title="1. 实现实时调度的基本条件"></a>1. 实现实时调度的基本条件</h5><p>（1）提供必要的信息。</p>
+<p>如就绪时间、开始截止时间和完成截止时间、处理时间、资源要求、优先级。</p>
+<p>（2）系统处理能力强。</p>
+<p>假定系统中有m个周期性的硬实时任务，它们的处理时间可表示为Ci，周期时间表示为Pi，则在单处理机情况下，必须满足下面的限制条件系统才是可调度的：<br>$$<br>\sum_{i=1}^{m}\frac{C_{i}}{P_{i}}≤1<br>$$<br>提高系统的处理能力，其途径有二：其一仍是采用单处理机系统，但须增强其处理能力，以显著地减少对每一个任务的处理时间；其二是采用多处理机系统。假定系统中的处理机数为 N，则应将上述的限制条件改为：<br>$$<br>\sum_{i=1}^{m}\frac{C_{i}}{P_{i}}≤N<br>$$<br>（3）采用抢占式调度机制。</p>
+<p>在含有硬实时任务的实时系统中，广泛采用抢占机制。当一个优先权更高的任务到达时，允许将当前任务暂时挂起，而令高优先权任务立即投入运行，这样便可满足该硬实时任务对截止时间的要求。但这种调度机制比较复杂。</p>
+<p>（4）具有快速切换机制。</p>
+<p>为保证要求较高的硬实时任务能及时运行，在实时系统中还应具有快速切换机制，以保证能进行任务的快速切换。该机制应具有如下两方面的能力：</p>
+<ul>
+<li>对外部中断的快速响应能力。为使在紧迫的外部事件请求中断时系统能及时响应，要求系统具有快速硬件中断机构，还应使禁止中断的时间间隔尽量短，以免耽误时机(其它紧迫任务)。</li>
+<li>快速的任务分派能力。在完成任务调度后，便应进行任务切换。为了提高分派程序进行任务切换时的速度，应使系统中的每个运行功能单位适当地小，以减少任务切换的时间开销。</li>
+</ul>
+<h5 id="2-实时调度算法的分类"><a href="#2-实时调度算法的分类" class="headerlink" title="2. 实时调度算法的分类"></a>2. 实时调度算法的分类</h5><p>可以按不同方式对实时调度算法加以分类，如根据实时任务性质的不同，可将实时调度的算法分为<strong>硬实时调度算法</strong>和<strong>软实时调度算法</strong>；而按调度方式的不同，又可分为<strong>非抢占调度算法</strong>和<strong>抢占调度算法</strong>； 还可因调度程序调度时间的不同而分成<strong>静态调度算法</strong>和<strong>动态调度算法</strong>，前者是指在进程执行前，调度程序便已经决定了各进程间的执行顺序，而后者则是在进程的执行过程中，由调度程序届时根据情况临时决定将哪一进程投入运行。在多处理机环境下，还可将调度算法分为<strong>集中式调度</strong>和<strong>分布式调度</strong>两种算法。</p>
+<p>这里，我们仅按调度方式的不同对调度算法进行分类。</p>
+<p>1）非抢占式调度算法</p>
+<p>（1）<strong>非抢占式轮转调度算法</strong>。</p>
+<p>由一台计算机控制若干个相同的(或类似的)对象，为每一个被控对象建立一个实时任务，并将它们排成一个轮转队列。调度程序每次选择队列中的第一个任务投入运行。当该任务完成后，便把它挂在轮转队列的末尾，等待下次调度运行，而调度程序再选择下一个(队首)任务运行。</p>
+<p>（2）<strong>非抢占式优先调度算法</strong></p>
+<p>如果在实时系统中存在着要求较为严格(响应时间为数百毫秒)的任务，则可采用非抢占式优先调度算法为这些任务赋予较高的优先级。当这些实时任务到达时，把它们安排在就绪队列的队首，等待当前任务自我终止或运行完成后才能被调度执行。</p>
+<p>2）抢占式调度算法</p>
+<p>（1）<strong>基于时钟中断的抢占式优先权调度算法</strong></p>
+<p>在某实时任务到达后，如果该任务的优先级高于当前任务的优先级，这时并不立即抢占当前任务的处理机，而是等到时钟中断到来时，调度程序才剥夺当前任务的执行，将处理机分配给新到的高优先权任务。这种调度算法能获得较好的响应效果，其调度延迟可降为几十毫秒至几毫秒。因此，此算法可用于大多数的实时系统中。</p>
+<p>（2）<strong>立即抢占(Immediate Preemption)的优先权调度算法</strong></p>
+<p>在这种调度策略中，要求操作系统具有快速响应外部事件中断的能力。一旦出现外部中断，只要当前任务未处于临界区，便立即剥夺当前任务的执行，把处理机分配给请求中断的紧迫任务。这种算法能获得非常快的响应，可把调度延迟降低到几毫秒至 100 微秒，甚至更低。</p>
+<img src="/images/操作系统2-处理机调度与死锁/image-20220826134933125.png" alt="image-20220826134933125" style="zoom: 80%;">
+
+<h5 id="3-常见的实时调度算法"><a href="#3-常见的实时调度算法" class="headerlink" title="3. 常见的实时调度算法"></a>3. 常见的实时调度算法</h5><p>1）最早截止时间优先（Earliest Deadline First,EDF）算法</p>
+<p>根据任务的开始截止时间确定任务优先级的调度算法。截止时间越早则优先级越高。该算法要求在系统中保持一个实时任务就绪队列，该队列按各任务截止时间的先后排序。</p>
+<p>2）最低松弛度优先（Least Laxity First,LLF）算法</p>
+<p>该算法是根据任务紧急(或松弛)的程度，来确定任务的优先级。任务的紧急程度愈高，为该任务所赋予的优先级就越高，以使之优先执行。</p>
+<h5 id="4-优先级倒置"><a href="#4-优先级倒置" class="headerlink" title="4. 优先级倒置"></a>4. 优先级倒置</h5><p>何谓“优先级倒置”现象，可采用什么方法来解决？</p>
+<p>答：优先级倒置，即高优先级进程被低优先级进程延迟或阻塞的现象。</p>
+<p>优先级倒置的解决方法：</p>
+<p>(1) 规定进程在进入临界区后，其所占有的处理机不允许被抢占。</p>
+<p>(2) 动态优先级继承。</p>
+<h4 id="3-5-死锁概述"><a href="#3-5-死锁概述" class="headerlink" title="3.5 死锁概述"></a>3.5 死锁概述</h4><h5 id="1-资源问题"><a href="#1-资源问题" class="headerlink" title="1. 资源问题"></a>1. 资源问题</h5><p>1）可重用性资源和消耗性资源。</p>
+<ul>
+<li><p>可重用性资源。<br>是一种可供用户重复使用多次的资源。每一个可重用性资源只能分配给一个进程使用，不允许多个进程共享。资源的单元数目是相对固定的，在运行期间既不能创建也不能删除它。例如设备、文件。</p>
+</li>
+<li><p>消耗性资源。<br>在进程运行期间，由进程动态地创建和消耗。资源的单元数目在进程运行期间可以不断变化的。进程可以请求若干个可消耗性资源单元。可消耗性资源通常由生产者创建，消费者消耗。例如进程间通信的消息。</p>
+</li>
+</ul>
+<p>2）可抢占性资源和不可抢占性资源。</p>
+<ul>
+<li>可抢占性资源不会引起死锁。</li>
+<li>不可抢占性资源是指资源一旦被分配给进程，只能在进程用完后自行释放。</li>
+</ul>
+<h5 id="2-计算机系统中的死锁"><a href="#2-计算机系统中的死锁" class="headerlink" title="2. 计算机系统中的死锁"></a>2. 计算机系统中的死锁</h5><ol>
+<li><p>竞争不可抢占性资源引起死锁。<br>两进程分别保持一个临界资源，而又分别因请求对方所保持的资源被阻塞。</p>
+<img src="/images/操作系统2-处理机调度与死锁/1774310-20210805143451008-1059689047.png" alt="" style="zoom: 67%;">
+</li>
+<li><p>竞争可消耗性资源引起死锁。<br>一进程需接受到对方发送的消息a后才能发送消息b，而另一进程需接受到对方发送的消息b后才能发送消息a。</p>
+<img src="/images/操作系统2-处理机调度与死锁/1774310-20210805144306792-1233499135.png" alt="" style="zoom: 67%;">
+</li>
+<li><p>进程推进顺序不当引起死锁。<br>进程在运行过程中，对资源的申请和释放的顺序非法引起死锁。</p>
+</li>
+</ol>
+<h5 id="3-死锁的定义、必要条件和处理方法"><a href="#3-死锁的定义、必要条件和处理方法" class="headerlink" title="3. 死锁的定义、必要条件和处理方法"></a>3. 死锁的定义、必要条件和处理方法</h5><ol>
+<li><p>死锁的定义。<br>如果一组进程中的每一个进程都在等待仅由该组进程中的其它进程才能引发的事件，那么该组进程是死锁的（Deadlock）。</p>
+</li>
+<li><p>产生死锁的必要条件。</p>
+<ul>
+<li><strong>互斥条件</strong>：即在一段时间内某资源只由一个进程占用。如果其它进程请求该资源则只能等待。</li>
+<li><strong>请求和保持条件</strong>：指进程已经保持了至少一个资源，又请求新资源而被阻塞，但又对自己已获得的资源保持不放。</li>
+<li><strong>不可抢占条件</strong>：进程已获得的资源在未使用完之前不能被抢占，只能在进程使用完时由进程自己释放。</li>
+<li><strong>循环等待条件</strong>：即存在一个进程——资源的循环链。</li>
+</ul>
+</li>
+<li><p>处理死锁的方法。</p>
+<ul>
+<li>预防死锁：即破坏产生死锁的四个必要条件中的一个或几个条件。</li>
+<li>避免死锁：在资源的动态分配过程中，用某种方法去防止系统进入不安全状态。</li>
+<li>检测死锁：允许发生死锁，但可通过系统所设置的检测机构，及时地检测出死锁的发生，然后采取适当措施。</li>
+<li>解除死锁：常用的实施方法是撤消或挂起一些进程，以便回收一些资源，再将这些资源分配给已处于阻塞状态的进程。</li>
+</ul>
+<p>上述方法对死锁的防范程度逐渐减弱，但对应的是资源利用率的提高，以及进程因资源因素而阻塞的频度下降（即并发程度提高）。</p>
+</li>
+</ol>
+<h4 id="3-6-预防死锁"><a href="#3-6-预防死锁" class="headerlink" title="3.6 预防死锁"></a>3.6 预防死锁</h4><p>由于互斥条件是非共享设备所必须的，不仅不能改变，还应加以保证，因此主要是破坏其它三个条件。</p>
+<h5 id="1-破化“请求和保持”条件"><a href="#1-破化“请求和保持”条件" class="headerlink" title="1. 破化“请求和保持”条件"></a>1. 破化“请求和保持”条件</h5><p>1）第一种协议</p>
+<p>规定所有进程在开始运行之前，都必须一次性地申请其在整个运行过程所需的全部资源。在整个运行期间便不会再提出资源要求，从而破坏了请求条件。在分配资源时，只要有一种资源不能满足某进程的要求，即使其它所需的各资源都空闲，也不分配给该进程，即在该进程的等待期间，它并未占有任何资源，因而也破坏了保持条件。</p>
+<p>2）第二种协议</p>
+<p>允许进程只获得运行初期所需的资源后，便开始运行。进程运行过程中再逐步释放已分配给自己的、且已用毕的全部资源，然后再去请求新的所需资源。</p>
+<h5 id="2-破坏“不可抢占”条件"><a href="#2-破坏“不可抢占”条件" class="headerlink" title="2. 破坏“不可抢占”条件"></a>2. 破坏“不可抢占”条件</h5><p>当一个已经保持了某些资源的进程，再提出新的资源请求而不能立即得到满足时，必须释放它已经保持了的所有资源，待以后需要时再重新申请。这意味着某一进程已经占有的资源，在运行过程中会被暂时地释放掉，也可认为是被抢占了，从而破坏了“不可抢占”条件。</p>
+<h5 id="3-破化“循环等待”条件"><a href="#3-破化“循环等待”条件" class="headerlink" title="3. 破化“循环等待”条件"></a>3. 破化“循环等待”条件</h5><p>系统将所有类型资源进行线性排队，并赋予不同的序号。规定每个进程必须按序号递增的顺序请求资源。假如某进程已请求到一些序号较高的资源，后来它又想请求一个序号低的资源时，它必须先释放所有具有相同和更高序号的资源后，才能申请序号低的资源。在采用这种策略后不可能再出现环路，因而破坏了“循环等待”条件。</p>
+<h4 id="3-7-避免死锁"><a href="#3-7-避免死锁" class="headerlink" title="3.7 避免死锁"></a>3.7 避免死锁</h4><h5 id="1-系统安全状态"><a href="#1-系统安全状态" class="headerlink" title="1. 系统安全状态"></a>1. 系统安全状态</h5><p>系统在进行资源分配之前，应先计算此次资源分配的安全性。所谓安全状态，是指系统能按某种进程顺序(P1，P2，…，Pn)每个进程Pi分配其所需资源，直至满足每个进程对资源的最大需求，使每个进程都可顺利地完成。此时称(P1，P2，…，Pn)为安全序列。如果系统无法找到这样一个安全序列，则称系统处于不安全状态。</p>
+<p>避免死锁的实质在于：系统在进行资源分配时，如何使系统不进入不安全状态。</p>
+<h5 id="2-利用银行家算法避免死锁"><a href="#2-利用银行家算法避免死锁" class="headerlink" title="2. 利用银行家算法避免死锁"></a>2. 利用银行家算法避免死锁</h5><p>Dijkstra的银行家算法名字是由于该算法原本是为银行系统设计的，以确保银行在发放现金贷款时，不会发生不能满足所有客户需要的情况。<br>为实现银行家算法，每一个新进程在进入系统时，它必须申明在运行过程中，可能需要每种资源类型的最大单元数目，其数目不应超过系统所拥有的资源总量。</p>
+<p>1）银行家算法中的数据结构。</p>
+<p>在系统中必须设置四种数据结构，分别用来描述系统中可利用的资源、所有进程对资源的最大需求、系统中的资源分配，以及所有进程还需要多少资源的情况。</p>
+<ul>
+<li>可利用资源向量 Available。这是一个含有m个元素的数组，其中的每一个元素代表一类可利用的资源数目，其初始值是系统中所配置的该类全部可用资源的数目，其数值随该类资源的分配和回收而动态地改变。如果 Available[j]=K，则表示系统中现有$R_{j}$类资源K个。</li>
+<li>最大需求矩阵 Max。这是一个 n×m 的矩阵，它定义了系统中n个进程中的每一个进程对m类资源的最大需求。如果 Max[i,j]=K，则表示进程i需要$R_{j}$类资源的最大数目为K。</li>
+<li>分配矩阵 Allocation。这也是一个 n×m 的矩阵，它定义了系统中每一类资源当前已分配给每一进程的资源数。如果 Allocation[i,j]=K，则表示进程i当前已分得$R_{j}$类资源的数目为K。</li>
+<li>需求矩阵 Need。这也是一个 n×m 的矩阵，用以表示每一个进程尚需的各类资源数。如果 Need[i,j]=K，则表示进程i还需要$R_{j}$类资源 K个，方能完成其任务。</li>
+<li>上述三个矩阵间存在下述关系：Need[i,j]=Max[i,j]-Allocation[i,j]</li>
+</ul>
+<p>2)银行家算法。</p>
+<p>设 Request[i] 是进程$P_{i}$的请求向量，如果 $Request_{i}[j]=K$，表示进程$P_{i}$需要K个$R_{j}$类型的资源。当$P_{i}$发出资源请求后，系统按下述步骤进行检查：</p>
+<p>(1）如果 $Request_{i}[j]≤Need[i,j]$，便转向步骤(2)；否则认为出错，因为它所需要的资源数已超过它所宣布的最大值。</p>
+<p>(2）如果 $Request_{i}[j]≤Available[j]$，便转向步骤(3)；否则，表示尚无足够资源，$P_{i}$须等待。</p>
+<p>(3）系统试探着把资源分配给进程$P_{i}$，并修改下面数据结构中的数值：</p>
+<p>​	$Available[j] = Available[j]-Request_{i}[j]$；</p>
+<p>​	$Allocation[i,j] = Allocation[i,j]+Request_{i}[j]$；</p>
+<p>​	$Need[i,j] = Need[i,j]-Request_{i}[j]$；</p>
+<p>(4）系统执行安全性算法，检查此次资源分配后系统是否处于安全状态。若安全，才正式将资源分配给进程$P_{i}$，以完成本次分配；否则，将本次的试探分配作废，恢复原来的资源分配状态，让进程$P_{i}$等待。</p>
+<img src="/images/操作系统2-处理机调度与死锁/1774310-20211015150624204-323115928.png" alt="" style="zoom: 80%;">
+
+<p>3)安全性算法。</p>
+<p>系统所执行的安全性算法可描述如下：</p>
+<p>(1）设置两个向量：</p>
+<p>① 工作向量 Work，它表示系统可提供给进程继续运行所需的各类资源数目，它含有 m个元素，在执行安全算法开始时，Work=Available。</p>
+<p>② Finish，它表示系统是否有足够的资源分配给进程，使之运行完成。开始时先做Finish[i]=false；当有足够资源分配给进程时，再令 Finish[i]=true。</p>
+<p>(2）从进程集合中找到一个能满足下述条件的进程：</p>
+<p>① Finish[i]=false;</p>
+<p>② Need[i,j]≤Work[j]；</p>
+<p>若找到，执行步骤(3)，否则，执行步骤(4)。</p>
+<p>(3）当进程$P_{i}$获得资源后，可顺利执行，直至完成，并释放出分配给它的资源，故应执行：<br>    Work[j] = Work[j]+Allocation[i,j]；<br>    Finish[i] = true；<br>    go to step 2；<br>(4) 如果所有进程的 Finish[i]=true 都满足，则表示系统处于安全状态；否则，系统处于不安全状态。</p>
+<h4 id="3-8-死锁的检测和解除"><a href="#3-8-死锁的检测和解除" class="headerlink" title="3.8 死锁的检测和解除"></a>3.8 死锁的检测和解除</h4><h5 id="1-死锁的检测"><a href="#1-死锁的检测" class="headerlink" title="1. 死锁的检测"></a>1. 死锁的检测</h5><p>为了能对系统中是否发生了死锁进行检测，必须：1）保存有关资源的请求和分配信息；2）提供一种算法，以利用这些信息来检测系统是否已进入死锁状态。</p>
+<p>1)资源分配图。</p>
+<p>系统死锁可利用资源分配图来描述。该图是由一组结点N和一组边E所组成的一个对偶G=(N,E)。<br>把结点N分为两个互斥的子集，即一组进程结点P和一组资源结点R。<br>由进程$P_{i}$指向资源$R_{j}$，它表示进程$P_{i}$请求一个单位的$R_{j}$资源。由资源$R_{j}$指向进程$P_{i}$，它表示把一个单位的资源 $R_{j}$分配给进程 $P_{j}$。<br>用圆圈代表一个进程，用方框代表一类资源。</p>
+<img src="/images/操作系统2-处理机调度与死锁/1774310-20210805230232210-1306695891.png" alt="" style="zoom:67%;">
+
+<p>2）死锁定理。</p>
+<p>利用把资源分配图加以简化的方法，来检测系统是否为死锁状态。</p>
+<p>1）在资源分配图中，找出一个既不阻塞又非独立的进程结点Pi。消去Pi所求的请求边和分配边，使之成为孤立的结点。表示其运行完毕。依次进行。</p>
+<p>2）在进行一系列的简化后，若能消去图中所有的边，使所有的进程结点都成为孤立结点，则称该图是可完全简化的；若不能通过任何过程使该图完全简化，则称该图是不可完全简化的。</p>
+<p>有关文献已经证明，所有的简化顺序，都将得到相同的不可简化图。同样可以证明：S为死锁状态的充分条件是：当且仅当S状态的资源分配图是不可完全简化的。该充分条件被称为<strong>死锁定理</strong>。</p>
+<img src="/images/操作系统2-处理机调度与死锁/1774310-20210805230745422-14628352.png" alt="" style="zoom: 67%;">
+
+<h5 id="2-死锁的解除"><a href="#2-死锁的解除" class="headerlink" title="2. 死锁的解除"></a>2. 死锁的解除</h5><p>常采用解除死锁的两种方法是：</p>
+<ul>
+<li>抢占(死锁进程所需的)资源。</li>
+<li>终止(死锁)进程。</li>
+</ul>
+<p>1）终止进程的方法。</p>
+<ul>
+<li><p>终止所有死锁进程。</p>
+</li>
+<li><p>逐个终止进程，直至有足够的资源，以打破循环等待。</p>
+</li>
+</ul>
+<p>选择终止进程的策略最主要的依据是，为死锁解除所付出的”代价最小“。</p>
+<p>2）付出代价最小的死锁解除算法。</p>
+<p>一种付出代价最小的死锁解除算法是类似于动态规划地去选择被终止进程。<br>还有一个比较有效的方法是类似于贪心地去选择被终止进程。</p>
+<p>3）王道书上解除死锁的办法是：资源剥夺法、撤销进程法和进程回退法。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Longfat</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://Longfater.github.io/2022/11/01/cao-zuo-xi-tong-2-chu-li-ji-diao-du-yu-si-suo/">https://Longfater.github.io/2022/11/01/cao-zuo-xi-tong-2-chu-li-ji-diao-du-yu-si-suo/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Longfat</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/OS/">
+                                    <span class="chip bg-color">OS</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+    <div class="livere-card card" data-aos="fade-up">
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" class="card-content" data-id="city" data-uid="MTAyMC81NTY2NC8zMjEzMQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                let j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') {
+                    return;
+                }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript。</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</div>
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/11/01/cao-zuo-xi-tong-3-cun-chu-qi-guan-li/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="操作系统3-存储器管理">
+                        
+                        <span class="card-title">操作系统3-存储器管理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Longfat
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/OS/">
+                        <span class="chip bg-color">OS</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/11/01/cao-zuo-xi-tong-1-jin-cheng-de-miao-shu-yu-kong-zhi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="操作系统1-进程的描述与控制">
+                        
+                        <span class="card-title">操作系统1-进程的描述与控制</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-01
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Longfat
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/OS/">
+                        <span class="chip bg-color">OS</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022</span>
+            
+            <span id="year">2022</span>
+            <a href="/about" target="_blank">Longfat</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">116.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Longfater" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2094717311@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2094717311" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2094717311" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

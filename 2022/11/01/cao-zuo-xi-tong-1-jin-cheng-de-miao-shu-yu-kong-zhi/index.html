@@ -1,0 +1,1597 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="操作系统1-进程的描述与控制, 龙胖的博客">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>操作系统1-进程的描述与控制 | 龙胖的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="龙胖的博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">龙胖的博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">龙胖的博客</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">操作系统1-进程的描述与控制</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/OS/">
+                                <span class="chip bg-color">OS</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-11-01
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-11-01
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    18.2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    63 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="操作系统1-进程的描述与控制"><a href="#操作系统1-进程的描述与控制" class="headerlink" title="操作系统1-进程的描述与控制"></a>操作系统1-进程的描述与控制</h1><blockquote>
+<p>在传统的操作系统中，为了提高资源利用率和系统吞吐量，通常采用多道程序设计技术，将多个程序同时装入内存，使之并发运行，传统意义上的程序不能再独立运行。此时，作为资源分配和独立运行的基本单位都是进程。</p>
+</blockquote>
+<h4 id="2-1-前趋图和程序执行"><a href="#2-1-前趋图和程序执行" class="headerlink" title="2.1 前趋图和程序执行"></a>2.1 前趋图和程序执行</h4><p>在早期未配置OS的系统和单道批处理程序中，程序的执行方式是顺序执行，即在内存中仅装入一道用户程序，由它独占系统中的所有资源，只有在一个用户程序执行完成后才允许装入另一个程序并执行。可见，这种顺序执行的运行方式存在着浪费资源、系统运行效率低等缺点。</p>
+<p>而在多道程序系统中，由于内存中可以同时装入多个程序，使它们共享系统资源，并发执行，显然可以克服上述缺点。程序的顺序执行和并发执行这两种执行方式之间有显著的不同，尤其是考虑到程序并发执行的特征，才导致了在操作系统中引入了进程的概念。</p>
+<h5 id="1-前趋图"><a href="#1-前趋图" class="headerlink" title="1. 前趋图"></a>1. 前趋图</h5><p>所谓前趋图（Precedence Graph），是指一个有向无循环图，可记为DAG（Directed Acyclic Graph），它用于描述程序之间执行的先后顺序。图中的每一个节点可用来表示一个进程或程序段，乃至一条语句；结点间的有向边则表示两个节点之间存在着前趋关系。在前驱图中，除了初始节点外每个节点都至少有一个直接前趋，除了终止节点外，每个节点都至少有一个直接后继。此外，每个节点还具有一个重量，用于表示该节点所含有的程序量或程序的执行时间。注意，前趋图中是不允许有循环的。</p>
+<h5 id="2-程序的顺序执行"><a href="#2-程序的顺序执行" class="headerlink" title="2. 程序的顺序执行"></a>2. 程序的顺序执行</h5><p>通常，一个应用程序由若干个程序段组成，每一个程序段完成特定的功能，它们在执行时，都需要按照某种先后次序顺序执行，仅当前一个程序段执行完后，才运行后一程序段。</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210731072931025-84000607.png" alt="img" style="zoom:80%;">
+
+<p>程序顺序执行时的特征：</p>
+<ol>
+<li>顺序性：指处理机严格地按照程序所规定的顺序执行，即每一操作必须在下一操作开始之前结束；</li>
+<li>封闭性：指程序在封闭的环境下运行，即程序运行时独占全机资源，资源的状态（除初始状态外）只有本程序才能改变它，程序一旦开始运行，其执行结果不受外界因素影响；</li>
+<li>可再现性：指只要程序执行时的环境和初始条件相同，当程序重复执行时，不论它是从头到尾一气呵成，还是“走走停停”地执行，都可获得相同的结果。</li>
+</ol>
+<p>程序顺序执行时的这种特性，为程序员检验和校正程序的错误带来了很大的方便。</p>
+<h5 id="3-程序并发执行"><a href="#3-程序并发执行" class="headerlink" title="3. 程序并发执行"></a>3. 程序并发执行</h5><p>程序顺序执行时，虽然可以给程序员带来方便，但系统资源的利用率却很低。为此，在系统中引入了多道程序技术，使程序或程序段间能并发执行。然而，并非所有的程序都能并发执行。事实上只有不存在前趋关系的程序之间才有可能并发执行（因为它们彼此互不依赖），否则无法并发执行。</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210731074044348-1709701241.png" alt="img" style="zoom:80%;">
+
+<p>程序并发执行时的特征：</p>
+<ol>
+<li>间断性：程序在并发执行时，由于它们共享系统资源，以及为完成同一项任务而相互合作，致使在这些相互执行的程序之间形成了相互制约的关系。相互制约将导致并发程序失去执行的连贯性，具有“执行——暂停——执行”这种间断性的活动规律。</li>
+<li>失去封闭性：当系统中存在着多个可以并发执行的程序时，系统中的资源将为它们所共享，而这些资源的状态也由这些程序来改变，致使其中任一程序在运行时，其环境都必然会受到其它程序的影响。显然，程序的运行已经失去了封闭性。</li>
+<li>不可再现性：程序在并发执行时，由于失去了封闭性，其计算结果必将与程序的执行速度有关，从而使程序的执行失去了可再现性。换言之，程序经过多次执行后，虽然它们执行时的环境和初始条件相同，但得到的结果却各不相同。</li>
+</ol>
+<h4 id="2-2-进程的描述"><a href="#2-2-进程的描述" class="headerlink" title="2.2 进程的描述"></a>2.2 进程的描述</h4><h5 id="1-进程的定义和特征"><a href="#1-进程的定义和特征" class="headerlink" title="1. 进程的定义和特征"></a>1. 进程的定义和特征</h5><p>在多道程序环境下，程序的进行属于并发执行，具有间断性、失去封闭性和不可再现性等特征。由此决定了通常的程序是不能参与并发执行的，否则程序的运行也就失去了意义。为了能使程序并发执行，并且可以对并发执行的程序加以描述和控制，人们引入了“进程”的概念。</p>
+<p>为了使参与并发执行的每个程序（含数据）都能独立地运行，在操作系统中必须为之配置一个专门的数据结构，称为进程控制块（Process Control Block,PCB）。系统利用进程控制块来描述进程的基本情况和活动过程，进而控制和管理进程。这样，由程序段、相关数据段和PCB三部分便构成了进程实体（又称进程映像）。一般情况下，我们把进程实体就简称为进程。</p>
+<p>较典型的进程定义有：</p>
+<ol>
+<li>进程是程序的一次执行。</li>
+<li>进程是一个程序及其数据在处理机上顺序执行时所发生的活动。</li>
+<li>进程是具有独立功能的程序在一个数据集合上运行的过程，它是系统进行资源分配和调度的一个独立单位。</li>
+</ol>
+<p>在引入了进程实体的概念之后，我们可以把传统OS中的进程定义为：</p>
+<blockquote>
+<p>进程是进程实体的运行过程，是系统进行资源分配和调度的一个独立单位。</p>
+</blockquote>
+<p>进程除了程序所没有的PCB结构外，还具有以下特征：</p>
+<ol>
+<li>动态性：进程的实质就是进程实体的执行过程，因此，动态性就是进程最基本的特征。动态性还表现在：进程由创建而产生，由调度而执行，由撤销而消亡。可见，进程实体具有一定的生命期，而程序只是一组有序指令的集合，并存放于某种介质上，其本身不具有活动的含义，因而是静态的。</li>
+<li>并发性：是指多个进程实体同时存在于内存中，且能在一段时间内同时运行。并发性是进程的另一重要特征，同时也成为操作系统的重要特征，而程序（没有建立PCB）是不能参与并发执行的。</li>
+<li>独立性：独立性是指进程实体是一个能独立运行、独立获得资源和独立接受调度的基本单位。凡未建立PCB的程序都不能作为一个独立地单位参与运行。</li>
+<li>异步性：是指进程是按异步方式运行的，即按各自独立的、不可预知的速度向前推进。</li>
+</ol>
+<h5 id="2-进程的基本状态及转换"><a href="#2-进程的基本状态及转换" class="headerlink" title="2.进程的基本状态及转换"></a>2.进程的基本状态及转换</h5><p>由于多个进程在并发执行时共享系统资源，致使它们在运行过程中呈现间断性的运行规律，所以进程在其生命周期内可能具有多种状态。一般而言，每个进程都至少应处于以下三种基本状态之一：</p>
+<ol>
+<li>就绪（Ready）状态。这是指进程已处于准备好运行的状态，即进程已分配到除CPU以外所有的必要资源，只需要再获得CPU，便可立即执行。通常将处于就绪状态的进程按照一定的策略排成一个队列，等待CPU的调度，称为就绪队列。</li>
+<li>运行（Running）状态。即进程已获得CPU，程序正在执行的状态。</li>
+<li>阻塞（Block）状态。指正在执行的进程由于发生某事件（如I/O请求、申请缓冲区失败等）暂时无法继续执行的状态，亦即进程的执行受到阻塞。此时引起进程调度，OS将处理机分配给另一就绪进程，而让受阻进程处于暂停状态，以提高处理机的利用率。通常操作系统会将处于阻塞状态的进程根据阻塞原因的不同设置成多个阻塞队列。</li>
+</ol>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210731082140070-1015419772.png" alt="img" style="zoom:80%;">
+
+<p>进程的创建和终止：</p>
+<p>进程是由创建而产生的，创建进程是一个很复杂的过程，一般要通过多个步骤才能完成：首先由进程申请一个空白PCB，并向PCB中填写用于控制和管理进程的信息；然后为该进程分配运行时所必须的资源；最后把该进程转为就绪状态并插入就绪队列之中。</p>
+<p>如果进程所需的资源尚不能得到满足，此时创建工作尚未完成，进程尚不能被调度运行，于是把此时所处的状态称为创建状态。引入创建状态是为了保证进程的调度必须在创建工作完成后进行，以确保对进程控制块操作的完整性。</p>
+<p>进程的终止也需要通过两个步骤：首先，是等待操作系统的善后处理，最后将其PCB清零，并将PCB空间返还系统。当一个进程到达了自然结束点，或是出现了无法克服的错误，或是被操作系统所终结，或是被其它有终止权的进程所终结，它将进入终止状态。</p>
+<p>进入终止态的进程以后不能再执行，但在操作系统中依然保留一个记录，其中保存状态码和一些计时统计数据，供其它进程收集。一旦其它进程完成了对信息的提取之后，操作系统将删除该进程，即将其PCB清零，并将该空白PCB返还系统。</p>
+<h5 id="3-挂起和激活操作"><a href="#3-挂起和激活操作" class="headerlink" title="3. 挂起和激活操作"></a>3. 挂起和激活操作</h5><p>在许多操作系统中，进程除就绪、执行和阻塞三种最基本的状态外，为了系统和用户观察和分析进程的需要，还引入了一个对进程的重要操作——挂起操作。该操作作用于某个进程时，该进程将被挂起，意味着此时该进程处于静止状态。如果进程正在执行，它将暂停执行；如果进程原本处于就绪状态，则该进程此时暂不接受调度。与挂起操作对应的是激活操作。</p>
+<p>引入挂起操作的原因：终端用户的需要；父进程请求；负荷调节的需要；操作系统的需要。</p>
+<blockquote>
+<p>挂起原语——Suspend，激活原语——Active。</p>
+</blockquote>
+<p>引入挂起操作后五个进程状态的转换：</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210731082607409-1649799763.png" alt="img" style="zoom:80%;">
+
+<h5 id="4-进程管理中的数据结构"><a href="#4-进程管理中的数据结构" class="headerlink" title="4. 进程管理中的数据结构"></a>4. 进程管理中的数据结构</h5><p>在计算机系统中，对于每个资源和每个进程都设置了一个数据结构，用于表征其实体，我们称之为资源信息表或进程信息表，其中包含了资源或进程的标识、描述、状态等信息以及一批指针。通过这些指针，可以将同类资源或进程的信息表分类链接成不同的队列，便于操作系统进行查找。</p>
+<p>OS管理这些数据结构一般分为以下四类：内存表、设备表、文件表和用于进程管理的进程表，通常进程表又被称为进程控制块PCB，本节着重介绍PCB。</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210731154739028-839160778.png" alt="img" style="zoom:80%;">
+
+<p>进程控制块PCB的作用：</p>
+<p>为了便于系统描述和管理进程的运行，在OS的核心为每个进程专门定义了一个数据结构——进程控制块（Process Control Block,PCB）。PCB作为进程实体的一部分，记录了操作系统所需的，用于描述进程的当前情况以及管理进程运行的全部信息，是操作系统中最重要的记录型数据结构。</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210731162933326-1113710143.png" alt="img" style="zoom:80%;">
+
+<p>PCB的作用是是一个在多道程序环境下不能独立运行的程序（含数据）称为一个能独立运行的基本单位，一个能与其它进程并发执行的进程。</p>
+<ol>
+<li>作为独立运行基本单位的标志。当一个程序配置了PCB后，就表示它已是一个能在多道程序环境下独立运行的、合法的基本单位，也就具有了取得OS服务的权利。进程随着PCB的创建而建立，随着PCB的回收而消亡，系统是通过PCB感受进程的存在的，<strong>PCB是进程存在于系统中的唯一标志</strong>。</li>
+<li>能实现间断性运行方式。程序间断性运行时必须保留自己运行时的CPU现场信息，有了PCB后，系统就可将CPU现场信息保存在被中断进程的PCB中，供该进程再次被CPU调度执行时恢复CPU现场时使用。</li>
+<li>提供进程管理所需要的信息。PCB中记录了程序和数据在内存或外存中的起始地址指针，当需要访问文件或I/O设备时也需要借助于PCB中的信息。此外，还可以根据PCB中的资源清单了解到该进程所需的全部资源。可见，进程的整个生命期中，操作系统总是根据PCB实施对进程的控制和管理。</li>
+<li>提供进程调度所需要的信息。只有处于就绪状态的进程才能被调度，而PCB中记录了进程的状态信息。</li>
+<li>实现与其它进程的同步与通信。</li>
+</ol>
+<p>在进程控制块PCB中，主要包含四个方面的信息：进程标识符、处理机状态、进程调度信息、进程控制信息。</p>
+<ol>
+<li>进程标识符：分为内部（系统）标识符和外部（用户）标识符。</li>
+<li>处理机状态：处理机状态信息也称为处理机的上下文，主要是由处理机各种寄存器中的内容组成的。包括通用寄存器、指令计数器、程序状态字PSW、用户栈指针等。</li>
+<li>进程调度信息：包括进程状态、进程优先级、进程调度所需的其它信息和事件。事件是指进程由执行状态转变为阻塞状态所等待发生的事件，即阻塞原因。</li>
+<li>进程控制信息：包括程序和数据的地址、进程同步和通信机制、资源清单和链接指针。</li>
+</ol>
+<p>进程控制块的组织方式：</p>
+<ol>
+<li><p>线性方式：即将系统中所有的PCB都组织在一张线性表中，将该表的首址存放在内存的一个专用区域中。该方式实现简单、开销小，但每次查找时都需要扫描整张表，因此适合进程数目不多的系统。</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210731205433453-1217053081.png" alt="img" style="zoom:80%;">
+</li>
+<li><p>链接方式：即把具有相同状态进程的PCB分别通过PCB中的链接字链接成一个队列。这样就可以形成就绪队列、若干个阻塞队列和空白队列等。</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20220120141136007-1319366976.png" alt="img" style="zoom: 80%;">
+</li>
+<li><p>索引方式：即系统根据所有进程状态的不同，建立几张索引表，如就绪索引表、阻塞索引表等，并将各索引表在内存的首地址记录在内存的一些专用单元中。在每个索引表的表目中，记录具有相应状态的某个PCB在PCB表中的地址。</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210731210827154-1412413422.png" alt="img" style="zoom: 80%;"></li>
+</ol>
+<h4 id="2-3-进程控制"><a href="#2-3-进程控制" class="headerlink" title="2.3 进程控制"></a>2.3 进程控制</h4><p>进程控制是进程管理中最基本的功能，主要包括创建新进程、终止已完成的进程、将因发生异常情况而无法继续运行的进程置于阻塞状态、负责进程运行中的状态转换等功能。</p>
+<h5 id="1-操作系统内核"><a href="#1-操作系统内核" class="headerlink" title="1. 操作系统内核"></a>1. 操作系统内核</h5><p>现代操作系统一般将OS划分为若干个层次，再将OS不同的功能分别置于不同的层次中。通常将一些和硬件紧密相关的模块（如中断处理程序）、各种常用设备的驱动程序以及运行频率比较高的模块（如时钟管理、进程调度和许多模块所公用的一些基本操作），都安排在紧靠硬件的软件层次中，将它们常驻内存，即通常被称为的OS内核。这种安排方式目的在于两方面：一是便于对这些软件进行保护，防止遭到其它应用程序的破坏；二是可以提高操作系统的运行效率。</p>
+<p>相对应的是，为防止OS本身及关键数据（如PCB等）遭受到应用程序有意或无意的破坏，通常也将处理机的执行状态分为系统态和用户态两种：1）系统态，又称管态、内核态。它具有较高的权限，能执行一切指令，访问所有寄存器和存储区，传统的OS都在系统态运行。2）用户态，又称目态。它是具有较低特权的执行状态，仅能执行规定的指令，访问指定的寄存器和存储区。一般情况下，应用程序只能在用户态运行，不能去执行OS指令和访问OS区域，这样可以防止应用程序对OS的破坏。</p>
+<p>OS内核的两大方面功能：支撑功能和资源管理功能。</p>
+<ol>
+<li>支撑功能：中断处理、时钟管理、原语操作。</li>
+<li>资源管理功能：进程管理、存储器管理、设备管理。</li>
+</ol>
+<h5 id="2-进程的创建"><a href="#2-进程的创建" class="headerlink" title="2. 进程的创建"></a>2. 进程的创建</h5><p>进程树：子进程可以继承父进程所拥有的资源，父进程对子进程具有控制权，子进程撤销时应将从父进程获得的资源归还给父进程。</p>
+<p>引起进程创建的事件：用户登录、作业调度、提供服务、应用请求。</p>
+<p>进程的创建过程：</p>
+<ol>
+<li>申请空白PCB。</li>
+<li>为新进程分配其运行所需的资源，包括各种物理资源和逻辑资源，如内存、文件、I/O设备和CPU时间等。这些资源从操作系统或仅从其父进程获得。</li>
+<li>初始化进程控制块。</li>
+<li>插入就绪队列。</li>
+</ol>
+<h5 id="3-进程的终止"><a href="#3-进程的终止" class="headerlink" title="3. 进程的终止"></a>3. 进程的终止</h5><p>引起进程终止（Termination Of Process）的事件：</p>
+<ol>
+<li>正常结束</li>
+<li>异常结束：是指进程在运行时发生了某种异常事件，使程序无法继续运行。如越界错、保护错、非法指令、特权指令错、运行超时、等待超时、算术运算错、I/O故障等。</li>
+<li>外界干预：是指进程应外界请求而终止运行。这些干预有用户或操作系统干预、父进程请求、父进程结束。</li>
+</ol>
+<p>进程的终止过程：</p>
+<ol>
+<li>根据被终止进程的标识符检索其PCB，从中读出该进程的状态信息。</li>
+<li>若被终止进程处于运行态，立即终止运行，并置调度标志为真，用于之后重新调度。</li>
+<li>若被终止进程有子孙进程，应终止其子孙进程，以防子孙进程成为不可控进程。</li>
+<li>被终止进程将其所拥有的全部资源部分归还于父进程，部分归还于操作系统。</li>
+<li>将被终止进程（PCB）从所在队列（或链表）中移出，等待其他程序来搜集信息。</li>
+</ol>
+<h5 id="4-进程的阻塞与唤醒"><a href="#4-进程的阻塞与唤醒" class="headerlink" title="4. 进程的阻塞与唤醒"></a>4. 进程的阻塞与唤醒</h5><p>有下述几类事件会引起进程的阻塞和唤醒：</p>
+<ol>
+<li>向系统请求共享资源失败。</li>
+<li>等待某种操作的完成。</li>
+<li>新数据尚未到达。</li>
+<li>等待新任务的到达。</li>
+</ol>
+<p>进程的阻塞过程：</p>
+<p>正在执行的程序，如果发生了上述某事件，进程便通过调用阻塞原语block将自己阻塞。可见，阻塞是进程自身的一种主动行为。进入block过程后，由于该进程还处于执行态，所以应先立即停止执行，把PCB中的现行状态由执行态改为阻塞态，并将该进程插入阻塞队列。最后转调度程序进行重新调度，将处理机分配给另一就绪进程，并进行切换。亦即，保留被阻塞进程的处理机状态，按新进程PCB中的处理机状态设置CPU的环境。</p>
+<p>进程唤醒过程：</p>
+<p>当被阻塞进程所期待的事件发生时，比如它所启动的I/O操作已经完成，或其所期待的数据已经到达，则由有关进程调用唤醒原语wakeup，将等待该事件的进程唤醒。wakeup的执行过程是：首先把被阻塞进程从该事件的等待队列中移出，将其PCB中的现行状态由阻塞改为就绪，然后再将该PCB插入到就绪队列中。</p>
+<p>应当指出，block原语和wakeup原语是一对作用刚好相反的原语，在使用它们时，必须成对使用。</p>
+<h5 id="5-进程的挂起与激活"><a href="#5-进程的挂起与激活" class="headerlink" title="5. 进程的挂起与激活"></a>5. 进程的挂起与激活</h5><p>利用挂起原语suspend和激活原语active进行挂起和激活操作。</p>
+<h4 id="2-4-进程同步"><a href="#2-4-进程同步" class="headerlink" title="2.4 进程同步"></a>2.4 进程同步</h4><p>在OS中引入进程后，一方面可以使系统中的多道程序并发执行，这不仅能有效地改善资源利用率，还可显著地提高系统的吞吐量，但另一方面却使系统变得更为复杂。</p>
+<p>为保证多个程序能有条不紊地运行，在多道程序系统中，必须引入进程同步机制。在本节中，将详细介绍单处理机系统中的进程同步机制——硬件同步机制、信号量机制和管程机制等，利用它们来保证程序执行的可再现性。</p>
+<h5 id="1-进程同步的基本概念"><a href="#1-进程同步的基本概念" class="headerlink" title="1. 进程同步的基本概念"></a>1. 进程同步的基本概念</h5><p>进程同步机制的主要任务，是对多个相关进程在执行次序上进行协调使并发执行的诸进程之间能够按照一定的规则（或时序）共享系统资源，并能很好地相互合作，从而使程序的执行具有可再现性。</p>
+<p>在多道程序环境下，对于同处于一个系统中的多个进程，由于它们共享系统中的资源，或为完成某一任务而相互合作，它们之间可能存在着以下两种形式的制约关系：</p>
+<ol>
+<li>间接相互制约。多个程序在并发执行时，由于共享系统资源，如CPU、I/O设备等，致使在这些并发执行的程序之间形成相互制约的关系。如多个进程只能互斥地访问临界资源。</li>
+<li>直接相互制约。某些应用程序，为了完成某任务而建立了两个或多个进程。这些进程将为完成同一项任务而相互合作。进程间的直接制约关系就是源于它们之间的相互合作。</li>
+</ol>
+<p><strong>临界资源</strong>：把在一段时间内只允许一个进程访问的资源称为临界资源（或独占资源），把在一段时间内只允许一个进程访问临界资源的资源共享称为互斥共享方式。</p>
+<p>临界区：</p>
+<p>不论是硬件临界资源还是软件临界资源，多个进程必须互斥地对它进行访问。</p>
+<p>人们把在进程中访问临界资源的那段代码称为临界区。每个进程在进入临界区之前，应先对欲访问的临界资源进行检查，看它是否正被访问，因此必须在临界区代码之前增加一段用于上述检查的代码，把这段代码称为进入区；相应地，在临界区后面也要加上一段称为退出区的代码，用于将临界区正被访问的标志恢复为未被访问的标志。进程中，将除上述进入区、临界区和退出区之外的其它部分的代码统称为剩余区。</p>
+<p>同步机制应遵循的规则：</p>
+<ol>
+<li>空闲让进：当无进程处于临界区时，表明临界资源处于空闲状态，应允许一个请求进入临界区的进程立即进入自己的临界区，以有效地利用临界资源。</li>
+<li>忙则等待：当已有进程进入临界区时，表明临界资源正在被访问因而其它试图进入临界区的进程必须等待，以保证对临界资源的互斥访问。</li>
+<li>有限等待：对要求访问临界资源的进程，应保证在有限时间内进入自己的临界区，以免陷入“死等”状态。</li>
+<li>让权等待：当进程不能进入自己的临界区时，应立即释放处理机，以免进程陷入“忙等”状态。</li>
+</ol>
+<h5 id="2-硬件同步机制"><a href="#2-硬件同步机制" class="headerlink" title="2. 硬件同步机制"></a>2. 硬件同步机制</h5><p>利用软件方法解决诸进程之间互斥地进入临界区有一定的难度，并且存在很大的局限性，现已很少采用。</p>
+<p>相应地，目前许多计算机已提供了一些特殊的硬件指令，允许对一个字中的内容进行检测和修正，或者是对两个字的内容进行交换等。可以利用这些特殊的指令来解决临界区问题。</p>
+<p>在对临界区进行管理时，可以将标志看成一把锁，锁开时进入，锁关时等待，初始时锁是打开的。每个要进入临界区的进程必须先对锁进行测试，当锁未开时必须等待，直至锁打开；反之，当锁打开时，则应立即关上，以阻止其它进程进入临界区。显然，为防止多个进程同时测试到锁为开的情况，测试和关锁操作必须是连续的，不允许分开进行。</p>
+<p>1）关中断。</p>
+<p>关中断是实现互斥最简单的方法之一。在进入锁测试之前关闭中断，直到完成锁测试并上锁之后才能打开中断。这样，进程在临界区执行期间，计算机系统不响应中断，从而不会引发调度，也就不会发生进程或线程切换。由此，保证了对锁测试和关锁操作的连续性和完整性，有效地保证了互斥。</p>
+<p>关中断的方法存在许多缺点：滥用关中断权力可能会导致严重后果；关中断时间过长会影响系统效率；关中断方法不适用于多CPU系统。</p>
+<p>2）利用Test-and-Set指令实现互斥。</p>
+<p>硬件指令Test-and-Set的一般性描述如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">boolean TS(boolean *lock){</span><br><span class="line">	boolean old;</span><br><span class="line">	old = *lock;</span><br><span class="line">	*lock = TRUE;</span><br><span class="line">	return old;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>这条指令可以看作一个函数过程，其执行过程是不可分割的，即是一条原语。其中lock是一个布尔变量，有两种状态，当<code>*lock == FALSE</code>时，即未上锁，表示该资源空闲；当<code>*lock == TRUE</code>时，即已上锁，表示该资源正在被使用。</p>
+<p>进程进入临界区之前，首先用TS指令对lock进行测试，如果其值为FALSE，表示没有进程在临界区内，可以进入，并<strong>同时</strong>将lock的值设为TRUE，等效于关闭了临界资源，阻止了其它任何进程进入临界区。</p>
+<p>利用TS指令实现互斥的循环进程结构可描述如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">do{</span><br><span class="line">	...</span><br><span class="line">	while TS(&amp;lock);	//当lock为true时陷入循环等待</span><br><span class="line">	临界区;</span><br><span class="line">	lock = FALSE;	//访问结束，将资源标记为空闲状态</span><br><span class="line">	剩余区;</span><br><span class="line">}while(true);</span><br></pre></td></tr></tbody></table></figure>
+
+<p>3）利用Swap指令实现进程互斥</p>
+<p>该指令称为对换指令，用于交换两个字的内容。其处理过程描述如下：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">swap</span><span class="params">(boolean *a, boolean *b)</span></span><br><span class="line">{</span><br><span class="line">	boolean temp;</span><br><span class="line">	temp = *a;</span><br><span class="line">	*a = *b;</span><br><span class="line">	*b = temp;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>用对换指令可以简单有效地实现互斥，方法是为每个临界资源设置一个全局的布尔变量lock，其初值为false，在每个进程中再利用一个局部布尔变量key。利用swap指令实现进程互斥的循环进程可描述如下：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span>{</span><br><span class="line">	key = TRUE;</span><br><span class="line">	<span class="keyword">do</span>{</span><br><span class="line">		swap(&amp;lock,&amp;key);</span><br><span class="line">	}<span class="keyword">while</span>(key != FALSE);	<span class="comment">//当两者均为TRUE时陷入循环测试，直至有进程释放资源</span></span><br><span class="line">	临界区操作；</span><br><span class="line">	lock = FALSE;</span><br><span class="line">	...</span><br><span class="line">}<span class="keyword">while</span>(TRUE);</span><br></pre></td></tr></tbody></table></figure>
+
+<p>局部布尔变量key用于描述当前进程是否想要访问临界区，全局布尔变量lock用于描述临界区当前是否可以访问。当某进程欲访问临界区时，其key为TRUE，若此时资源空闲，即lock为FALSE，则经swap指令，lock变为TRUE，对临界资源上锁，阻止了其他进程进入临界区。直至该进程访问结束，重新将lock置为FALSE。</p>
+<p>利用上述硬件指令能有效地实现进程互斥，但当临界资源忙碌时，其它访问进程必须不断地进行测试，处于一种忙等状态，不符合让权等待的原则，造成处理机时间的浪费。</p>
+<h5 id="3-信号量机制"><a href="#3-信号量机制" class="headerlink" title="3. 信号量机制"></a>3. 信号量机制</h5><p>1965年，荷兰学者Dijkstra提出的信号量机制是一种卓有成效的进程同步工具。</p>
+<p>1）整型信号量</p>
+<p>最初由Dijkstra把整型信号量定义为一个用于表示资源数目的整型量S，它除了初始化外，仅能通过两个标准的原子操作wait(S)和signal(S)来访问。这两个操作被称为P、V操作。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wait(S){</span><br><span class="line">	<span class="keyword">while</span>(S&lt;=<span class="number">0</span>);	<span class="comment">//没有空闲资源可用，需要循环测试等待</span></span><br><span class="line">	S--;	<span class="comment">//当S&gt;0时才会执行，占用一个资源，可用资源数量-1</span></span><br><span class="line">}</span><br><span class="line">signal(S){</span><br><span class="line">	S++;	<span class="comment">//使用结束，释放资源</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>wait(S)和signal(S)是两个原子操作，它们在执行时是不可中断的。</p>
+<p>2）记录型信号量</p>
+<p>在整型信号量机制中，只要信号量S&lt;=0，就会不断地测试，使进程处于忙等状态，并未符合让权等待的原则。</p>
+<p>记录型信号量机制是一种不存在忙等现象的进程同步机制。在采取了“让权等待”策略后，又出现了多个进程等待访问同一临界资源的现象，为此，在信号量机制中，除了需要一个用于代表资源数目的整型变量value外，还应增加一个进程链表指针list，用于链接上述的所有等待进程。</p>
+<p>记录型信号量是由于它采用了记录型的数据结构而得名的。它所包含的两个数据项可描述如下：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>{</span></span><br><span class="line">	<span class="type">int</span> value;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">process_control_block</span> *<span class="title">list</span>;</span></span><br><span class="line">}semaphore;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>相应地，wait(S)和signal(S)操作可描述如下：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wait(semaphore *S){</span><br><span class="line">	S-&gt;value--;	<span class="comment">//申请访问资源，可用资源数量-1</span></span><br><span class="line">	<span class="keyword">if</span> (S-&gt;value&lt;<span class="number">0</span>) block(S-&gt;<span class="built_in">list</span>);	<span class="comment">//如果可用资源数量为负，则阻塞进程，将其加入等待队列</span></span><br><span class="line">}</span><br><span class="line">signal(semaphore *S){</span><br><span class="line">	S-&gt;value++;	<span class="comment">//释放资源，可用资源数量+1</span></span><br><span class="line">	<span class="keyword">if</span> (S-&gt;value&lt;=<span class="number">0</span>) wakeup(S-&gt;<span class="built_in">list</span>);	<span class="comment">//如果value&lt;=0，说明等待队列中还有进程在等待，唤醒进程</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>当资源信号量value&lt;=0时，表示没有空闲资源，此时进程调用block原语进行自我阻塞，满足了让权等待的原则。当进程释放资源后value仍小于0，表明在该信号量链表中仍有等待该资源的进程被阻塞，故调用wakeup原语将链表中的第一个等待进程唤醒。</p>
+<p>如果S-&gt;value的初值为1，表示只允许一个进程访问临界资源，此时的信号量转化为互斥信号量，用于进程互斥。</p>
+<p>3）AND型信号量</p>
+<p>前面所述的进程互斥问题针对的是多个并发进程仅共享一个临界资源的情况。在有些应用场合，一个进程往往需要获得多个资源后方能执行其任务。而所需资源越多，进程间越容易发生冲突。当两个进程，既不释放自己手里的资源，又必须在获得对方的资源的前提下才能执行完成释放资源时，就会陷入僵持状态，称之为死锁。</p>
+<p>AND同步机制的基本思想是：将进程在整个运行过程中需要的所有资源，一次性全部地分配给进程，待进程使用完后再一起释放。亦即，要么把进程所请求的资源全部分配给它，要么一个也不分配。这样就可以避免了死锁情况的发生。</p>
+<p>为此，在wait操作中增加了一个AND条件，故称为AND同步。或称为同时wait操作，即Swait(Simultaneous wait)定义如下：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Swait(S1,S2,...,Sn)</span><br><span class="line">{</span><br><span class="line">	<span class="keyword">while</span>(TRUE)</span><br><span class="line">	{</span><br><span class="line">		<span class="keyword">if</span> (Si&gt;=<span class="number">1</span> &amp;&amp;...&amp;&amp; Sn&gt;=<span class="number">1</span>){</span><br><span class="line">			<span class="keyword">for</span> (i=<span class="number">1</span>;i&lt;=n;i++)Si--;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">else</span> {</span><br><span class="line">			将进程置于与发现的第一个Si&lt;<span class="number">1</span>的Si相关的等待队列中，并将该进程的程序计数设置为Swait操作的开始</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">}</span><br><span class="line">Ssignal(S1,S2,...,Sn){</span><br><span class="line">	<span class="keyword">while</span> (TRUE){</span><br><span class="line">		<span class="keyword">for</span> (i=<span class="number">1</span>;i&lt;=n;i++){</span><br><span class="line">		Si++;</span><br><span class="line">		将所有在与Si相关的队列中等待的进程移到就绪队列中;</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>4）信号量集</p>
+<p>记录型信号量机制中，每次仅能对某类临界资源进行一个单位的申请或释放，这显然是低效的。此外，有时在资源的数量低于某一下限值时，为保证系统的安全性，应当对申请该资源的进程予以拒绝。基于上述两点，可以对AND信号量机制加以扩充，对进程所申请的所有资源以及每类资源不同的资源需求量，在一次P、V原语操作中完成申请或释放。</p>
+<p>进程对信号量Si的测试值不再是1，而是该资源的分配下限值$t_{i}$，即要求$S_{i}&gt;=t_{i}$，否则不予分配。一旦允许分配，进程对该资源的需求量值为$d_{i}$，即表示资源占用量，进行$S_{i}=S_{i}-d_{i}$，操作，而非简单的$S_{i}=S_{i}-1$。</p>
+<p>由此形成一般化的“信号量集”机制。对应的<code>Swait</code>和<code>Ssignal</code>格式为：</p>
+<p>$Swait(S1,t1,d1,…,Sn,tn,dn)$;</p>
+<p>$Ssignal(S1,d1,…,Sn,dn)$;</p>
+<h5 id="4-信号量的应用"><a href="#4-信号量的应用" class="headerlink" title="4.信号量的应用"></a>4.信号量的应用</h5><p>1.利用信号量实现进程互斥</p>
+<p>为使多个进程能够互斥地访问某临界资源，只需为该临界资源设置一互斥信号量mutex，并设其初始值为1，然后将各进程访问该资源的临界区CS置于wait(mutex)和signal(mutex)操作之间即可。</p>
+<p>2.利用信号量实现前驱关系</p>
+<p>设有两个并发的进程P1和P2，P1中有语句S1，P2中有语句S2，我们希望在S1执行结束之后才能执行S2。为实现这种前驱关系，只需使进程P1和P2共享一个公用信号量S，并赋予其初值为0，将signal(S)操作放在S1语句之后，将wait(S)操作放在S2语句之前即可。</p>
+<p>此时若在S1之前执行S2，由于S&lt;=0，进程P2必定阻塞，直至P1执行完S2后，signal(S)操作释放了资源，才能将P2从阻塞队列中唤醒，由此确保了S1和S2的前驱关系。</p>
+<h5 id="5-管程机制"><a href="#5-管程机制" class="headerlink" title="5. 管程机制"></a>5. 管程机制</h5><p>1）管程的定义</p>
+<p>信号量机制的引入解决了进程同步的描述问题，但信号量的大量同步操作分散在各个进程中不便于管理，还有可能导致系统死锁。如：生产者消费者问题中将P、V颠倒可能死锁。</p>
+<p>为此Dijkstra于1971年提出：把所有进程对某一种临界资源的同步操作都集中起来，构成一个所谓的秘书进程。凡要访问该临界资源的进程，都需先报告秘书，由秘书来实现诸进程对同一临界资源的互斥使用。</p>
+<p>即利用共享数据结构抽象地表示系统中的共享资源，并且将对该共享结构实施的特定操作定义为一组过程。进程对共享资源的申请、释放和其它操作必须通过这组过程，间接地对共享数据结构实现操作。</p>
+<p>对于请求访问共享资源的诸多并发进程，可以根据资源的情况接受或阻塞，确保每次仅有一个进程进入管程，执行这组过程，使用共享资源，达到对共享资源所有访问的统一管理，有效地实现进程互斥。</p>
+<p>代表共享资源的数据结构以及由对该数据结构实施操作的一组过程所组成的资源管理程序共同过程了一个操作系统的资源管理模块，我们称之为管程。</p>
+<p>管程的特性：</p>
+<ol>
+<li>模块化：即管程是一个基本的程序单位，可以单独编译；</li>
+<li>抽象数据类型：指管程中不仅有数据，而且有对数据的操作。</li>
+<li>信息掩蔽：指管程中的数据结构只能被管程中的过程访问，这些过程也是在管程内部定义的，供管程外的进程调用，而管程中的数据结构以及过程的具体实现外部不可见。</li>
+</ol>
+<p>2）条件变量</p>
+<p> 在利用管程实现进程同步时，必须设置同步工具，如两个同步操作原语wait和signal。而仅此还不够，考虑一种情况：当一个进程调用了管程，在管程中时被阻塞或挂起，直到阻塞或挂起的原因解除，而在此期间，如果进程不释放管程，则其他进程无法进入管程，被迫长时间等待。为了解决这个问题，引入了条件变量condition。</p>
+<p>通常，一个进程被阻塞或挂起的原因可有多个，因此在管程中设置了多个条件变量，对这些条件变量的访问只能在管程中进行。condition x,y 表示引起进程阻塞的原因是x事件和y事件。</p>
+<p>对条件变量的操作是wait和signal，因此条件变量也是一种抽象数据类型。每个条件变量保存了一个链表，用于记录因该条件变量而阻塞的所有进程，同时提供的两个操作即可表示为x.wait和x.signal，其含义为：</p>
+<ol>
+<li>x.wait：正在调用管程的进程因为x条件需要被阻塞或挂起，则调用x.wait将自己插入到x条件的等待队列上，并释放管程，直到x条件发生变化。</li>
+<li>x.signal：正在调用管程的进程发现x条件发生了变化，则调用x.signal，重新启动一个因x条件而被阻塞或挂起的进程。如果x条件变化，但没有等待进程，则原进程继续执行而不产生任何结果。</li>
+</ol>
+<h4 id="2-5-经典的进程同步问题"><a href="#2-5-经典的进程同步问题" class="headerlink" title="2.5 经典的进程同步问题"></a>2.5 经典的进程同步问题</h4><h5 id="1-生产者-消费者问题"><a href="#1-生产者-消费者问题" class="headerlink" title="1. 生产者-消费者问题"></a>1. 生产者-消费者问题</h5><p>有一群生产者进程在生产产品，并将这些产品提供给消费者进程去消费。为使生产者进程与消费者进程能并发执行，在两者之间设置了一个具有n个缓冲区的缓冲池，生产者进程将其所生产的产品放入一个缓冲区中；消费者进程可以从一个缓冲区中取走产品去消费。尽管所有的生产者进程和消费者进程都是以异步方式运行的，但它们之间必须保持同步，既不允许一个消费者进程到一个空缓冲区中去取产品，也不允许生产者进程向一个已装满产品且尚未被取走的缓冲区中投放产品。</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210918234344105-1454075700.png" alt="img" style="zoom:80%;">
+
+<p>1）利用记录型信号量解决生产者-消费者问题</p>
+<p>可以利用互斥信号量mutex实现诸进程对缓冲池的互斥使用；利用信号量empty表示空缓冲区的数量，信号量full表示满缓冲区的数量。对生产者-消费者问题描述如下：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> in=<span class="number">0</span>,out=<span class="number">0</span>;</span><br><span class="line">item buffer[n];</span><br><span class="line">semaphore mutex=<span class="number">1</span>,empty=n,full=<span class="number">0</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">producer</span><span class="params">()</span>{</span><br><span class="line">	<span class="keyword">do</span> {</span><br><span class="line">		producer an item nextp;	<span class="comment">//生产者想要生产一件产品</span></span><br><span class="line">		...</span><br><span class="line">		wait(empty);	<span class="comment">//首先申请一个空缓冲区</span></span><br><span class="line">		wait(mutex);	<span class="comment">//mutex用来实现诸进程对缓冲池的互斥使用，防止多个进程抢占一个缓冲区</span></span><br><span class="line">		buffer[in]=nextp;	<span class="comment">//将产品放入空缓冲区</span></span><br><span class="line">		in=(in+<span class="number">1</span>)%n;</span><br><span class="line">		signal(mutex);	<span class="comment">//释放缓冲池，允许其它进程使用缓冲池</span></span><br><span class="line">		signal(full);	<span class="comment">//满缓冲区+1，即缓冲池中的产品+1</span></span><br><span class="line">	}<span class="keyword">while</span>(TRUE);</span><br><span class="line">}</span><br><span class="line"><span class="type">void</span> <span class="title function_">consumer</span><span class="params">()</span>{</span><br><span class="line">    <span class="keyword">do</span> {</span><br><span class="line">        wait(full);		<span class="comment">//申请一个满缓冲区，即申请一件产品</span></span><br><span class="line">        wait(mutex);	<span class="comment">//实现进程互斥，防止多个进程申请消费同一件产品</span></span><br><span class="line">        netxc=buffer[out];	<span class="comment">//从满缓冲区取走一件产品</span></span><br><span class="line">        out=(out+<span class="number">1</span>)%n;</span><br><span class="line">        signal(mutex);	<span class="comment">//释放缓冲池</span></span><br><span class="line">        signal(empty);	<span class="comment">//释放空缓冲区，空缓冲区+1</span></span><br><span class="line">        consumer the item in nextc;</span><br><span class="line">        ...</span><br><span class="line">    }<span class="keyword">while</span>(TRUE);</span><br><span class="line">}</span><br><span class="line"><span class="type">void</span> <span class="title function_">main</span><span class="params">()</span>{</span><br><span class="line">    cobegin</span><br><span class="line">        <span class="title function_">producer</span><span class="params">()</span>; consumer();</span><br><span class="line">    coend</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>注意：首先，wait(mutex)和signal(mutex)必须成对出现；其次，对资源信号量empty和full的wait和signal操作也同样需要成对出现，只不过它们分别处于不同的程序中；最后，在每个程序中的多个wait操作顺序不能颠倒，应先执行对资源信号量的wait操作，然后再执行对互斥信号量mutex的wait操作，否则可能引起进程死锁。</p>
+<blockquote>
+<p>如果缓冲池已满，且生产者进程仍想继续生产产品，若此时先执行wait(mutex)再执行wait(empty)，则缓冲池被锁，消费者进程无法进入缓冲池取走产品，同时生产者进程的请求也无法得到满足，陷入死锁状态。因此，必须保证P同步在前，P互斥在后，而V操作的顺序可以互换。</p>
+</blockquote>
+<p>2）利用AND型信号量解决生产者-消费者问题</p>
+<p>生产者（消费者）需要同时满足两个条件才能正常进行生产和消费：一是具有一个空（满）缓冲区，二是各个进程互斥地使用缓冲池。故可以用AND型信号量解决生产者-消费者问题，即用Swait(empty/full,mutex)来代替wait(empty/full)和wait(mutex)，用Ssignal(mutex,empty/full)来代替signal(mutex)和mutex(empty/full)。描述如下：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i=<span class="number">0</span>,out=<span class="number">0</span>;</span><br><span class="line">item buffer[n];</span><br><span class="line">semaphore mutex=<span class="number">1</span>,empty=n,full=<span class="number">0</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">producer</span><span class="params">()</span>{</span><br><span class="line">	<span class="keyword">do</span> {</span><br><span class="line">		producer an item nextp;</span><br><span class="line">		...</span><br><span class="line">		Swait(empty,mutex);</span><br><span class="line">		buffer[in]=nextp;</span><br><span class="line">		in=(in+<span class="number">1</span>)%n;</span><br><span class="line">		Ssignal(mutex,full);</span><br><span class="line">	}<span class="keyword">while</span>(TRUE);</span><br><span class="line">}</span><br><span class="line"><span class="type">void</span> <span class="title function_">consumer</span><span class="params">()</span>{</span><br><span class="line">	<span class="keyword">do</span> {</span><br><span class="line">		Swait(full,mutex);</span><br><span class="line">		nextc=buffer[out];</span><br><span class="line">		out=(out+<span class="number">1</span>)%n;</span><br><span class="line">		Ssignal(mutex,empty);</span><br><span class="line">		consumer the item in nextc;</span><br><span class="line">		...</span><br><span class="line">	}<span class="keyword">while</span>(TRUE);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>3）利用管程解决生产者-消费者问题</p>
+<p>建立一个管程，命名为producerconsumer，简称为PC，其中包括两个过程：</p>
+<p>（1）put(x)过程。生产者利用该过程将自己生产的产品投放到缓冲池中，并用整型变量count来表示在缓冲池中已有的产品数量，当count&gt;=N时，表示缓冲池已满，生产者需等待。</p>
+<p>（2）get(x)过程。消费者利用该过程从缓冲池中取出一个产品，当count&lt;=0时，表示缓冲池中已无可取用的产品，消费者需等待。</p>
+<p>对于条件变量notfull和notempty，分别有两个过程cwait和csignal对它们进行操作：</p>
+<p>（1）cwait(condition)过程：当管程被一个进程占用时，其他进程调用该过程时阻塞，并挂在条件condition的队列上。</p>
+<p>（2）csignal(condition)过程：唤醒在cwait执行后阻塞在条件condition队列上的进程。如果这样的进程不止一个，则选择其中一个实施唤醒操作；如果队列为空，则无操作而返回。</p>
+<p>PC管程可描述如下：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Monitor producerconsumer{</span><br><span class="line">	item buffer[N];</span><br><span class="line">	<span class="type">int</span> in,out;</span><br><span class="line">	condition notfull,notempty;</span><br><span class="line">	<span class="type">int</span> count;</span><br><span class="line">	public:</span><br><span class="line">	<span class="type">void</span> <span class="title function_">put</span><span class="params">(item x)</span>{</span><br><span class="line">		<span class="keyword">if</span> (count&gt;=N) cwait(notfull);	<span class="comment">//如果缓冲池已满，则阻塞进程并插入notfull等待队列</span></span><br><span class="line">		buffer[in]=x;</span><br><span class="line">		in=(in+<span class="number">1</span>)%N;</span><br><span class="line">		count++;</span><br><span class="line">		csignal(notempty);</span><br><span class="line">	}</span><br><span class="line">	<span class="type">void</span> <span class="title function_">get</span><span class="params">(item x)</span>{</span><br><span class="line">		<span class="keyword">if</span> (count&lt;=<span class="number">0</span>) cwait(notempty);	<span class="comment">//如果缓冲池为空，则阻塞进程并插入notempty等待队列</span></span><br><span class="line">		x=buffer[out];</span><br><span class="line">		out=(out+<span class="number">1</span>)%N;</span><br><span class="line">		count--;</span><br><span class="line">		csignal(notfull);</span><br><span class="line">	}</span><br><span class="line">	{	in=<span class="number">0</span>;out=<span class="number">0</span>;count=<span class="number">0</span>;}</span><br><span class="line">}PC;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>在利用管程解决生产者-消费者问题时，其中的生产者和消费者可描述为：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">producer</span><span class="params">()</span>{</span><br><span class="line">    item x;</span><br><span class="line">    <span class="keyword">while</span>(TRUE){</span><br><span class="line">        ...</span><br><span class="line">    	producer an item in nextp;</span><br><span class="line">        PC.put(x);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="type">void</span> <span class="title function_">consumer</span><span class="params">()</span>{</span><br><span class="line">    item x;</span><br><span class="line">    <span class="keyword">while</span>(TRUE){</span><br><span class="line">        PC.get(x);</span><br><span class="line">        consumer the item nextc;</span><br><span class="line">        ...</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="type">void</span> <span class="title function_">main</span><span class="params">()</span>{</span><br><span class="line">    cobegin</span><br><span class="line">    <span class="title function_">producer</span><span class="params">()</span>; consumer();</span><br><span class="line">    coend</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="2-读者-写者问题"><a href="#2-读者-写者问题" class="headerlink" title="2. 读者-写者问题"></a>2. 读者-写者问题</h5><p>问题描述：有读者和写者两组并发进程，共享一个文件，当两个或以上的读进程同时访问共享数据时不会产生副作用，但若某个写进程和其他进程（读或写）同时访问共享数据时，则可能导致数据不一致的错误，因此要求：（1）允许多个读者同时对文件进行读操作；（2）只允许一个写进程往文件中写信息；（3）任一写者在完成写操作之前不允许其它读者或写者工作；（4）写者进行写操作之前，应让已有的读者和写者全部退出。</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210919123656116-604008233.png" alt="img" style="zoom:80%;">
+
+<p>问题分析：读者和写者是互斥的，写者之间也是互斥的，读者之间是同步的。写者和任何其它进程互斥，因此很简单，用互斥信号量的P、V操作即可实现。读者则必须在与写者互斥的同时实现与其它读者的同步。</p>
+<p>代码如下：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> count=<span class="number">0</span>;    <span class="comment">//count用于记录当前的读者数量</span></span><br><span class="line">semaphore mutex=<span class="number">1</span>;    <span class="comment">//用于保护更新count变量时的互斥</span></span><br><span class="line">semaphore rw=<span class="number">1</span>;    <span class="comment">//读写进程互斥信号量，用于保证读者和写者互斥地访问文件</span></span><br><span class="line">writer(){</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>){</span><br><span class="line">        P(rw);    <span class="comment">//互斥访问共享文件</span></span><br><span class="line">        writing;	<span class="comment">//写入</span></span><br><span class="line">        V(rw);     <span class="comment">//释放共享文件</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">reader(){</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>){</span><br><span class="line">        P(mutex);	<span class="comment">//申请访问临界资源count</span></span><br><span class="line">        <span class="keyword">if</span> (count==<span class="number">0</span>) </span><br><span class="line">            P(rw);	<span class="comment">/*如果读者进程数量为0，此时文件可能正在被writer进程使用，执行P操作，即wait(rw)，申请该资源，若该资源正在被写，则申请失败，进入等待队列排队，若wait(rw)成功，即此时既没有读者进程也没有写者进程，则保证了在进行读操作时与writer进程互斥。若count!=0，说明此时有读者进程正在读，则writer进程已经互斥，无需再执行wait(rw)操作，而读操作之间是不互斥的，直接读即可。*/</span></span><br><span class="line">        count++;</span><br><span class="line">        V(mutex);	<span class="comment">//对count操作结束后释放资源以便其他进程访问</span></span><br><span class="line">        reading;	<span class="comment">//读取文件</span></span><br><span class="line">        P(mutex);	<span class="comment">//读取结束后需要让count--，申请访问count</span></span><br><span class="line">        count--;</span><br><span class="line">        <span class="keyword">if</span> (count==<span class="number">0</span>)</span><br><span class="line">            V(rw);	<span class="comment">//如果count==0，没有进程在读文件，则归还文件，释放资源</span></span><br><span class="line">        V(mutex);	<span class="comment">//释放互斥变量count</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>在上面的算法中，读进程是优先的，即当存在读进程时，写操作将被延迟，且只要有一个读进程活跃，随后而来的读进程都将被孕育访问文件。这样的方式会导致写进程长时间的等待，且存在写进程“饿死”的情况。</p>
+<p>若希望避免上述情况，则当有读进程正在读共享文件时，有写进程请求访问，这时应禁止后续读进程的请求。等到已在共享文件中的读进程执行完毕，立即让写进程执行。（同理，为保证读写公平，应按照阻塞队列的顺序先后唤醒进程。）</p>
+<p>改进代码如下：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> count=<span class="number">0</span>;</span><br><span class="line">semaphore mutex=<span class="number">1</span>;</span><br><span class="line">semaphore rw=<span class="number">1</span>;</span><br><span class="line">semaphore w=<span class="number">1</span>;	<span class="comment">//用于避免写进程饿死</span></span><br><span class="line">writer(){</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>){</span><br><span class="line">        P(w);	<span class="comment">//在无写者进程请求时进入</span></span><br><span class="line">        P(rw);</span><br><span class="line">        writing;</span><br><span class="line">        V(rw);</span><br><span class="line">        V(w);	<span class="comment">//恢复对共享文件的访问</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">reader(){</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>){</span><br><span class="line">        P(w);	<span class="comment">//在无写者进程请求时进入</span></span><br><span class="line">        P(mutex);</span><br><span class="line">        <span class="keyword">if</span> (count==<span class="number">0</span>) </span><br><span class="line">            P(rw);</span><br><span class="line">        count++;</span><br><span class="line">        V(mutex);</span><br><span class="line">        V(w);	<span class="comment">//恢复对共享文件的访问</span></span><br><span class="line">        reading;</span><br><span class="line">        P(mutex);</span><br><span class="line">        count--;</span><br><span class="line">        <span class="keyword">if</span> (count==<span class="number">0</span>)</span><br><span class="line">            V(rw);</span><br><span class="line">        V(mutex);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="3-哲学家进餐问题"><a href="#3-哲学家进餐问题" class="headerlink" title="3. 哲学家进餐问题"></a>3. 哲学家进餐问题</h5><p>问题描述：有五个哲学家共用一张圆桌，分别坐在周围的五张椅子上，在桌上有五个碗和五只筷子，他们的生活方式是交替地进行思考和进餐。平时，一个哲学家进行思考，饥饿时便试图取其左右最靠近他的筷子，只有在他拿到两只筷子时才能进餐。进餐毕，放下筷子继续思考。</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210919113950697-271711805.png" alt="img" style="zoom: 50%;">
+
+<p>1）利用记录型信号量解决哲学家进餐问题</p>
+<p>经分析可知，放在桌子上的筷子是临界资源，在一段时间内只允许一位哲学家使用。为了实现对筷子的互斥使用，可以用一个信号量表示一只筷子，由这5个信号量构成信号量数组。其描述如下：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">semaphore chopstick[<span class="number">5</span>]={<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>};</span><br></pre></td></tr></tbody></table></figure>
+
+<p>所有信号量均被初始化为1，第i位哲学家的活动可描述为：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> {</span><br><span class="line">    wait(chopstick[i]);</span><br><span class="line">    wait(chopstick[(i+<span class="number">1</span>)%<span class="number">5</span>]);</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">//eat</span></span><br><span class="line">    ...</span><br><span class="line">    signal(chopstick[i]);</span><br><span class="line">    signal(chopstick[(i+<span class="number">1</span>)%<span class="number">5</span>]);</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">//think</span></span><br><span class="line">    ...</span><br><span class="line">}<span class="keyword">while</span>(TRUE);</span><br></pre></td></tr></tbody></table></figure>
+
+<p>在以上描述中，当哲学家饥饿时，总是先去拿他左边的筷子，即执行<code>wait(chopstick[i])</code>；成功后，又去拿他右边的筷子，即执行<code>wait(chopstick[(i+1)%5])</code>；又成功后便可进餐。进餐毕，先放回左边的筷子，再放回右边的筷子。虽然，上述解法可以保证不会有两个相邻的哲学家同时进餐，但却有可能引起死锁。假如五个哲学家同时饥饿而各自拿起左手边的筷子时，就会使五个信号量chopstick均为0，当他们再试图去拿起右边的筷子时，都将因无筷子可拿而陷入无限期的等待。</p>
+<p>对于这样的死锁问题，可采取以下几种解决方法：</p>
+<ol>
+<li>至多只允许有4位哲学家同时去拿左边的筷子最终能保证至少有一位哲学家能够进餐，并在用餐毕时能释放出他用过的两只筷子，从而使更多的哲学家能够进餐。</li>
+<li>仅当哲学家的左右两只筷子均可用时，才允许他拿起筷子进餐。</li>
+<li>规定奇数号哲学家先拿他左边的筷子，然后再去拿右边的筷子；而偶数号哲学家则相反。按此规定，将是1、2号哲学家竞争1号筷子；3、4号哲学家竞争3号筷子。即五位哲学家都先竞争奇数号筷子，获得后，再去竞争偶数号筷子，最后总会有一位哲学家能获得两只筷子而进餐。</li>
+</ol>
+<p>2）利用AND型信号量机制解决哲学家进餐问题</p>
+<p>在哲学家进餐问题中，要求每个哲学家获得两个临界资源（筷子）后才能进餐，这在本质上就是前面所介绍的AND同步问题，故利用AND信号量机制可获得最简洁的解法。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">semaphore chopstick[<span class="number">5</span>]={<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>};</span><br><span class="line"><span class="keyword">do</span> {</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">//think</span></span><br><span class="line">    ...</span><br><span class="line">    Swait(chopstick[(i+<span class="number">1</span>)%<span class="number">5</span>],chopstick[i]);</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">//eat</span></span><br><span class="line">    ...</span><br><span class="line">    Ssignal(chopstick[(i+<span class="number">1</span>)%<span class="number">5</span>],chopstick[i]);</span><br><span class="line">}<span class="keyword">while</span>(TRUE);</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="4-吸烟者问题"><a href="#4-吸烟者问题" class="headerlink" title="4. 吸烟者问题"></a>4. 吸烟者问题</h5><p>吸烟者问题是为了解决“可以生产多个产品的单生产者”问题提供了一个思路。</p>
+<p>问题描述：有三个抽烟者和一个供应者。每个抽烟者不停地卷烟抽，组成一根烟需要三种材料：烟草、纸和胶水。三个抽烟者中，第一个有烟草，第二个有纸，第三个拥有胶水。供应者无限地提供三种材料，供应者每次将两种材料放到桌子上，拥有剩下那种材料的抽烟者卷一根烟并抽掉它，并给供应者一个信号告诉已完成，那么供应者可以继续提供另外两种材料，如此重复（让三个抽烟者轮流地抽烟）。</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210919150521872-1834185513.png" alt="img" style="zoom:80%;">
+
+<p>问题分析：</p>
+<p>1）关系分析。供应者与三个抽烟者分别是同步关系。供应着无法同时满足两个或两个以上的抽烟者，所以三个抽烟者是互斥关系。<br>2）整理思路。这里有四个进程，一个供应者，三个抽烟者。<br>3）信号量设置。信号量offer1，offer2，offer3分别表示烟草和纸的组合、烟草和胶水的组合、纸和胶水的组合。信号量finish用于互斥进行抽烟动作。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> random; <span class="comment">//存储随机数</span></span><br><span class="line">semaphore offer1=<span class="number">0</span>; <span class="comment">//定义信号量对应烟草和纸组合的资源</span></span><br><span class="line">semaphore offer2=<span class="number">0</span>; <span class="comment">//定义信号量对应烟草和胶水组合的资源</span></span><br><span class="line">semaphore offer3=<span class="number">0</span>; <span class="comment">//定义信号量对应纸和胶水组合的资源</span></span><br><span class="line">semaphore finish=<span class="number">0</span>; <span class="comment">//定义信号量表示抽烟是否完成</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//供应者</span></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>){</span><br><span class="line">    random = 任意一个整数随机数;</span><br><span class="line">    random=random% <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">if</span>(random==<span class="number">0</span>)</span><br><span class="line">        V(offerl) ; <span class="comment">//提供烟草和纸</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(random==l) </span><br><span class="line">        V(offer2);  <span class="comment">//提供烟草和胶水</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        V(offer3)  <span class="comment">//提供纸和胶水</span></span><br><span class="line">    <span class="comment">// 任意两种材料放在桌子上;</span></span><br><span class="line">    P(finish);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//拥有烟草者</span></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>){</span><br><span class="line">    P (offer3);</span><br><span class="line">    <span class="comment">// 拿纸和胶水，卷成烟，抽掉;</span></span><br><span class="line">    V(finish);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//拥有纸者</span></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>){</span><br><span class="line">    P(offer2);</span><br><span class="line">    <span class="comment">// 烟草和胶水,卷成烟，抽掉；</span></span><br><span class="line">    V(finish);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//拥有胶水者</span></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>){</span><br><span class="line">    P(offer1);</span><br><span class="line">    <span class="comment">// 拿烟草和纸，卷成烟，抽掉;</span></span><br><span class="line">    v(finish);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-6-进程通信"><a href="#2-6-进程通信" class="headerlink" title="2.6 进程通信"></a>2.6 进程通信</h4><blockquote>
+<p>进程通信是指进程间的信息交换。P、V操作是低级通信方式，高级通信方式是指以较高速率传输大量数据的通信方式。</p>
+</blockquote>
+<p>目前，高级通信机制可归结为四大类：共享存储器系统、管道通信系统、消息传递系统以及客户机-服务器系统。</p>
+<h5 id="1-共享存储器系统"><a href="#1-共享存储器系统" class="headerlink" title="1. 共享存储器系统"></a>1. 共享存储器系统</h5><p>在共享存储器系统中，相互通信的进程共享某些数据结构或共享存储区，进程之间能够通过这些空间进行通信。据此，又可分为基于共享数据结构的通信方式和基于共享存储区的通信方式。</p>
+<p>基于共享数据结构的通信方式仅适于传递相对少量的数据，通信效率底下，属于低级通信方式。</p>
+<p>基于共享存储区的通信方式为了传输大量数据，在内存中划出了一块共享存储区域，诸进程可通过对该共享区域的读或写交换信息，数据的形式及位置甚至访问控制都是由进程负责，而不是OS，属于高级通信方式。</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210801092007946-1777432566.png" alt="img" style="zoom: 80%;">
+
+<h5 id="2-管道-pipe-通信系统"><a href="#2-管道-pipe-通信系统" class="headerlink" title="2. 管道(pipe)通信系统"></a>2. 管道(pipe)通信系统</h5><p>所谓“管道”，是指用于连接一个读进程和一个写进程以实现它们之间通信的一个共享文件，又名pipe文件。</p>
+<p>向管道（共享文件）提供输入的发送进程（即写进程）以字符流形式将大量数据送入管道；而接受管道输出的接收进程（即读进程）则从管道中接收数据。</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210801092403875-920699540.png" alt="img" style="zoom: 80%;">
+
+<p>为了协调双方的通信，管道机制必须提供以下三个方面的协调能力：一、互斥，即当一个进程正在对pipe执行读/写操作时，其它进程必须等待；二、同步，指当写进程把一定数量的数据写入pipe，便去睡眠等待，直到读进程取走数据后再把它唤醒；当读进程读一空pipe时，也应睡眠等待直至写进程写入数据后再将它唤醒；三、确定对方是否存在，只有确定了对方已存在时才能进行通信。</p>
+<h5 id="3-消息传递系统"><a href="#3-消息传递系统" class="headerlink" title="3. 消息传递系统"></a>3. 消息传递系统</h5><p>在该机制中，进程不必借助任何共享存储区或数据结构，而是以格式化的消息（message）为单位，将通信的数据封装在消息中，并利用操作系统提供的一组通信命令（原语），在进程间进行消息传递，完成进程间的数据交换。</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210801094007632-1260755192.png" alt="img" style="zoom:80%;">
+
+<p>该方式隐藏了通信实现细节，使通信过程对用户透明化。</p>
+<p>基于消息传递系统的通信方式属于高级通信方式，因其实现方式的不同，可进一步分为：一、直接通信方式，指发送进程通过操作系统所提供的发送原语，直接把消息发送给目标进程。二、间接通信方式，指发送和接收进程都通过共享中间实体（称为邮箱）的方式进行消息的发送和接收，完成进程间的通信。</p>
+<h5 id="4-客户机-服务器系统"><a href="#4-客户机-服务器系统" class="headerlink" title="4. 客户机-服务器系统"></a>4. 客户机-服务器系统</h5><p>客户机-服务器系统的通信机制，在网络环境的各种应用领域已成为当前主流的通信实现机制，其主要的实现方法分为三类：套接字、远程过程调用和远程方法调用。</p>
+<p>套接字：一个套接字就是一个通信标识类型的数据结构，包含了通信目的的地址、通信使用的端口号、通信网络的传输层协议、进程所在的网络地址，以及针对客户或服务器程序提供的不同系统调用等，是进程通信和网络通信的基本构件。套接字包括基于文件型和基于网络型两类。</p>
+<p>远程过程调用RPC是一个通信协议，它允许运行于一台主机（本地）系统上的进程调用另一台主机（远程）系统上的进程，而对程序员表现为常规的过程调用，无需额外地为此编程。</p>
+<h4 id="2-7-线程的基本概念"><a href="#2-7-线程的基本概念" class="headerlink" title="2.7 线程的基本概念"></a>2.7 线程的基本概念</h4><h5 id="1-线程的引入"><a href="#1-线程的引入" class="headerlink" title="1. 线程的引入"></a>1. 线程的引入</h5><p>如果说，在OS中引入进程是为了使多个程序能够并发执行，以提高资源利用率和系统吞吐量，那么，在操作系统中再引入线程，则是为了减少程序在并发执行时所付出的时空开销，使OS具有更好的并发性。</p>
+<p>首先让我们来回顾进程的两个基本属性：</p>
+<p>1）进程是一个可拥有资源的独立单位，一个进程要能独立运行，它必须拥有一定的资源，包括用于存放程序正文、数据的磁盘和内存地址空间，以及它在运行时所需要的I/O设备、已打开的文件、信号量等；</p>
+<p>2）进程同时又是一个可独立调度和分派的基本单位，一个进程要能独立运行，它还必须是一个可独立调度和分派的基本单位。每个进程在系统中有唯一的PCB，系统可通过PCB感知进程的存在，也可以根据PCB中的信息对进程进行调度，还可将断点信息保存在其PCB中。反之，再利用进程PCB中的信息来恢复进程运行的现场。</p>
+<p>正是由于进程有这两个基本属性，才能使进程成为一个能够独立运行的基本单位，从而也就构成了程序并发执行的基础。</p>
+<p>为使程序能够并发执行，系统必须进行创建进程、撤销进程、进程切换等一系列操作，因此系统也必须为之付出较大的时空开销。这就限制了系统中所设置进程的数目，而且进程切换也不宜过于频繁，从而限制了并发程度的进一步提高。</p>
+<p>为使多个程序能够更好地并发执行，同时又尽量减少系统的开销，可以将进程的上述两个基本属性分开，由OS分开处理。亦即并不把调度和分派的基本单位也同时作为拥有资源的单位，以做到“轻装上阵”；而对于拥有资源的基本单位，又不对之施以频繁的切换。由此产生了线程的概念。</p>
+<blockquote>
+<p>也就是说，进程作为拥有资源的单位，频繁的对它进行切换和调度会产生大量的时空开销，为了减少开销，应该将拥有资源的单位和作为进程调度的单位分开，即进程作为拥有资源的基本单位，而将线程作为调度和分派的基本单位，以减少程序在并发执行时的时空开销。</p>
+</blockquote>
+<h5 id="2-进程与线程的比较"><a href="#2-进程与线程的比较" class="headerlink" title="2. 进程与线程的比较"></a>2. 进程与线程的比较</h5><ol>
+<li><p>调度的基本单位</p>
+<p>在传统的OS中，进程作为独立调度和分派的基本单位，因而进程是能够独立运行的基本单位。每次被调度时都需要进行上下文切换，开销较大。而在引入线程的OS中，将线程作为调度和分派的基本单位，因而线程是能够独立运行的基本单位。当线程切换时，仅需保存和设置少量寄存器内容，切换代价远低于进程。</p>
+</li>
+<li><p>并发性</p>
+<p>在引入线程的OS中，不仅进程之间可以并发执行，而且在一个进程的多个线程之间也能并发执行。同样，不同进程中的线程也能并发执行。这使得操作系统具有更好的并发性，从而能更有效地提高系统资源的利用率和系统的吞吐量。</p>
+</li>
+<li><p>拥有资源</p>
+<p>进程可以拥有资源，并作为系统中拥有资源的一个基本单位。然而，线程本身并不拥有资源，仅有一点必不可少的、能满足独立运行的资源。线程除了拥有自己的必要资源意外，还允许多个线程共享该进程所拥有的资源。</p>
+</li>
+<li><p>独立性</p>
+<p>在同一个进程中不同线程的独立性要比不同进程之间的独立性低得多。这是因为，为防止进程之间彼此破坏和干扰，每个进程都拥有一个独立的地址空间和其它资源，除了共享全局变量外，不允许其它进程访问。但是同一个进程间的不同线程往往是为了提高并发性以及进行相互之间的合作而创建的，它们共享进程的内存地址空间和资源。由一个线程打开的文件可供其它线程读、写。</p>
+</li>
+<li><p>系统开销</p>
+<p>进程的创建、撤销和切换的代价远高于线程。</p>
+</li>
+<li><p>支持多处理机系统</p>
+<p>单线程进程只能运行在一个处理机上，多线程进程可以将多个线程分配到多个处理机上，使它们<strong>并行</strong>执行。</p>
+</li>
+</ol>
+<h5 id="3-线程的状态和线程控制块"><a href="#3-线程的状态和线程控制块" class="headerlink" title="3. 线程的状态和线程控制块"></a>3. 线程的状态和线程控制块</h5><p>线程运行的三个状态：执行状态、就绪状态、阻塞状态。</p>
+<img src="/images/操作系统1-进程的描述与控制/1774310-20210801233034606-794137008.png" alt="img">
+
+<p>线程控制块TCB：记录了用于控制和管理线程的所有信息，包括线程标识符、一组寄存器（程序计数器PC、状态寄存器和通用寄存器）、线程运行状态、优先级、线程专有存储区、信号屏蔽、堆栈指针。</p>
+<p>多线程OS中的进程属性：</p>
+<ol>
+<li>进程是一个可拥有资源的基本单位。</li>
+<li>多个线程可并发执行。</li>
+<li>线程作为独立运行的基本单位，进程不再是可执行的实体。</li>
+</ol>
+<h4 id="2-8-线程的实现"><a href="#2-8-线程的实现" class="headerlink" title="2.8 线程的实现"></a>2.8 线程的实现</h4><h5 id="1-线程的实现方式"><a href="#1-线程的实现方式" class="headerlink" title="1. 线程的实现方式"></a>1. 线程的实现方式</h5><ol start="3">
+<li><p>1）内核支持线程KST（Kernel Supported Threads）</p>
+<p>在OS中的所有<strong>进程</strong>，无论是系统进程还是用户进程，都是在操作系统内核的支持下运行的，是与内核紧密相关的。</p>
+<p>而内核支持<strong>线程</strong>KST，同样也是在内核的支持下运行的，它们的创建、阻塞、切换和撤销等，都在内核空间实现。</p>
+<p>为了对内核线程进行控制和管理，在内核空间为每一个内核线程设置了一个线程控制块，内核根据该控制块而感知线程的存在，并对其加以控制。</p>
+<p>内核级线程实现方式的优点：</p>
+<ol>
+<li>在多处理器系统中，内核能够同时调度同一进程中的多个线程并行执行；</li>
+<li>如果某个线程被阻塞，内核可以调度该进程的其他线程占有处理机运行，也可以运行其它进程中的线程；</li>
+<li>内核支持线程具有很小的数据结构和堆栈，线程切换较快、开销较小；</li>
+<li>内核本身也可以采用多线程技术，提高系统的执行速度和效率。</li>
+</ol>
+<p>主要缺点：线程调度和管理是在内核实现的，用户的线程运行在用户态，当进行线程切换时，需要切换到内核态，<strong>模式切换的开销较大</strong>。</p>
+<p>2）用户级线程ULT（User Level Threads）</p>
+<p>用户级线程是在用户空间中实现的。对线程的创建、撤销、同步与通信等功能，都无需内核的支持，即用户级线程是与内核无关的。由于这些线程的任务控制块都是设置在用户空间，而线程所执行的操作也无需内核的帮助，因此内核完全不知道用户级线程的存在。</p>
+<p>值得说明的是，对于设置了用户级线程的系统，其调度仍是以进程为单位进行的。</p>
+<p>用户级线程实现方式的优点：</p>
+<ol>
+<li>线程切换不需要转到内核空间。</li>
+<li>不同进程可以根据自身需要选择不同的调度算法。</li>
+<li>用户级线程的实现与OS平台无关。</li>
+</ol>
+<p>主要缺点：一、<strong>系统调用的阻塞问题</strong>，当线程执行一个系统调用时，由于<strong>内核不知道进程中多个用户级线程的存在</strong>，因此会阻塞整个进程，使进程中的其它线程也被阻塞；二、因为内核不知道进程中多个用户级线程的存在，内核每次仅为一个进程分配一个CPU，因此进程中仅有一个线程能执行。</p>
+<p>3）组合方式</p>
+<p>在组合方式线程系统中，内核支持多个内核级线程的建立、调度和管理，同时允许用户应用程序建立、调度和管理用户级进程。组合方式线程中，同一个进程内的多个线程可以同时在多处理器上并行执行，而且在阻塞一个线程时并不需要将整个进程阻塞。所以，组合方式多线程机制能够结合用户级线程与内核级线程的优点，并克服了其各自的不足。</p>
+<p>由于用户级线程与内核支持线程连接方式的不同，从而形成了三种不同的模型：</p>
+<ol>
+<li><p>多对一模型，即将多个用户线程映射到一个内核控制线程。这些用户线程一般属于一个用户进程，运行在该进程的用户空间，对这些线程的调度和管理也是在该进程的用户空间中完成。仅当用户线程需要访问内核时，才将其映射到一个内核控制线程上，但每次只允许一个用户级线程进行映射。</p>
+<p>优点：线程管理的开销小、效率高；</p>
+<p>缺点：如果一个线程在访问内核时发生阻塞，则整个进程都将被阻塞；此外，在任一时刻，只有一个线程能访问内核多个线程不能同时在多个处理机上运行。</p>
+<img src="/images/操作系统1-进程的描述与控制/f5ff73a1fd0fe2f80271010fc81e61aa.png" alt="" style="zoom: 50%;">
+</li>
+<li><p>一对一模型，即将每一个用户级线程都映射到一个内核支持线程。</p>
+<p>优点：当一个线程被阻塞时，允许调度另一个线程运行。此外，它允许多个线程并行地运行在多处理机系统上。</p>
+<p>缺点：每创建一个用户线程，相应地就需要创建一个内核线程，开销较大，因此需要限制整个系统的线程数。</p>
+<img src="/images/操作系统1-进程的描述与控制/437f99eaffb30bb7511379659c218070.png" alt="" style="zoom:50%;">
+</li>
+<li><p>多对多模型，将多个用户线程映射到更少数量的内核线程上。</p>
+<p>该模型结合了一对一模型和多对一模型的优点，它可以像一对一模型那样，使一个进程的多个线程并行地运行在多处理机系统上，也可以像多对一模型那样，减少线程的管理开销和提高效率。</p>
+<img src="/images/操作系统1-进程的描述与控制/80ea231f29681b9218a7c6b624ff4bc5.png" alt="" style="zoom:50%;">
+
+<img src="/images/操作系统1-进程的描述与控制/80ea231f29681b9218a7c6b624ff4bc5.png" style="zoom: 50%;"></li>
+</ol>
+</li>
+</ol>
+<h5 id="2-线程的实现"><a href="#2-线程的实现" class="headerlink" title="2. 线程的实现"></a>2. 线程的实现</h5><p>1）内核支持线程的实现</p>
+<p>在仅设置了内核支持线程的OS中，一种可能的线程控制方法是，系统在创建一个新进程时，便为它分配一个任务数据区PTDA，其中包含若干线程控制块TCB空间。在每一个TCB中可保存线程标识符、优先级、线程运行的CPU状态等信息。虽然这些信息与用户级线程TCB中的信息相同，但现在却是被保存在内核空间中。</p>
+<p>每当进程要创建一个线程时，便为新线程分配一个TCB,将有关信息填入该TCB中，并为之分配必要的资源。在撤销一个线程时，也应该回收该线程的所有资源和TCB。</p>
+<p>2）用户级线程的实现</p>
+<p>一、运行时系统（Running System）</p>
+<p>　　所谓“运行时系统”，实质是用于管理和控制线程的函数集合，包括创建、撤销、线程的同步和通信的函数以及调度的函数。正因为这些函数，才能使用户线程与内核无关，所有函数都驻留在用户空间中，作为用户线程和内核之间的接口。在进行线程切换时，不需要转入核心态，而是由运行时系统中的线程切换来执行切换任务。由于用户线程不能使用系统调用，所以当线程需要系统资源时，将请求传送给运行时系统，由后者通过相应的系统调用来获取系统资源。</p>
+<p>二、内核控制线程</p>
+<p>　　这种线程又称为轻型进程LWP（Light Weight Process）。每一进程可拥有多个LWP，同用户级线程一样，每个LWP都有自己的数据结构（如TCB），其中包括线程标识符、优先级、状态，另外还有栈和局部存储区等。它们可以共享进程所拥有的资源。LWP可通过系统调用来获得内核提供的服务，这样一个用户级线程运行时，只要将它们连接到一个LWP上，此时它便具有了内核支持线程的所有属性，这种线程实现方式就是组合方式。</p>
+<p>　　在一个系统中的用户线程数量可能很大，为了节省开销，不可能设置过多的LWP，而把这些LWP做成一个缓冲池，称为“线程池”。用户进程中的任一用户线程都可以连接到LWP池中的任何一个LWP上，为使每一用户级线程都利用LWP与内核通信，可以使多个用户级线程多路复用一个LWP，但只有当前连接到LWP上的线程才能与内核通信，其余进程或者阻塞，或者等待LWP。而每一个LWP都要连接到一个内核级线程上，这样，通过LWP可把用户级线程与内核线程连接起来，用户线程可通过LWP来访问内核，但内核所看到的总是多个LWP而看不到用户级线程，亦即，由LWP实现了内核与用户级线程之间的隔离，从而使用户级线程与内核无关。如下图所示。</p>
+<p><img src="/images/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F1-%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%8F%8F%E8%BF%B0%E4%B8%8E%E6%8E%A7%E5%88%B6/1008396-20170521154622041-286899160.png"></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Longfat</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://Longfater.github.io/2022/11/01/cao-zuo-xi-tong-1-jin-cheng-de-miao-shu-yu-kong-zhi/">https://Longfater.github.io/2022/11/01/cao-zuo-xi-tong-1-jin-cheng-de-miao-shu-yu-kong-zhi/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Longfat</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/OS/">
+                                    <span class="chip bg-color">OS</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+    <div class="livere-card card" data-aos="fade-up">
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" class="card-content" data-id="city" data-uid="MTAyMC81NTY2NC8zMjEzMQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                let j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') {
+                    return;
+                }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript。</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</div>
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/11/01/cao-zuo-xi-tong-2-chu-li-ji-diao-du-yu-si-suo/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="操作系统2-处理机调度与死锁">
+                        
+                        <span class="card-title">操作系统2-处理机调度与死锁</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Longfat
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/OS/">
+                        <span class="chip bg-color">OS</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/11/01/cao-zuo-xi-tong-0-yin-lun/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="操作系统0-引论">
+                        
+                        <span class="card-title">操作系统0-引论</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-01
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Longfat
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/OS/">
+                        <span class="chip bg-color">OS</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022</span>
+            
+            <span id="year">2022</span>
+            <a href="/about" target="_blank">Longfat</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">116.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Longfater" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2094717311@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2094717311" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2094717311" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

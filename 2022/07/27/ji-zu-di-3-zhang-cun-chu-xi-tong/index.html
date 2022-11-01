@@ -410,30 +410,36 @@
 <p>（一）存储器的分类</p>
 <p>（二）层次化存储器的基本结构</p>
 <p>（三）半导体随机存储器</p>
-<p>​        SRAM、DRAM、Flash存储器</p>
+<p>​		SRAM、DRAM、Flash存储器</p>
 <p>（四）主存储器</p>
-<p>​        DRAM芯片与内存条、多模块存储器、主存和CPU之间的连接</p>
+<p>​		DRAM芯片与内存条、多模块存储器、主存和CPU之间的连接</p>
 <p>（五）外部存储器</p>
-<p>​        磁盘存储器、固态硬盘（SSD）</p>
+<p>​		磁盘存储器、固态硬盘（SSD）</p>
 <p>（六）高速缓冲存储器（Cache）</p>
-<p>​        Cache的基本原理；Cache和主存之间的映射方式</p>
-<p>​        Cache中主存块的替换算法；Cache写策略</p>
+<p>​		Cache的基本原理；Cache和主存之间的映射方式</p>
+<p>​		Cache中主存块的替换算法；Cache写策略</p>
 <p>（七）虚拟存储器</p>
-<p>​        虚拟存储器的基本概念</p>
-<p>​        页式虚拟存储器：基本原理、页表、地址转换、TLB（快表）</p>
-<p>​        段式虚拟存储器的基本原理；段页式虚拟存储器的基本原理</p>
+<p>​		虚拟存储器的基本概念</p>
+<p>​		页式虚拟存储器：基本原理、页表、地址转换、TLB（快表）</p>
+<p>​		段式虚拟存储器的基本原理；段页式虚拟存储器的基本原理</p>
 </blockquote>
-<h4 id="3-1-存储器概述"><a href="#3-1-存储器概述" class="headerlink" title="3.1 存储器概述"></a>3.1 存储器概述</h4><h5 id="1-存储器的层次结构"><a href="#1-存储器的层次结构" class="headerlink" title="1. 存储器的层次结构"></a>1. 存储器的层次结构</h5><p><img src="/images/计组第3章-存储系统/image-20220710162950624.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710163119440.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710163158290.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710164124133.png" alt=""></p>
+<h4 id="3-1-存储器概述"><a href="#3-1-存储器概述" class="headerlink" title="3.1 存储器概述"></a>3.1 存储器概述</h4><h5 id="1-存储器的层次结构"><a href="#1-存储器的层次结构" class="headerlink" title="1. 存储器的层次结构"></a>1. 存储器的层次结构</h5><img src="/images/计组第3章-存储系统/image-20220710162950624.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220710163119440.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220710163158290.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220710164124133.png" alt="">
+
 <p>实际上，存储器层次结构主要体现在<code>Cache—主存层</code>和<code>主存—辅存层</code>，前者主要解决<strong>CPU和主存速度不匹配的问题</strong>，后者主要解决<strong>存储系统的容量问题</strong>。在存储体系中，Cache、主存能够与CPU直接交换信息，辅存则要通过主存与CPU交换信息。存储器层次结构的主要思想是上一层存储器作为低一层存储器的高速缓存，上一层内容只是下一层经常使用到的内容的副本。</p>
 <h5 id="2-存储器的分类"><a href="#2-存储器的分类" class="headerlink" title="2. 存储器的分类"></a>2. 存储器的分类</h5><ul>
 <li>按存储介质分类：半导体存储器、磁表面存储器、光存储器</li>
 <li>按存取方式分类：随机存取存储器(RAM、ROM)、顺序存取存储器(磁带)、直接存取存储器(磁盘、光盘)</li>
 </ul>
-<p><img src="/images/计组第3章-存储系统/image-20220710165435322.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710165509725.png" alt=""></p>
+<img src="/images/计组第3章-存储系统/image-20220710165435322.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220710165509725.png" alt="">
+
 <p><strong>顺序存取存储器（SAM）</strong>：磁带、电影胶片</p>
 <p>访问时，读/写部件按顺序查找目标地址，访问时间与数据的存储位置有关。</p>
 <p><strong>直接存取存储器（DAM）</strong>：硬盘</p>
@@ -448,24 +454,39 @@
 </ul>
 </li>
 </ul>
-<p><img src="/images/计组第3章-存储系统/image-20220711152647054.png" alt=""></p>
-<h4 id="3-2-主存储器"><a href="#3-2-主存储器" class="headerlink" title="3.2 主存储器"></a>3.2 主存储器</h4><h5 id="1-SRAM芯片和DRAM芯片"><a href="#1-SRAM芯片和DRAM芯片" class="headerlink" title="1. SRAM芯片和DRAM芯片"></a>1. SRAM芯片和DRAM芯片</h5><h6 id="1-SRAM的工作原理"><a href="#1-SRAM的工作原理" class="headerlink" title="1. SRAM的工作原理"></a>1. SRAM的工作原理</h6><p><img src="/images/计组第3章-存储系统/image-20220710170638568.png" alt=""></p>
+<img src="/images/计组第3章-存储系统/image-20220711152647054.png" alt="">
+
+
+
+<h4 id="3-2-主存储器"><a href="#3-2-主存储器" class="headerlink" title="3.2 主存储器"></a>3.2 主存储器</h4><h5 id="1-SRAM芯片和DRAM芯片"><a href="#1-SRAM芯片和DRAM芯片" class="headerlink" title="1. SRAM芯片和DRAM芯片"></a>1. SRAM芯片和DRAM芯片</h5><h6 id="1-SRAM的工作原理"><a href="#1-SRAM的工作原理" class="headerlink" title="1. SRAM的工作原理"></a>1. SRAM的工作原理</h6><img src="/images/计组第3章-存储系统/image-20220710170638568.png" alt="">
+
 <p>通常把存放一个二进制位的物理器件称为存储元，它是存储器最基本的结构。</p>
 <p><strong>静态随机存储器SRAM的存储元是双稳态触发器（六晶体管MOS），依靠双稳态电路内部交叉反馈电路形成互锁，通过电源对电路的持续供电以存储信息，不需要刷新，为非破坏性读出，不需要重写。</strong></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710171018980.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710171508165.png" alt=""></p>
+<img src="/images/计组第3章-存储系统/image-20220710171018980.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220710171508165.png" alt="">
+
 <h6 id="2-DRAM的工作原理"><a href="#2-DRAM的工作原理" class="headerlink" title="2. DRAM的工作原理"></a>2. DRAM的工作原理</h6><p><strong>动态随机访问存储器DRAM依靠存储单元中形成的栅极电容来保存信息，不需要持续电源，因此需要定期逐行刷新。</strong>MOS：金属氧化物半导体，加高电平即导通，低电平即阻断。</p>
-<p><img src="/images/计组第3章-存储系统/image-20220710172412606.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710172450820.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710172518487.png" alt=""></p>
+<img src="/images/计组第3章-存储系统/image-20220710172412606.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220710172450820.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220710172518487.png" alt="">
+
 <p><strong>动态存储器的刷新：</strong></p>
 <p><strong>定期向电容补充电荷叫做刷新。</strong>因为动态存储器依靠电容电荷存储信息，没有电源持续供电，电荷会泄露，故需定期向电容补充电荷，才能维持存储信息不变。</p>
-<p><img src="/images/计组第3章-存储系统/image-20220710175156513.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710175305647.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710175332757.png" alt=""></p>
-<h6 id="3-DRAM芯片读写周期"><a href="#3-DRAM芯片读写周期" class="headerlink" title="3. DRAM芯片读写周期"></a>3. DRAM芯片读写周期</h6><p><img src="/images/计组第3章-存储系统/image-20220710184205175.png" alt=""></p>
-<h6 id="4-SRAM与DRAM的比较"><a href="#4-SRAM与DRAM的比较" class="headerlink" title="4. SRAM与DRAM的比较"></a>4. SRAM与DRAM的比较</h6><p><img src="/images/计组第3章-存储系统/image-20220710184607749.png" alt=""></p>
-<h6 id="5-存储器芯片的内部结构"><a href="#5-存储器芯片的内部结构" class="headerlink" title="5. 存储器芯片的内部结构"></a>5. 存储器芯片的内部结构</h6><p><img src="/images/计组第3章-存储系统/image-20220724162255581.png" alt=""></p>
+<img src="/images/计组第3章-存储系统/image-20220710175156513.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220710175305647.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220710175332757.png" alt="">
+
+<h6 id="3-DRAM芯片读写周期"><a href="#3-DRAM芯片读写周期" class="headerlink" title="3. DRAM芯片读写周期"></a>3. DRAM芯片读写周期</h6><img src="/images/计组第3章-存储系统/image-20220710184205175.png" alt="">
+
+<h6 id="4-SRAM与DRAM的比较"><a href="#4-SRAM与DRAM的比较" class="headerlink" title="4. SRAM与DRAM的比较"></a>4. SRAM与DRAM的比较</h6><img src="/images/计组第3章-存储系统/image-20220710184607749.png" alt="">
+
+<h6 id="5-存储器芯片的内部结构"><a href="#5-存储器芯片的内部结构" class="headerlink" title="5. 存储器芯片的内部结构"></a>5. 存储器芯片的内部结构</h6><img src="/images/计组第3章-存储系统/image-20220724162255581.png" alt="">
+
 <ol>
 <li>存储体（存储矩阵 ）。存储体是存储单元的集合，它由行选择线(X)和列选择线(Y)来选择所访问单元，存储体上的相同行、列上的位同时被读出或写入。</li>
 <li>地址译码器：用来将地址转换为译码输出线上的高电平，以便驱动相应的读写电路。</li>
@@ -473,13 +494,22 @@
 <li>片选控制信号。</li>
 <li>读/写控制信号。</li>
 </ol>
-<h6 id="6-半导体存储器的逻辑设计"><a href="#6-半导体存储器的逻辑设计" class="headerlink" title="6. 半导体存储器的逻辑设计"></a>6. 半导体存储器的逻辑设计</h6><p><img src="/images/计组第3章-存储系统/image-20220710190056581.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710190134519.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710190200719.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710190229562.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710190301146.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710190355822.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220710190421670.png" alt=""></p>
+<h6 id="6-半导体存储器的逻辑设计"><a href="#6-半导体存储器的逻辑设计" class="headerlink" title="6. 半导体存储器的逻辑设计"></a>6. 半导体存储器的逻辑设计</h6><img src="/images/计组第3章-存储系统/image-20220710190056581.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220710190134519.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220710190200719.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220710190229562.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220710190301146.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220710190355822.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220710190421670.png" alt="">
+
+
+
 <h5 id="2-只读存储器ROM"><a href="#2-只读存储器ROM" class="headerlink" title="2. 只读存储器ROM"></a>2. 只读存储器ROM</h5><p>只读存储器（ROM）有两个显著的优点：</p>
 <ul>
 <li>结构简单，所以位密度比可读写存储器高。</li>
@@ -494,7 +524,8 @@
 <li>Flash存储器：即闪存，是一种快速擦写型ROM，典型应用有U盘、SSD固态硬盘等。其主要特点是既可在不加电的情况下长期保存信息，又能在线进行快速擦除与重写。</li>
 <li>固态硬盘SSD：基于闪存，保留了Flash存储器长期保存信息、快速擦除与重写的特性，对比传统硬盘也具有读写速度快、低功耗等特点，缺点是价格较高。</li>
 </ol>
-<h5 id="3-主存储器的基本组成"><a href="#3-主存储器的基本组成" class="headerlink" title="3. 主存储器的基本组成"></a>3. 主存储器的基本组成</h5><p><img src="/images/计组第3章-存储系统/image-20220710191407193.png" alt=""></p>
+<h5 id="3-主存储器的基本组成"><a href="#3-主存储器的基本组成" class="headerlink" title="3. 主存储器的基本组成"></a>3. 主存储器的基本组成</h5><img src="/images/计组第3章-存储系统/image-20220710191407193.png" alt="">
+
 <p>指令执行过程中需要访问主存时，CPU首先把被访问单元的地址送到地址寄存器MAR中，然后通过地址线将主存地址送到主存中的地址寄存器，以便地址译码器译码选中相应单元，同时CPU将读写信号通过控制线送到主存的读写控制电路。</p>
 <p>如果是写操作，那么CPU同时将要写的信号送入MDR中，在读写控制电路的控制下，经过数据线将信号写入选中的单元；</p>
 <p>若果是读操作，那么主存读出选中单元的内容送到数据线，然后送到MDR中。</p>
@@ -507,10 +538,12 @@
 <h6 id="2-多体并行存储器"><a href="#2-多体并行存储器" class="headerlink" title="2. 多体并行存储器"></a>2. 多体并行存储器</h6><p>多体并行存储器由多体模块组成。每个模块都有相同的容量和存取速度，各模块都有独立的读写控制电路、地址寄存器和数据寄存器。它们既能并行工作，又能交叉工作。</p>
 <p>多体并行存储器分为高位交叉编址和低位交叉编址。</p>
 <p><strong>高位交叉编址（顺序方式）</strong>：高位地址表示体号，低位地址为体内地址。访问一个连续主存块时总是先在一个模块内访问，等待该模块访问结束才转到下一个模块，各模块不能被并行访问。</p>
-<p><img src="/images/计组第3章-存储系统/image-20220724163124596.png" alt=""></p>
+<img src="/images/计组第3章-存储系统/image-20220724163124596.png" alt="">
+
 <p><strong>低位交叉编址（交叉方式）</strong>：低位地址为体号，高位地址为体内地址。每个模块按”模m“编址，模块号=单元地址%m，假定有m个模块，每个模块有k个单元，则$M_{0}=Pm,M_{1}=Pm+1,\cdot\cdot\cdot$,$0=&lt;P&lt;=k+1$。</p>
 <p>低位交叉方式下，总是把高位的体内地址送到由低位地址确定的模块内进行译码，程序连续存放在相邻的模块中，因此称采用此编制方式的存储器为交叉存储器。</p>
-<p><img src="/images/计组第3章-存储系统/image-20220724163237158.png" alt=""></p>
+<img src="/images/计组第3章-存储系统/image-20220724163237158.png" alt="">
+
 <p>采用低位交叉编址后，可在不改变每个模块的存取周期的前提下，用流水线的方式并行存取，提高存储器的带宽。</p>
 <p>交叉存取度m = 存取周期T / 总线传送周期r；存储体的模块数必须大于等于m。</p>
 <p>顺序存储器  $t_{1}=m T$</p>
@@ -534,20 +567,19 @@
 <blockquote>
 <p>注意：仅采用位扩展时，各芯片连接地址线的方式相同，但连接数据线的方式不同，在某一时刻选中所有的芯片，所以片选信号（CS非）要连接到所有的芯片。</p>
 </blockquote>
-<p><img src="/images/计组第3章-存储系统/image-20220724163553716.png" alt=""></p>
+<img src="/images/计组第3章-存储系统/image-20220724163553716.png" alt="">
 </li>
 <li><p><strong>字扩展法</strong>：字扩展将芯片的地址线、数据线、读写控制线相应并联，而由片选信号来区分各芯片的地址范围。</p>
 <blockquote>
 <p>注意：仅采用字扩展时，各芯片连接地址线的方式相同，连接数据线的方式也相同，但在某一时刻只需选中部分芯片，所以通过片选信号（CS非）连接到相应的芯片。</p>
 </blockquote>
-<p><img src="/images/计组第3章-存储系统/image-20220724163643199.png" alt=""></p>
+<img src="/images/计组第3章-存储系统/image-20220724163643199.png" alt="">
 </li>
 <li><p><strong>字位同时扩展法</strong>：同时增加存储字的数量和存储字长。</p>
 <blockquote>
 <p>数据线的连接方式不同，而且片选信号也要连接到相应的芯片。</p>
 </blockquote>
-<p><img src="/images/计组第3章-存储系统/image-20220724163750209.png" alt=""></p>
-</li>
+<img src="/images/计组第3章-存储系统/image-20220724163750209.png" alt=""></li>
 </ol>
 <h5 id="3-存储容量的地址分配和片选"><a href="#3-存储容量的地址分配和片选" class="headerlink" title="3. 存储容量的地址分配和片选"></a>3. 存储容量的地址分配和片选</h5><p>CPU要实现对存储单元的访问，首先要进行片选，然后进行字选。</p>
 <p>片选信号的产生分为线选法和译码片选法。</p>
@@ -595,18 +627,25 @@
 </ol>
 <h5 id="2-固态硬盘"><a href="#2-固态硬盘" class="headerlink" title="2. 固态硬盘"></a>2. 固态硬盘</h5><p>固态硬盘是一种基于闪存技术的存储器。它与U盘并没有本质上的区别，只是容量更大、存储性能更好。</p>
 <p>固态硬盘的特点：基于闪存的存储技术、随机写很慢、随机读写性能明显高于磁盘、容易磨损。</p>
-<h4 id="3-5-高速缓冲存储器"><a href="#3-5-高速缓冲存储器" class="headerlink" title="3.5 高速缓冲存储器"></a>3.5 高速缓冲存储器</h4><h5 id="1-程序访问的局部性原理"><a href="#1-程序访问的局部性原理" class="headerlink" title="1. 程序访问的局部性原理"></a>1. 程序访问的局部性原理</h5><p><img src="/images/计组第3章-存储系统/image-20220724180300224.png" alt="" style="zoom: 67%;"></p>
+<h4 id="3-5-高速缓冲存储器"><a href="#3-5-高速缓冲存储器" class="headerlink" title="3.5 高速缓冲存储器"></a>3.5 高速缓冲存储器</h4><h5 id="1-程序访问的局部性原理"><a href="#1-程序访问的局部性原理" class="headerlink" title="1. 程序访问的局部性原理"></a>1. 程序访问的局部性原理</h5><img src="/images/计组第3章-存储系统/image-20220724180300224.png" alt="" style="zoom: 67%;">
+
 <h5 id="2-Cache的基本工作原理"><a href="#2-Cache的基本工作原理" class="headerlink" title="2. Cache的基本工作原理"></a>2. Cache的基本工作原理</h5><p>Cache位于存储器层次结构的顶层，通常由SRAM构成。为便于Cache和主存交换信息，Cache和主存通常被划分为大小相等的块，Cache块又称Cache行，每块由若干字节组成，块的长度称为块长（Cache行长）。</p>
-<p><img src="/images/计组第3章-存储系统/image-20220724181021396.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220724181049649.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220724181150167.png" alt=""></p>
-<h5 id="3-Cache和主存的映射方式"><a href="#3-Cache和主存的映射方式" class="headerlink" title="3. Cache和主存的映射方式"></a>3. Cache和主存的映射方式</h5><p><img src="/images/计组第3章-存储系统/image-20220724181329933.png" alt=""></p>
+<img src="/images/计组第3章-存储系统/image-20220724181021396.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220724181049649.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220724181150167.png" alt="">
+
+
+
+<h5 id="3-Cache和主存的映射方式"><a href="#3-Cache和主存的映射方式" class="headerlink" title="3. Cache和主存的映射方式"></a>3. Cache和主存的映射方式</h5><img src="/images/计组第3章-存储系统/image-20220724181329933.png" alt="">
+
 <ol>
 <li><p><strong>全相联映射</strong></p>
 <p><strong>主存中的每一块可以装入Cache中的任何位置</strong>，每行的标记用于指出该行取自主存的哪一块，所以CPU访存时需要与所有Cache行的标记进行比较。<strong>标记 = 主存块地址</strong>，主存地址 = 主存块地址（标记） + 块内地址。</p>
 <p>优点：比较灵活，冲突率低，空间利用率高，命中率高；</p>
 <p>缺点：标记长，标记的比较速度慢，实现成本高通常采用价格昂贵的相联存储器。</p>
-<p><img src="/images/计组第3章-存储系统/image-20220724182111571.png" alt=""></p>
+<img src="/images/计组第3章-存储系统/image-20220724182111571.png" alt="">
 </li>
 <li><p><strong>直接映射</strong></p>
 <p>主存中的每一块只能装入Cache块中的唯一位置。若这个位置已有内容，则产生块冲突，原来的块将被无条件替换出去（<strong>无需使用替换算法</strong>）。</p>
@@ -614,7 +653,7 @@
 <p>主存地址结构：<strong>主存块地址 = 标记 + Cache行号</strong>，主存地址 = 标记 + Cache行号 + 块内地址。</p>
 <p>假设Cache共有$2^{c}$行，主存有$2^{m}$块，则每个Cache行会对应$2^{m-c}$块，故需要设置一个长为m-c的标记，以确定该Cache行的内容来自$2^{m-c}$块中的哪一块。而主存块号的低c位正好是它要装入的Cache行号。</p>
 <p>直接映射实现简单，但不够灵活，块冲突概率最高，空间利用率最低。</p>
-<p><img src="/images/计组第3章-存储系统/image-20220724190305533.png" alt=""></p>
+<img src="/images/计组第3章-存储系统/image-20220724190305533.png" alt="">
 </li>
 <li><p><strong>组相联映射</strong></p>
 <p>将Cache分成Q个大小相等的组，每个主存块可装入固定组中的任意一行，即组间采用直接映射、而组内采用全相联映射的方式。它是对全相联映射和直接映射的一种折中，当Q=1时变为全相联映射，当Q=Cache行数时变为直接映射。假设每组有r个Cache行，则称之为r路组相联。</p>
@@ -622,8 +661,7 @@
 <p>选定适当的分组数量，可使组相联映射的成本接近直接映射，而性能上仍接近全相联映射。</p>
 <p>组相联映射的主存地址结构为：<strong>主存块地址 = 标记 + 组号</strong>，主存地址 = 标记 + 组号 + 块内地址。</p>
 <p>组间作区分，组内不作区分，给定一个主存块，根据主存块号%Cache组数Q确定组号，然后映射至该组内空闲的Cache块，若Cache块均已装满，则根据替换算法进行替换。</p>
-<p><img src="/images/计组第3章-存储系统/image-20220724192557766.png" alt=""></p>
-</li>
+<img src="/images/计组第3章-存储系统/image-20220724192557766.png" alt=""></li>
 </ol>
 <h5 id="4-Cache中主存块的替换算法"><a href="#4-Cache中主存块的替换算法" class="headerlink" title="4. Cache中主存块的替换算法"></a>4. Cache中主存块的替换算法</h5><p>在采用全相联映射或组相联映射方式时，从主存向Cache传送一个新块，当Cache或Cache组中的空间已被占满时，就需要使用替换算法置换Cache行。而采用直接映射方式时，由于新主存块的Cache行位置是固定的，所以直接将该位置替换即可，无需考虑替换算法。</p>
 <p>常见的替换算法有：随机（RAND）替换算法；先进先出法（First in First out）;近期最少使用法（Least recently Used）;最不经常使用法（Least Frequently Used）。</p>
@@ -657,15 +695,24 @@
 </ol>
 <p><strong>非写分配法通常与全写法合用，写分配法通常与回写法合用。</strong>即写命中时如果同时将数据写入主存和Cache，则写不命中时，只写入主存，不进行调块。写命中时，如果只写入Cache，则写不命中时，进行调块，至Cache块被替换时再根据修改位写回主存。</p>
 <p>随着新技术的发展（如指令预取），需要将指令Cache和数据Cache分离，分离的主要目的是减少指令流水线的资源冲突。</p>
-<h4 id="3-6-虚拟存储器"><a href="#3-6-虚拟存储器" class="headerlink" title="3.6 虚拟存储器"></a>3.6 虚拟存储器</h4><h5 id="1-虚拟存储器的基本概念"><a href="#1-虚拟存储器的基本概念" class="headerlink" title="1. 虚拟存储器的基本概念"></a>1. 虚拟存储器的基本概念</h5><p><img src="/images/计组第3章-存储系统/image-20220724213434258.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220724213522820.png" alt=""></p>
-<h5 id="2-页式虚拟存储器"><a href="#2-页式虚拟存储器" class="headerlink" title="2. 页式虚拟存储器"></a>2. 页式虚拟存储器</h5><p><img src="/images/计组第3章-存储系统/image-20220724213612239.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220724213650698.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220724213749639.png" alt=""></p>
-<h5 id="3-段式虚拟存储器"><a href="#3-段式虚拟存储器" class="headerlink" title="3. 段式虚拟存储器"></a>3. 段式虚拟存储器</h5><p><img src="/images/计组第3章-存储系统/image-20220724214839881.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220724214917023.png" alt=""></p>
-<h5 id="4-段页式虚拟存储器"><a href="#4-段页式虚拟存储器" class="headerlink" title="4. 段页式虚拟存储器"></a>4. 段页式虚拟存储器</h5><p><img src="/images/计组第3章-存储系统/image-20220724214958091.png" alt=""></p>
-<p><img src="/images/计组第3章-存储系统/image-20220724215026995.png" alt=""></p>
+<h4 id="3-6-虚拟存储器"><a href="#3-6-虚拟存储器" class="headerlink" title="3.6 虚拟存储器"></a>3.6 虚拟存储器</h4><h5 id="1-虚拟存储器的基本概念"><a href="#1-虚拟存储器的基本概念" class="headerlink" title="1. 虚拟存储器的基本概念"></a>1. 虚拟存储器的基本概念</h5><img src="/images/计组第3章-存储系统/image-20220724213434258.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220724213522820.png" alt="">
+
+<h5 id="2-页式虚拟存储器"><a href="#2-页式虚拟存储器" class="headerlink" title="2. 页式虚拟存储器"></a>2. 页式虚拟存储器</h5><img src="/images/计组第3章-存储系统/image-20220724213612239.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220724213650698.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220724213749639.png" alt="">
+
+<h5 id="3-段式虚拟存储器"><a href="#3-段式虚拟存储器" class="headerlink" title="3. 段式虚拟存储器"></a>3. 段式虚拟存储器</h5><img src="/images/计组第3章-存储系统/image-20220724214839881.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220724214917023.png" alt="">
+
+<h5 id="4-段页式虚拟存储器"><a href="#4-段页式虚拟存储器" class="headerlink" title="4. 段页式虚拟存储器"></a>4. 段页式虚拟存储器</h5><img src="/images/计组第3章-存储系统/image-20220724214958091.png" alt="">
+
+<img src="/images/计组第3章-存储系统/image-20220724215026995.png" alt="">
+
 <h5 id="5-虚拟存储器与Cache的比较"><a href="#5-虚拟存储器与Cache的比较" class="headerlink" title="5. 虚拟存储器与Cache的比较"></a>5. 虚拟存储器与Cache的比较</h5><p>相同之处：</p>
 <ol>
 <li>最终目标都是为了提高系统性能，两者都有容量、速度、价格的梯度；</li>
@@ -941,13 +988,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/10/27/cao-zuo-xi-tong-0-yin-lun/">
+                <a href="/2022/11/01/cao-zuo-xi-tong-0-yin-lun/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="操作系统0：引论">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="操作系统0-引论">
                         
-                        <span class="card-title">操作系统0：引论</span>
+                        <span class="card-title">操作系统0-引论</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -958,7 +1005,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-27
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-01
                         </span>
                         <span class="publish-author">
                             

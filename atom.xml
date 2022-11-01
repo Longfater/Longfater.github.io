@@ -6,7 +6,7 @@
   <link href="https://longfater.github.io/atom.xml" rel="self"/>
   
   <link href="https://longfater.github.io/"/>
-  <updated>2022-10-27T00:09:27.965Z</updated>
+  <updated>2022-11-01T15:02:59.939Z</updated>
   <id>https://longfater.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>操作系统7：磁盘存储器管理</title>
-    <link href="https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-7-ci-pan-cun-chu-qi-guan-li/"/>
-    <id>https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-7-ci-pan-cun-chu-qi-guan-li/</id>
-    <published>2022-10-27T00:08:03.000Z</published>
-    <updated>2022-10-27T00:09:27.965Z</updated>
+    <title>操作系统7-磁盘存储器管理</title>
+    <link href="https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-7-ci-pan-cun-chu-qi-guan-li/"/>
+    <id>https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-7-ci-pan-cun-chu-qi-guan-li/</id>
+    <published>2022-11-01T14:35:34.000Z</published>
+    <updated>2022-11-01T15:02:59.939Z</updated>
     
     
       
@@ -40,11 +40,11 @@
   </entry>
   
   <entry>
-    <title>操作系统6：文件管理</title>
-    <link href="https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-6-wen-jian-guan-li/"/>
-    <id>https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-6-wen-jian-guan-li/</id>
-    <published>2022-10-27T00:07:25.000Z</published>
-    <updated>2022-10-27T00:08:47.066Z</updated>
+    <title>操作系统6-文件管理</title>
+    <link href="https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-6-wen-jian-guan-li/"/>
+    <id>https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-6-wen-jian-guan-li/</id>
+    <published>2022-11-01T14:35:04.000Z</published>
+    <updated>2022-11-01T14:50:24.274Z</updated>
     
     
       
@@ -63,11 +63,11 @@
   </entry>
   
   <entry>
-    <title>操作系统5：I/O系统</title>
-    <link href="https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-5-i-o-xi-tong/"/>
-    <id>https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-5-i-o-xi-tong/</id>
-    <published>2022-10-27T00:05:55.000Z</published>
-    <updated>2022-10-27T00:06:38.999Z</updated>
+    <title>操作系统5-输入输出系统</title>
+    <link href="https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-5-shu-ru-shu-chu-xi-tong/"/>
+    <id>https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-5-shu-ru-shu-chu-xi-tong/</id>
+    <published>2022-11-01T14:34:19.000Z</published>
+    <updated>2022-11-01T15:09:09.963Z</updated>
     
     
       
@@ -86,11 +86,11 @@
   </entry>
   
   <entry>
-    <title>操作系统4：虚拟存储器</title>
-    <link href="https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-4-xu-ni-cun-chu-qi/"/>
-    <id>https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-4-xu-ni-cun-chu-qi/</id>
-    <published>2022-10-27T00:04:26.000Z</published>
-    <updated>2022-10-27T00:05:04.397Z</updated>
+    <title>操作系统4-虚拟存储器</title>
+    <link href="https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-4-xu-ni-cun-chu-qi/"/>
+    <id>https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-4-xu-ni-cun-chu-qi/</id>
+    <published>2022-11-01T14:32:42.000Z</published>
+    <updated>2022-11-01T15:13:46.363Z</updated>
     
     
       
@@ -109,18 +109,18 @@
   </entry>
   
   <entry>
-    <title>操作系统3：存储器管理</title>
-    <link href="https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-3-cun-chu-qi-guan-li/"/>
-    <id>https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-3-cun-chu-qi-guan-li/</id>
-    <published>2022-10-27T00:02:46.000Z</published>
-    <updated>2022-10-27T00:03:46.610Z</updated>
+    <title>操作系统3-存储器管理</title>
+    <link href="https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-3-cun-chu-qi-guan-li/"/>
+    <id>https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-3-cun-chu-qi-guan-li/</id>
+    <published>2022-11-01T14:31:28.000Z</published>
+    <updated>2022-11-01T15:18:10.101Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;第四章-存储器管理&quot;&gt;&lt;a href=&quot;#第四章-存储器管理&quot; class=&quot;headerlink&quot; title=&quot;第四章 存储器管理&quot;&gt;&lt;/a&gt;第四章 存储器管理&lt;/h1&gt;&lt;h4 id=&quot;4-1-存储器的层次结构&quot;&gt;&lt;a</summary>
+    <summary type="html">&lt;h1 id=&quot;操作系统3-存储器管理&quot;&gt;&lt;a href=&quot;#操作系统3-存储器管理&quot; class=&quot;headerlink&quot; title=&quot;操作系统3-存储器管理&quot;&gt;&lt;/a&gt;操作系统3-存储器管理&lt;/h1&gt;&lt;h4 id=&quot;4-1-存储器的层次结构&quot;&gt;&lt;a</summary>
         
       
     
@@ -132,11 +132,11 @@
   </entry>
   
   <entry>
-    <title>操作系统2：处理机调度与死锁</title>
-    <link href="https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-2-chu-li-ji-diao-du-yu-si-suo/"/>
-    <id>https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-2-chu-li-ji-diao-du-yu-si-suo/</id>
-    <published>2022-10-27T00:01:05.000Z</published>
-    <updated>2022-10-27T00:01:46.796Z</updated>
+    <title>操作系统2-处理机调度与死锁</title>
+    <link href="https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-2-chu-li-ji-diao-du-yu-si-suo/"/>
+    <id>https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-2-chu-li-ji-diao-du-yu-si-suo/</id>
+    <published>2022-11-01T14:30:37.000Z</published>
+    <updated>2022-11-01T15:19:47.370Z</updated>
     
     
       
@@ -155,18 +155,18 @@
   </entry>
   
   <entry>
-    <title>操作系统1：进程控制与描述</title>
-    <link href="https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-1-jin-cheng-kong-zhi-yu-miao-shu/"/>
-    <id>https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-1-jin-cheng-kong-zhi-yu-miao-shu/</id>
-    <published>2022-10-26T23:58:29.000Z</published>
-    <updated>2022-10-26T23:59:36.054Z</updated>
+    <title>操作系统1-进程的描述与控制</title>
+    <link href="https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-1-jin-cheng-de-miao-shu-yu-kong-zhi/"/>
+    <id>https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-1-jin-cheng-de-miao-shu-yu-kong-zhi/</id>
+    <published>2022-11-01T14:29:54.000Z</published>
+    <updated>2022-11-01T15:45:00.154Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;第二章-进程的描述与控制&quot;&gt;&lt;a href=&quot;#第二章-进程的描述与控制&quot; class=&quot;headerlink&quot; title=&quot;第二章 进程的描述与控制&quot;&gt;&lt;/a&gt;第二章</summary>
+    <summary type="html">&lt;h1 id=&quot;操作系统1-进程的描述与控制&quot;&gt;&lt;a href=&quot;#操作系统1-进程的描述与控制&quot; class=&quot;headerlink&quot;</summary>
         
       
     
@@ -178,11 +178,11 @@
   </entry>
   
   <entry>
-    <title>操作系统0：引论</title>
-    <link href="https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-0-yin-lun/"/>
-    <id>https://longfater.github.io/2022/10/27/cao-zuo-xi-tong-0-yin-lun/</id>
-    <published>2022-10-26T23:55:20.000Z</published>
-    <updated>2022-10-26T23:57:08.367Z</updated>
+    <title>操作系统0-引论</title>
+    <link href="https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-0-yin-lun/"/>
+    <id>https://longfater.github.io/2022/11/01/cao-zuo-xi-tong-0-yin-lun/</id>
+    <published>2022-11-01T14:06:08.000Z</published>
+    <updated>2022-11-01T15:46:21.646Z</updated>
     
     
       
